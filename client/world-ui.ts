@@ -1,7 +1,4 @@
-import {EQUIPMENT_BY_ID} from '../shared/items';
-import {attributes} from '../shared/rules';
-import {meetsRequirements} from '../shared/items';
-import {equipmentIcon} from './equipment-ui';
+import {showInventory} from './inventory-ui';
 import {GUIDE_LESSONS} from './guide';
 import {MAPS,MAP_BY_ID,type GameMap,type Prop} from '../shared/maps';
 import type {Hero,Snapshot} from '../shared/rules';
@@ -22,4 +19,4 @@ export function showNpc(prop:Prop,hero:Hero,send:(m:unknown)=>void){closeWorldPa
  else if(prop.service==='guide'){modal.querySelector('section')!.classList.add('guide-panel');actions.innerHTML='<div class=guide-portrait><img src="/art/npcs/eira.webp" alt="Eira ผู้แนะนำเกม"></div>'+GUIDE_LESSONS.map((lesson,i)=>`<details ${i===0?'open':''}><summary>${lesson.title}</summary><p>${lesson.text}</p></details>`).join('');}
  else if(prop.service==='bind'){actions.innerHTML='<p>จุดเกิดและพลังชีวิตของคุณได้รับการบันทึกแล้ว</p>';}
 }
-export function showBag(hero:Hero,send:(m:unknown)=>void){closeWorldPanel();const modal=document.createElement('div');modal.id='world-panel';modal.className='world-modal';modal.innerHTML=`<section class="npc-panel"><button class="panel-close" aria-label="ปิดกระเป๋า">✕</button><span class="eyebrow">FIELD SATCHEL</span><h2>สัมภาระ ${hero.loot.length} / 25</h2><p>Silfr · S${hero.coins}</p><div class="bag-items"></div></section>`;document.querySelector('#shell')!.append(modal);modal.querySelector('.panel-close')!.addEventListener('click',closeWorldPanel);const list=modal.querySelector('.bag-items')!;if(hero.deliveries.length){const button=document.createElement('button');button.textContent=`รับของที่รอส่ง ${hero.deliveries.length} ชิ้น`;button.onclick=()=>{send({type:'claimDelivery'});closeWorldPanel();};modal.querySelector('section')!.append(button);}const starter=document.createElement('button');starter.textContent='สวมมีดเริ่มต้น';starter.onclick=()=>{send({type:'equip',id:'starter-knife'});closeWorldPanel();};list.append(starter);if(!hero.loot.length){const empty=document.createElement('p');empty.textContent='ยังไม่มีไอเทมในกระเป๋า';list.append(empty);}for(const item of hero.loot){const row=document.createElement('div'),gear=item.catalogId?EQUIPMENT_BY_ID.get(item.catalogId):undefined;if(gear){row.className='bag-weapon '+gear.rarity;row.innerHTML=equipmentIcon(gear)+`<div><b>${gear.name}</b><small>Lv.${gear.level} · ${gear.powerType} ${gear.power}${item.testOnly?' · GM TEST':''}</small><button ${meetsRequirements(gear,hero.level,attributes(hero))?'':'disabled'}>สวมใส่</button></div>`;row.querySelector('button')!.onclick=()=>{send({type:'equip',id:item.id});closeWorldPanel();};}else row.textContent=`◇ ${item.name}`;list.append(row);}}
+export function showBag(hero:Hero,send:(m:unknown)=>void){showInventory(hero,send,closeWorldPanel);}

@@ -14,8 +14,8 @@ export function capitalFloor(c:CanvasRenderingContext2D,map:GameMap,material:(in
  for(const slot of CENTRAL_MARKET_SLOTS){area(slot.x-.1,slot.y-.1,slot.w+.2,slot.h+.5);c.save();c.globalAlpha=.35;c.fillStyle=c.createPattern(material(4,80),'repeat')!;c.fill();c.restore();}
  // Service and storefront walks always follow the same collision-aware routes as gameplay.
  for(const goal of [...map.portals,...map.props.filter(p=>p.service&&!p.marketSlot).map(propEntrance)]){const route=findPath(map,map.spawn,goal);line([map.spawn,...route],13,'#e5d6b2');}
- const plaza=pos(CENTRAL_PLAZA.x,CENTRAL_PLAZA.y);for(const [r,color]of [[270,'#ad946a'],[263,'#eadbb8'],[250,'#8faaa7'],[243,'#eee4cd']]as const){c.fillStyle=color;c.beginPath();c.ellipse(plaza.x,plaza.y,r,r*.5,0,0,Math.PI*2);c.fill();}
- c.save();c.beginPath();c.ellipse(plaza.x,plaza.y,242,121,0,0,Math.PI*2);c.clip();c.globalAlpha=.2;c.fillStyle=c.createPattern(material(0,96),'repeat')!;c.fillRect(plaza.x-243,plaza.y-122,486,244);c.restore();
+ const plaza=pos(CENTRAL_PLAZA.x,CENTRAL_PLAZA.y);for(const [r,color]of [[270,'#b9ad8d'],[266,'#eee4cd']]as const){c.fillStyle=r===266?c.createPattern(material(0,80),'repeat')!:color;c.beginPath();c.ellipse(plaza.x,plaza.y,r,r*.5,0,0,Math.PI*2);c.fill();}
+ c.save();c.beginPath();c.ellipse(plaza.x,plaza.y,242,121,0,0,Math.PI*2);c.clip();c.globalAlpha=.08;c.fillStyle=c.createPattern(material(0,96),'repeat')!;c.fillRect(plaza.x-243,plaza.y-122,486,244);c.restore();
  const colors=['#c85d4c','#579655','#6aaacb','#9772b6','#c4a14b','#424852'];for(let i=0;i<6;i++){const angle=i*Math.PI/3;c.fillStyle=colors[i];c.beginPath();c.ellipse(plaza.x+Math.cos(angle)*222,plaza.y+Math.sin(angle)*111,13,6.5,0,0,Math.PI*2);c.fill();}
  rootTerrain(c,map,details);
  const arrival=pos(map.spawn.x,map.spawn.y);c.strokeStyle='#b9a06b';c.lineWidth=3;c.beginPath();c.ellipse(arrival.x,arrival.y,55,27.5,0,0,Math.PI*2);c.stroke();

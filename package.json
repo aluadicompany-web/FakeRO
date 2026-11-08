@@ -24,7 +24,9 @@
     "test:character-cast": "tsx scripts/playtest-character-cast.ts",
     "test:adventure": "tsx scripts/playtest-adventure.ts",
     "balance:adventure": "tsx scripts/adventure-balance.ts",
-    "art:adventure": "node scripts/pack-adventure-art.mjs && python3 scripts/pack-adventure-formats.py"
+    "art:adventure": "node scripts/pack-adventure-art.mjs && python3 scripts/pack-adventure-formats.py",
+    "test:refinement": "tsx scripts/playtest-refinement.ts",
+    "art:tower": "python3 scripts/pack-tower-art.py"
   },
   "dependencies": {
     "phaser": "^3.90.0",

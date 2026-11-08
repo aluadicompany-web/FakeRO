@@ -3,7 +3,7 @@ import type {GameMap,Point,Prop} from './maps.js';
 const cityRandom=(id:string)=>{let seed=2166136261;for(const c of id)seed=Math.imul(seed^c.charCodeAt(0),16777619);return()=>{seed=(seed+0x6d2b79f5)|0;let t=Math.imul(seed^(seed>>>15),1|seed);t^=t+Math.imul(t^(t>>>7),61|t);return((t^(t>>>14))>>>0)/4294967296;};};
 export const CENTRAL_SIZE=64;
 export const CENTRAL_PLAZA={x:32,y:34,radius:8};
-export const CENTRAL_GARDENS=[{x:26,y:25,w:2,h:15},{x:37,y:25,w:2,h:15},{x:3,y:49,w:11,h:10},{x:19,y:40,w:7,h:4},{x:40,y:40,w:8,h:4},{x:28,y:47,w:7,h:6},{x:3,y:2,w:22,h:2},{x:42,y:2,w:19,h:2}];
+export const CENTRAL_GARDENS=[{x:3,y:49,w:11,h:10},{x:19,y:40,w:7,h:4},{x:40,y:40,w:8,h:4},{x:28,y:47,w:7,h:6},{x:3,y:2,w:22,h:2},{x:42,y:2,w:19,h:2}];
 export const CENTRAL_MARKET_LANE={x:12,y:9,w:7,h:41};
 const marketRows=[10,13,16,19,22,25,28,31,34,37,43,46];
 export const CENTRAL_MARKET_SLOTS=Array.from({length:24},(_,i)=>({id:`central-stall-${String(i+1).padStart(2,'0')}`,number:i+1,x:i%2===0?8:20,y:marketRows[Math.floor(i/2)],w:3,h:2,approach:{x:i%2===0?12.5:18.5,y:marketRows[Math.floor(i/2)]+1},flipX:i%2===1}));
@@ -24,7 +24,7 @@ export function centralLandmarks(map:GameMap){map.size=CENTRAL_SIZE;map.spawn={x
  for(const y of [39,44])for(const x of [3,23])addHome(x,y);
  for(const y of [15,20])addHome(38,y);
  const plant=(x:number,y:number,hedge=false)=>{const p:Prop={id:`capital-${hedge?'hedge':'tree'}-${x}-${y}`,kind:hedge?'hedge':'tree',x,y,w:1,h:1,art:hedge?8:9,atlas:'districts',name:''};if(map.props.some(o=>{const margin=hedge&&o.kind==='hedge'?0:.3;return o.blocking!==false&&x<o.x+o.w+margin&&x+1>o.x-margin&&y<o.y+o.h+margin&&y+1>o.y-margin;})||map.props.some(o=>o.kind==='building'&&Math.hypot((o.approach?.x??o.x+o.w/2)-x-.5,(o.approach?.y??o.y+o.h+.7)-y-.5)<1.5))return;map.props.push(p);};
- for(const x of [26,38])for(let y=24;y<=40;y++)if(![27,28,33,34,39,40].includes(y))plant(x,y,true);
+
  for(const y of [6,12,18,24,30,36,44,50,56])for(const x of [3,60]){plant(x,y);for(let d=1;d<4;d++)plant(x,y+d,true);}
  for(const x of [6,13,25,27,39,52,61])for(const y of [8,13,19,25,31,38,44,52,58])if(!(x>=26&&x<=39&&y>=23&&y<=43))plant(x,y);
 
@@ -32,12 +32,14 @@ export function centralLandmarks(map:GameMap){map.size=CENTRAL_SIZE;map.spawn={x
 export function centralDetails(map:GameMap,protectedPoints:Point[]){let sequence=0;
  const add=(x:number,y:number,art:number,kind:Prop['kind']='decor',atlas?:Prop['atlas'])=>{const p:Prop={id:`capital-detail-${sequence++}`,kind,x,y,w:1,h:1,art,atlas,name:''};if(x<2||y<2||x>61||y>61||map.props.some(o=>x<o.x+o.w+.3&&x+1>o.x-.3&&y<o.y+o.h+.3&&y+1>o.y-.3)||protectedPoints.some(q=>Math.hypot(q.x-x-.5,q.y-y-.5)<1.2))return false;map.props.push(p);return true;};
  // Formal planted dividers leave frequent openings between the market and ceremonial square.
- for(const x of [26,38])for(let y=24;y<=40;y++){if([27,28,33,34,39,40].includes(y))continue;add(x,y,8,'hedge','districts');}
- for(const x of [27,37])for(const y of [24,30,37,42])add(x,y,9,'tree','districts');
+
+ for(const x of [27,37])for(const y of [24,42])add(x,y,9,'tree','districts');
  for(let d=4;d<61;d+=5)for(const [x,y]of [[d,2],[d,61],[2,d],[61,d]])add(x,y,d%2?1:5);
  for(const b of [...map.props].filter(p=>p.service&&!p.marketSlot)){add(b.x-2,b.y+b.h,1);add(b.x+b.w+1,b.y+b.h,5);}
  for(const [x,y,art]of [[27,22,6],[37,22,6],[27,41,6],[38,41,6],[3,49,2],[14,53,2],[18,42,2],[42,42,2],[40,50,8],[54,29,4],[53,32,9],[5,40,9],[25,8,5],[41,8,5]])add(x,y,art);
  for(const garden of CENTRAL_GARDENS)for(let x=garden.x;x<garden.x+garden.w;x+=3)for(let y=garden.y;y<garden.y+garden.h;y+=3){add(x,y,(x+y)%3?7:9,(x+y)%3?'decor':'tree',(x+y)%3?undefined:'districts');}
+ // Open fountain square: seating around the outside leaves the guide, water and approach lanes clear.
+ for(const [i,x,y,flip]of [[0,27,32,0],[1,29,38,0],[2,35,39,1],[3,38,34,1],[4,36,29,1],[5,29,29,0]])map.props.push({id:'fountain-bench-'+i,kind:'decor',x,y,w:1.6,h:.8,art:2,blocking:true,flipX:!!flip,name:'ม้านั่งลานน้ำพุ'});
  // Shade trees, benches and lanterns punctuate the broad ring road and residential streets.
  for(const x of [5,19,40,54])for(const y of [8,38,52,58])add(x,y,9,'tree','districts');
 }
