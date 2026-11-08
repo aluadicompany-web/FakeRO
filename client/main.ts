@@ -1,0 +1,143 @@
+import {MONSTER_BY_ID,MONSTER_FAMILIES} from '../shared/monsters';
+import {showBestiary} from './bestiary';
+import {HeroRig} from './hero-rig';
+import {CreatureRig,prepareAnimationAtlas} from './creature-rig';
+import {CombatFX} from './combat-fx';
+import {WEAPONS,weaponById} from '../shared/weapons';
+import {WORLD_BOSSES} from '../shared/norse';
+import Phaser from 'phaser';
+import {RACES,STAT_KEYS,attributes,derived,xpNeeded,type Hero,type Snapshot} from '../shared/rules';
+import {avatarSVG,HAIRSTYLES,EYE_COLORS,HAIR_COLORS,STARTER_OUTFITS,DEFAULT_APPEARANCE,type Appearance} from '../shared/appearance';
+import {MAPS,MAP_BY_ID,propEntrance,type Prop} from '../shared/maps';
+import {drawMap,sliceAtlas,iso} from './map-renderer';
+import {showWorldMap,showNpc,showBag,closeWorldPanel,ruleText} from './world-ui';
+import './style.css';
+import './hud.css';
+import './account.css';
+import {showAccountLogin,type AccountView} from './account-ui';
+import {showGMPanel} from './gm-ui';
+import {hudMarkup,resetHud,selectHudTarget,hudTarget,updateHudExtras,updateHudCooldown} from './hud';
+const shell=document.querySelector<HTMLDivElement>('#shell')!;
+let state:Snapshot|undefined,ws:WebSocket|undefined,selected=RACES[0].id as string,mode='physical',lastEvent=0;
+let sceneReady=false;let receivedAt=performance.now();let pendingNpc:Prop|undefined;
+let currentAccount:AccountView|null=null;
+let noticeMessage='',noticeUntil=0;
+let draftAppearance:Appearance={...DEFAULT_APPEARANCE};
+async function api(path:string,data?:unknown){const res=await fetch('/api/'+path,{method:data?'POST':'GET',headers:{'Content-Type':'application/json'},body:data?JSON.stringify(data):undefined});const b=await res.json();if(!res.ok)throw Error(b.error||'เชื่อมต่อไม่ได้');return b;}
+const send=(m:unknown)=>{if(ws?.readyState===WebSocket.OPEN)ws.send(JSON.stringify(m));};
+function continueSession(result:{account:AccountView|null;hero:unknown}){currentAccount=result.account;if(result.hero)enter();else if(currentAccount)characterCreator();else login();}
+function login(){showAccountLogin(shell,api,continueSession);}
+function characterCreator(){
+ shell.innerHTML=`<div class="entry"><div class="entry-art"><span class="eyebrow">ROOTS OF YGGDRASIL · STARTER OUTFIT</span><div id="avatar-preview" class="avatar-preview"></div><h2 id="outfit-name"></h2><p id="outfit-description"></p><div class="preview-caption"><span id="preview-class"></span><span id="preview-look"></span></div><p class="appearance-note">ชุดเริ่มต้นก่อนอัปเกรด · รูปลักษณ์ไม่มีผลต่อสเตตัส</p><div class="art-footer">FAKERO <span>ONLINE PROTOTYPE · 0.1</span></div></div><section class="entry-form"><div class="creator-account"><span id="creator-username"></span><button id="creator-logout">ออกจากบัญชี</button></div><span class="eyebrow">YOUR JOURNEY BEGINS IN CENTRAL</span><h2>เลือกสายเลือดของคุณ</h2><p class="muted">มนุษย์หกเผ่า · ทุกเผ่าเริ่มเดินทางที่ Central</p><div class="races">${RACES.map((r,i)=>`<button class="race ${r.id===selected?'selected':''}" data-race="${r.id}" style="--race:${r.hex}"><span class="race-mark">${['ᛏ','ᛉ','ᚦ','ᚨ','ᚠ','ᛇ'][i]}</span><strong>${r.name}</strong><small>${r.role}</small></button>`).join('')}</div><p id="lore">${RACES[0].lore}</p><form id="create"><div class="appearance-controls"><label>เพศ<select id="gender" aria-label="เพศ"><option value="male">ชาย</option><option value="female">หญิง</option></select></label><label>ทรงผม<select id="hair" aria-label="ทรงผม"></select></label></div><fieldset class="eye-options hair-color-options"><legend>สีผม <span id="hair-color-name"></span></legend>${HAIR_COLORS.map((e,i)=>`<button type="button" data-hair-color="${i}" aria-label="สีผม${e.name}" aria-pressed="${draftAppearance.hairColor===i}" style="--eye:${e.hex}"><span></span></button>`).join('')}</fieldset><fieldset class="eye-options"><legend>สีตา <span id="eye-name"></span></legend>${EYE_COLORS.map((e,i)=>`<button type="button" data-eye="${i}" aria-label="สีตา${e.name}" aria-pressed="${draftAppearance.eyes===i}" style="--eye:${e.hex}"><span></span></button>`).join('')}</fieldset><label for="name">ชื่อตัวละคร</label><input id="name" name="name" minlength="2" maxlength="18" required placeholder="ผู้เดินทางคนใหม่" autocomplete="nickname"><button class="primary" type="submit">เริ่มการเดินทาง <span>↗</span></button></form><div class="divider">มีตัวละครจากเวอร์ชันก่อน?</div><form id="recover"><label for="key">นำเข้ารหัสกู้คืนตัวละครเดิม</label><div class="recover-row"><input id="key" type="password" autocomplete="off" required placeholder="วางรหัสส่วนตัวของคุณ"><button type="submit">ผูกตัวละครเดิม →</button></div></form><p id="error" role="alert"></p><p class="fine">คลิกเพื่อเดินและโจมตี · PvE สำหรับกลุ่มทดสอบไม่เกิน 10 คน<br>ภาพต้นแบบ · เผ่าไม่จำกัดอาวุธ · ยังไม่มีระบบซื้อขาย</p></section></div>`;
+ document.querySelector('#creator-username')!.textContent=currentAccount?.username||'';document.querySelector<HTMLButtonElement>('#creator-logout')!.onclick=async()=>{await api('logout',{});currentAccount=null;login();};
+ document.querySelectorAll<HTMLButtonElement>('[data-race]').forEach(el=>el.onclick=()=>{selected=el.dataset.race!;document.querySelector('.race.selected')?.classList.remove('selected');el.classList.add('selected');document.querySelector('#lore')!.textContent=RACES.find(r=>r.id===selected)!.lore;updateAppearanceView();});
+ (document.querySelector('#gender') as HTMLSelectElement).value=draftAppearance.gender;
+ document.querySelector<HTMLSelectElement>('#gender')!.onchange=e=>{draftAppearance.gender=(e.target as HTMLSelectElement).value as Appearance['gender'];updateAppearanceView();};
+ document.querySelector<HTMLSelectElement>('#hair')!.onchange=e=>{draftAppearance.hair=Number((e.target as HTMLSelectElement).value);updateAppearanceView();};
+ document.querySelectorAll<HTMLButtonElement>('[data-eye]').forEach(b=>b.onclick=()=>{draftAppearance.eyes=Number(b.dataset.eye);updateAppearanceView();});
+ document.querySelectorAll<HTMLButtonElement>('[data-hair-color]').forEach(b=>b.onclick=()=>{draftAppearance.hairColor=Number(b.dataset.hairColor);updateAppearanceView();});
+ updateAppearanceView();
+ const submit=(id:string,fn:()=>Promise<void>)=>document.querySelector<HTMLFormElement>(id)!.onsubmit=async e=>{e.preventDefault();const button=document.querySelector<HTMLButtonElement>(`${id} button[type="submit"]`)!;button.disabled=true;try{await fn();}catch(e){document.querySelector('#error')!.textContent=(e as Error).message;}finally{button.disabled=false;}};
+ submit('#create',async()=>{const b=await api('create',{name:(document.querySelector('#name') as HTMLInputElement).value.trim(),race:selected,appearance:draftAppearance});continueSession(b);});
+ submit('#recover',async()=>{const b=await api('import',{recovery:(document.querySelector('#key')as HTMLInputElement).value});continueSession(b);});
+}
+function updateAppearanceView(){
+ const race=RACES.find(r=>r.id===selected)!;const outfit=STARTER_OUTFITS[race.id];
+ document.querySelector('#avatar-preview')!.innerHTML=avatarSVG(race.id,draftAppearance);
+ document.querySelector('#outfit-name')!.textContent=outfit.name;
+ document.querySelector('#outfit-description')!.textContent=outfit.description;
+ document.querySelector('#preview-class')!.textContent=`${race.name} · ${outfit.className}`;
+ document.querySelector('#preview-look')!.textContent=`${draftAppearance.gender==='male'?'ชาย':'หญิง'} · ${HAIRSTYLES[draftAppearance.gender][draftAppearance.hair]} · ผม${HAIR_COLORS[draftAppearance.hairColor].name} · ตา${EYE_COLORS[draftAppearance.eyes].name}`;
+ document.querySelector('#lore')!.textContent=race.lore;
+ const select=document.querySelector<HTMLSelectElement>('#hair')!;
+ select.innerHTML=HAIRSTYLES[draftAppearance.gender].map((name,i)=>`<option value="${i}">${i+1}. ${name}</option>`).join('');select.value=String(draftAppearance.hair);
+ document.querySelector('#hair-color-name')!.textContent=HAIR_COLORS[draftAppearance.hairColor].name;
+ document.querySelectorAll<HTMLButtonElement>('[data-hair-color]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.hairColor)===draftAppearance.hairColor)));
+ document.querySelector('#eye-name')!.textContent=EYE_COLORS[draftAppearance.eyes].name;
+ document.querySelectorAll<HTMLButtonElement>('[data-eye]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.eye)===draftAppearance.eyes)));
+}
+function closeHudPopovers(except=''){
+ for(const [panel,button]of [['#game-menu','#menu-toggle'],['.weapon-picker','#weapon-toggle'],['#stats','#stats-toggle'],['.quest','#quest-toggle']]){if(panel===except)continue;const el=document.querySelector<HTMLElement>(panel);if(el){el.hidden=true;document.querySelector(button)?.setAttribute('aria-expanded','false');}}
+}
+function enter(recovery?:string){
+ resetHud();shell.innerHTML=hudMarkup();
+ if(currentAccount?.role==='gm'){const button=document.createElement('button');button.id='gm-open';button.textContent='ᛟ เครื่องมือ GM';document.querySelector('#game-menu')!.append(button);button.onclick=()=>{closeHudPopovers();showGMPanel(api);};const badge=document.createElement('span');badge.className='gm-badge';badge.textContent='GM';document.querySelector('.hero-heading')!.prepend(badge);}
+ document.querySelector<HTMLButtonElement>('#stats-toggle')!.onclick=()=>{const el=document.querySelector<HTMLElement>('#stats')!;if(el.hidden)closeHudPopovers('#stats');el.hidden=!el.hidden;document.querySelector('#stats-toggle')!.setAttribute('aria-expanded',String(!el.hidden));};
+ document.querySelector<HTMLButtonElement>('#exit')!.onclick=async()=>{try{await api('logout',{});ws?.close();state=undefined;currentAccount=null;closeWorldPanel();login();}catch(e){document.querySelector('#connection')!.textContent=(e as Error).message;}};
+ for(const m of ['physical','magic'])document.querySelector<HTMLButtonElement>('#'+m)!.onclick=()=>{mode=m;send({type:'mode',mode});document.querySelector('.hotbar .active')?.classList.remove('active');document.querySelector('#'+m)!.classList.add('active');for(const id of ['physical','magic'])document.querySelector('#'+id)!.setAttribute('aria-pressed',String(id===m));};
+ document.querySelector<HTMLButtonElement>('#map-open')!.onclick=()=>{const h=state?.players.find(h=>h.id===state!.self);if(h){closeHudPopovers();showWorldMap(h,send,state?.worldBoss);}};
+ document.querySelector<HTMLButtonElement>('#bag-open')!.onclick=()=>{const h=state?.players.find(h=>h.id===state!.self);if(h){closeHudPopovers();showBag(h,send);}};
+ document.querySelector<HTMLButtonElement>('#world-boss-status')!.onclick=()=>{const h=state?.players.find(h=>h.id===state!.self);if(h){closeHudPopovers();showWorldMap(h,send,state?.worldBoss);}};
+ for(const [id,delta]of [['zoom-in',.1],['zoom-out',-.1]]as const)document.querySelector('#'+id)!.addEventListener('click',()=>window.dispatchEvent(new CustomEvent('game-zoom',{detail:delta})));
+ document.querySelector('#bestiary-open')!.addEventListener('click',()=>{closeHudPopovers();window.dispatchEvent(new Event('show-bestiary'));});
+ document.querySelector('#weapon-select')!.addEventListener('change',e=>send({type:'weapon',weapon:(e.target as HTMLSelectElement).value}));
+ const toggle=(button:string,panel:string)=>document.querySelector(button)!.addEventListener('click',()=>{const el=document.querySelector<HTMLElement>(panel)!;if(el.hidden)closeHudPopovers(panel);el.hidden=!el.hidden;document.querySelector(button)!.setAttribute('aria-expanded',String(!el.hidden));});
+ toggle('#quest-toggle','.quest');toggle('#weapon-toggle','.weapon-picker');toggle('#menu-toggle','#game-menu');
+ document.querySelector('#portrait-button')!.addEventListener('click',()=>document.querySelector<HTMLButtonElement>('#stats-toggle')!.click());
+ document.querySelector('#minimap-open')!.addEventListener('click',()=>document.querySelector<HTMLButtonElement>('#map-open')!.click());
+ document.querySelector('#journal-toggle')!.addEventListener('click',()=>{const el=document.querySelector<HTMLElement>('#combat-log')!;el.hidden=!el.hidden;document.querySelector('#journal-toggle')!.setAttribute('aria-expanded',String(!el.hidden));document.querySelector('#journal-toggle b')!.textContent=el.hidden?'+':'−';});
+ const stop=()=>{const h=state?.players.find(p=>p.id===state!.self);if(h)send({type:'move',x:h.x,y:h.y});selectHudTarget();};
+ document.querySelector('#stop-action')!.addEventListener('click',stop);document.querySelector('#clear-target')!.addEventListener('click',stop);
+ document.querySelector('#attack-action')!.addEventListener('click',()=>{if(!state)return;const h=state.players.find(p=>p.id===state!.self);if(!h||h.hp<=0)return;const target=state.mobs.find(m=>m.id===hudTarget()&&m.hp>0)||state.mobs.filter(m=>m.hp>0).sort((a,b)=>Math.hypot(a.x-h.x,a.y-h.y)-Math.hypot(b.x-h.x,b.y-h.y))[0];if(target){selectHudTarget(target.id);send({type:'attack',id:target.id});}});
+ document.querySelector('#weapon-select')!.addEventListener('change',()=>{document.querySelector<HTMLElement>('.weapon-picker')!.hidden=true;document.querySelector('#weapon-toggle')!.setAttribute('aria-expanded','false');});
+ for(const id of ['physical','magic'])document.querySelector('#'+id)!.setAttribute('aria-pressed',String(id===mode));
+ connect();if(recovery)showRecovery(recovery);
+}
+function showRecovery(key:string){const modal=document.createElement('div');modal.className='modal';modal.innerHTML=`<section><span class="eyebrow">KEEP YOUR JOURNEY SAFE</span><h2>เก็บรหัสกลับเข้าสู่โลก</h2><p>เบราว์เซอร์นี้จะจำตัวละครไว้ 30 วัน<br>ใช้รหัสนี้เมื่อเปลี่ยนเครื่องหรือล้างคุกกี้ ใครมีรหัสนี้เข้าตัวละครคุณได้</p><textarea readonly aria-label="รหัสกู้คืน">${key}</textarea><p class="fine">แสดงครั้งเดียว · เก็บในที่ปลอดภัย · ไม่ต้องส่งให้ผู้อื่น</p><button class="primary">ฉันเก็บรหัสแล้ว · เข้าสู่โลก</button></section>`;shell.append(modal);modal.querySelector('button')!.onclick=()=>modal.remove();}
+function connect(){lastEvent=0;mode='physical';document.querySelector('#physical')?.classList.add('active');document.querySelector('#physical')?.setAttribute('aria-pressed','true');document.querySelector('#magic')?.classList.remove('active');document.querySelector('#magic')?.setAttribute('aria-pressed','false');ws=new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/socket`);ws.onmessage=e=>{state=JSON.parse(e.data);receivedAt=performance.now();updateHUD();};ws.onclose=()=>{const el=document.querySelector('#connection');if(el)el.innerHTML='การเชื่อมต่อสิ้นสุดแล้ว · ปิดแท็บอื่นหากใช้ตัวละครเดียวกัน <button id="reconnect">เชื่อมต่อใหม่</button>';document.querySelector<HTMLButtonElement>('#reconnect')?.addEventListener('click',()=>{document.querySelector('#connection')!.textContent='กำลังเชื่อมต่อ…';connect();});};ws.onerror=()=>{};ws.onopen=()=>{if(sceneReady)send({type:'ready'});document.querySelector('#connection')!.textContent='';};}
+function updateHUD(){if(!state)return;const h=state.players.find(h=>h.id===state!.self);if(!h)return;const d=derived(h),r=RACES.find(r=>r.id===h.race)!;const text=(id:string,s:string)=>{document.querySelector(id)!.textContent=s;};
+ text('#hero-name',h.name);text('#hero-race',`${r.name} · ${r.thai}`);text('#online',`${state.online} / 10 ONLINE`);text('#hp-label',`${Math.ceil(h.hp)} / ${d.maxHp}`);text('#level-label',`LEVEL ${h.level}`);text('#xp-label',`${h.xp} / ${xpNeeded(h.level)} EXP`);text('#points-badge',h.points?`(${h.points} แต้ม)`:'');const map=MAP_BY_ID.get(h.mapId)!;text('#quest-count',`ค้นพบ ${h.visited.length} / ${MAPS.length} พื้นที่ · S${h.coins}`);text('#quest-note',map.id==='root_trial'?(state.rootTrialCleared?'เซิร์ฟเวอร์เคยผ่านบททดสอบนี้แล้ว':'บททดสอบแรกของเซิร์ฟเวอร์'):map.levelRange?`มอนสเตอร์ Lv.${map.levelRange.min}–${map.levelRange.max}`:map.boss?`บอสประจำเขต · ${map.boss.name}`:'คลิกสิ่งก่อสร้างหรือประตูเพื่อเดินไปใช้งาน');text('#zone-rule',ruleText(map));text('#zone-description',map.rule==='home'?(h.race===map.homeRace?'เมืองของเผ่าคุณ · เคารพขอบเขตเมือง':'คุณเป็นผู้มาเยือน · เจ้าถิ่นโจมตีคุณได้และคุณตอบโต้ไม่ได้'):map.rule==='red'?'มอนสเตอร์ให้ EXP เพิ่ม · ระวังผู้เล่นอื่น':'สำรวจ เก็บเลเวล และเดินทางต่อผ่านประตู');text('#location-name',map.name);
+ updateHudExtras(state,mode);
+ const selector=document.querySelector<HTMLSelectElement>('#weapon-select');if(selector&&document.activeElement!==selector)selector.value=weaponById(h.weapon).id;
+ const wb=state.worldBoss;if(wb){const seconds=Math.max(0,Math.ceil((wb.nextSpawnAt-wb.serverTime)/1000));text('#world-boss-status',wb.active?`WORLD BOSS · ${wb.active.name} · ${MAP_BY_ID.get(wb.active.mapId)?.name} · ${Math.ceil(wb.active.hp/wb.active.maxHp*100)}%`:`WORLD BOSS · รอบถัดไป ${Math.floor(seconds/3600)}:${String(Math.floor(seconds%3600/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`);}
+ const notice=document.querySelector('#world-notice');if(state.message!==noticeMessage){noticeMessage=state.message||'';noticeUntil=performance.now()+4500;}if(notice)notice.textContent=performance.now()<noticeUntil?noticeMessage:'';
+ if(pendingNpc){const p=pendingNpc;if(map.props.includes(p)&&Math.hypot(h.x-propEntrance(p).x,h.y-propEntrance(p).y)<1.5){pendingNpc=undefined;if(p.service!=='tower')showNpc(p,h,send);}else if(!map.props.includes(p))pendingNpc=undefined;}
+
+ (document.querySelector('#hp-bar')as HTMLElement).style.width=`${h.hp/d.maxHp*100}%`;(document.querySelector('#xp-bar')as HTMLElement).style.width=`${h.xp/xpNeeded(h.level)*100}%`;
+ const a=attributes(h);const panel=document.querySelector('#stats')!;
+ // Keep existing DOM buttons stable while snapshots arrive.
+ if(!panel.children.length){panel.innerHTML=STAT_KEYS.map(k=>`<div class="stat"><span>${k.toUpperCase()}</span><b id="value-${k}"></b><button data-stat="${k}" aria-label="เพิ่ม ${k}">+</button></div>`).join('')+'<small>1 แต้มต่อค่า · ค่าฐานสูงสุด 99<br>โบนัสเผ่า +3 และ +1 ทุก 5 เลเวล</small>';panel.querySelectorAll<HTMLButtonElement>('[data-stat]').forEach(b=>b.onclick=()=>send({type:'stat',key:b.dataset.stat}));}
+ for(const k of STAT_KEYS){text('#value-'+k,String(a[k]));(panel.querySelector(`[data-stat="${k}"]`)as HTMLButtonElement).disabled=h.points<1||h.stats[k]>=99;}
+}
+const TILE=48;
+class Grove extends Phaser.Scene {
+ fx!:CombatFX;
+ entities=new Map<string,Phaser.GameObjects.Container>();ring!:Phaser.GameObjects.Ellipse;zoom=1;mapId='';mapViews:Phaser.GameObjects.GameObject[]=[];castViews:Phaser.GameObjects.GameObject[]=[];
+ constructor(){super('grove');}
+ preload(){for(const key of ['forest','frost','ember','wilds'])for(const suffix of ['','-back'])this.load.image('mob-'+key+suffix,`/art/monsters/${key}${suffix}.webp`);for(const key of ['mapboss','worldboss','rootboss'])for(const suffix of ['','-back'])this.load.image('anim-'+key+suffix,`/art/monsters/${key}${suffix}.webp`);for(const key of ['materials','portals','nature','capital','districts','citylife'])this.load.image(key,`/art/world/${key}.png`);this.load.image('terrain','/art/world/terrain.png');this.load.image('buildings','/art/world/buildings.png');}
+ create(){
+  this.cameras.main.setBackgroundColor('#a1d8eb');sliceAtlas(this,'buildings',3,3);sliceAtlas(this,'portals',3,2);sliceAtlas(this,'nature',4,3);sliceAtlas(this,'capital',4,3);sliceAtlas(this,'districts',4,3);sliceAtlas(this,'citylife',4,3);document.body.dataset.citylifeTextures=String(Array.from({length:12},(_,i)=>this.textures.exists(`citylife-${i}`)).filter(Boolean).length);document.body.dataset.districtTextures=String(Array.from({length:12},(_,i)=>this.textures.exists(`districts-${i}`)).filter(Boolean).length);document.body.dataset.capitalTextures=String(Array.from({length:12},(_,i)=>this.textures.exists(`capital-${i}`)).filter(Boolean).length);document.body.dataset.natureTextures=String(Array.from({length:12},(_,i)=>this.textures.exists(`nature-${i}`)).filter(Boolean).length);
+  window.addEventListener('game-zoom',((e:CustomEvent)=>{this.zoom=Phaser.Math.Clamp(this.zoom+e.detail,.35,1.15);this.cameras.main.setZoom(this.zoom);})as EventListener);
+  let animationFrames=0;for(const key of ['forest','frost','ember','wilds'])animationFrames+=prepareAnimationAtlas(this,'mob-'+key,6);for(const key of ['mapboss','worldboss','rootboss'])animationFrames+=prepareAnimationAtlas(this,'anim-'+key,key==='rootboss'?1:6);document.body.dataset.animationFrames=String(animationFrames);this.fx=new CombatFX(this);sceneReady=true;send({type:'ready'});window.addEventListener('show-bestiary',()=>showBestiary(this));
+  this.ring=this.add.ellipse(0,0,36,18).setStrokeStyle(2,0xe8d89d).setVisible(false).setDepth(2000);
+  this.input.on('pointerdown',(pointer:Phaser.Input.Pointer)=>{if(!state||document.querySelector('#world-panel')||document.querySelector('.modal'))return;const q=this.cameras.main.getWorldPoint(pointer.x,pointer.y),map=MAP_BY_ID.get(state.mapId)!;
+   const gate=map.portals.find(g=>{const p=iso(g.x,g.y);return Math.abs(p.x-q.x)<65&&Math.abs(p.y-q.y)<50;});if(gate){send({type:'use',id:gate.id});return;}
+   const mob=state.mobs.find(m=>{const p=iso(m.x,m.y);return m.hp>0&&Math.abs(p.x-q.x)<(m.worldBoss?125:m.boss?95:MONSTER_FAMILIES[MONSTER_BY_ID.get(m.species||'')?.family||0].size*.45)&&q.y>p.y-(m.worldBoss?245:m.boss?180:MONSTER_FAMILIES[MONSTER_BY_ID.get(m.species||'')?.family||0].size*.9)&&q.y<p.y+13;});if(mob){selectHudTarget(mob.id);send({type:'attack',id:mob.id});return;}
+   const player=state.players.find(h=>{const p=iso(h.x,h.y);return h.id!==state!.self&&Math.abs(p.x-q.x)<24&&q.y>p.y-85&&q.y<p.y+12;});if(player){selectHudTarget(player.id);send({type:'attackPlayer',id:player.id});return;}
+   const prop=[...map.props].reverse().find(p=>{if(!p.service)return false;const point=iso(p.x+p.w/2,p.y+p.h/2),width=(p.w+p.h)*34;return Math.abs(q.x-point.x)<width*.44&&q.y>point.y-width*.85&&q.y<point.y+35;});if(prop){pendingNpc=prop;send({type:'use',id:prop.id});return;}
+   const x=(q.x/TILE+q.y/(TILE*.5))/2,y=(q.y/(TILE*.5)-q.x/TILE)/2;selectHudTarget();send({type:'move',x,y});this.ring.setPosition(q.x,q.y).setVisible(true);this.tweens.killTweensOf(this.ring);this.tweens.add({targets:this.ring,alpha:{from:1,to:0},duration:700,onComplete:()=>this.ring.setVisible(false)});
+  });
+  this.scale.on('resize',()=>this.resize());this.resize();
+ }
+ resize(){this.zoom=this.scale.width<700?.7:.9;this.cameras.main.setZoom(this.zoom);}
+ character(h:Hero){const c=this.add.container(0,0),rig=new HeroRig(this,h);rig.name='rig';c.add(rig);c.add(this.add.text(0,-108,h.name,{fontFamily:'sans-serif',fontSize:'12px',color:h.id===state?.self?'#f7e4a7':'#d3e6df',backgroundColor:'#142d29bb',padding:{x:5,y:3}}).setOrigin(.5));return c;}
+ monster(m:Snapshot['mobs'][number]){return new CreatureRig(this,m);}
+ update(){if(!state)return;const now=(state.serverTime||state.worldBoss?.serverTime||Date.now())+Math.min(250,performance.now()-receivedAt);updateHudCooldown(state,now);document.body.dataset.activeEffects=String(state.effects?.length||0);document.body.dataset.castWarning=String(state.telegraph?.length||0);
+ if(this.mapId!==state.mapId){for(const c of this.entities.values())c.destroy();this.entities.clear();for(const o of this.mapViews)o.destroy();this.mapId=state.mapId;this.mapViews=drawMap(this,state.mapId);document.body.dataset.worldRendered=state.mapId;closeWorldPanel();lastEvent=state.events.at(-1)?.id||0;}
+ for(const v of this.castViews)v.destroy();this.castViews=[];for(const cast of state.telegraph||[]){const p=iso(cast.x,cast.y);this.castViews.push(this.add.ellipse(p.x,p.y,cast.radius*Math.SQRT2*96,cast.radius*Math.SQRT2*48,0xe85353,.23).setStrokeStyle(3,0xff9270).setDepth(1));}
+ const live=new Set<string>();for(const h of state.players){live.add(h.id);let c=this.entities.get(h.id);if(!c){c=this.character(h);this.entities.set(h.id,c);}const p=iso(h.x,h.y);c.x=Phaser.Math.Linear(c.x||p.x,p.x,.35);c.y=Phaser.Math.Linear(c.y||p.y,p.y,.35);c.setDepth(p.y+30);(c.getByName('rig')as HeroRig).updatePose(h,state.motions?.[h.id],now);if(h.id===state.self){document.body.dataset.heroAction=state.motions?.[h.id]?.action||'idle';document.body.dataset.heroFacing=String(state.motions?.[h.id]?.facing??2);this.cameras.main.centerOn(c.x,c.y-30);}}
+ const self=state.players.find(h=>h.id===state!.self);if(self){const focuses=[iso(self.x,self.y),...state.mobs.filter(m=>m.hp>0&&Math.hypot(m.x-self.x,m.y-self.y)<6).map(m=>iso(m.x,m.y))];for(const view of this.mapViews){const object=view as Phaser.GameObjects.Container;const box=object.getData?.('occluder');if(box)object.setAlpha(focuses.some(at=>at.y<box.y&&at.y>box.y-box.height&&Math.abs(at.x-box.x)<box.width*.45)?.4:1);}}
+ for(const m of state.mobs){const motion=state.motions?.[m.id];if(m.hp<=0&&(!motion||now>motion.since+1200))continue;live.add(m.id);let c=this.entities.get(m.id);if(!c){c=this.monster(m);this.entities.set(m.id,c);}const p=iso(m.x,m.y);c.setPosition(p.x,p.y).setDepth(p.y+30);(c as CreatureRig).updatePose(m,motion,now);}
+ this.fx.drawEffects(state.effects||[],now,id=>{const entity=state!.players.find(p=>p.id===id)||state!.mobs.find(m=>m.id===id);return entity?{x:entity.x,y:entity.y}:undefined;});
+
+ for(const [id,c]of this.entities){if(!live.has(id)){c.destroy();this.entities.delete(id);}}
+ for(const e of state.events){if(e.id<=lastEvent)continue;const p=iso(e.x,e.y);const t=this.add.text(p.x,p.y-65,e.text,{fontFamily:'sans-serif',fontSize:'16px',fontStyle:'bold',color:e.color,stroke:'#1a2e27',strokeThickness:3}).setOrigin(.5).setDepth(5000);this.tweens.add({targets:t,y:t.y-45,alpha:0,duration:1100,onComplete:()=>t.destroy()});lastEvent=e.id;}
+ }
+}
+window.addEventListener('keydown',e=>{if(!state||e.repeat||e.ctrlKey||e.altKey||e.metaKey||['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName||''))return;
+ if(e.key==='Escape'){if(document.querySelector('#world-panel'))closeWorldPanel();else for(const [panel,button]of [['#game-menu','#menu-toggle'],['.weapon-picker','#weapon-toggle'],['#stats','#stats-toggle'],['.quest','#quest-toggle']]){const el=document.querySelector<HTMLElement>(panel);if(el&&!el.hidden){el.hidden=true;document.querySelector(button)?.setAttribute('aria-expanded','false');}}return;}
+ if(document.querySelector('#world-panel')||document.querySelector('.modal')){if(e.key.toLowerCase()==='m'&&document.querySelector('.atlas-panel'))closeWorldPanel();return;}
+ const id:Record<string,string>={m:'map-open',b:'bag-open',n:'bestiary-open',c:'stats-toggle','1':'attack-action','2':'physical','3':'magic','4':'stop-action'};const button=id[e.key.toLowerCase()];if(button){e.preventDefault();document.querySelector<HTMLButtonElement>('#'+button)?.click();}
+});
+new Phaser.Game({type:Phaser.AUTO,parent:'game',backgroundColor:'#a1def5',scale:{mode:Phaser.Scale.RESIZE,width:window.innerWidth,height:window.innerHeight},scene:Grove,render:{antialias:true},audio:{noAudio:true}});
+api('me').then(continueSession).catch(()=>login());

@@ -1,0 +1,293 @@
+{
+  "status": "design-model-not-live",
+  "assumptions": {
+    "baseStat": 5,
+    "pointsPerLevel": 3,
+    "proposedAllocatedStatCap": 120,
+    "requirement": "ceil(8 + .6 * level)",
+    "boundedRaceBonus": "3 + floor((level-1)/5)",
+    "masteryCumulativeXP": "60*rank + 6*rank^2",
+    "xpPerEligibleSecond": 1,
+    "masteryRankCap": 100
+  },
+  "rows": [
+    {
+      "level": 10,
+      "model": "linear",
+      "baseStat": 5,
+      "raceBonus": 10,
+      "weaponRequirement": 14,
+      "earnedPoints": 27,
+      "nativeCost": 0,
+      "crossCost": 9,
+      "savedPoints": 9,
+      "remainingNative": 27,
+      "remainingCross": 18
+    },
+    {
+      "level": 10,
+      "model": "bounded",
+      "baseStat": 5,
+      "raceBonus": 4,
+      "weaponRequirement": 14,
+      "earnedPoints": 27,
+      "nativeCost": 5,
+      "crossCost": 9,
+      "savedPoints": 4,
+      "remainingNative": 22,
+      "remainingCross": 18
+    },
+    {
+      "level": 20,
+      "model": "linear",
+      "baseStat": 5,
+      "raceBonus": 20,
+      "weaponRequirement": 20,
+      "earnedPoints": 57,
+      "nativeCost": 0,
+      "crossCost": 15,
+      "savedPoints": 15,
+      "remainingNative": 57,
+      "remainingCross": 42
+    },
+    {
+      "level": 20,
+      "model": "bounded",
+      "baseStat": 5,
+      "raceBonus": 6,
+      "weaponRequirement": 20,
+      "earnedPoints": 57,
+      "nativeCost": 9,
+      "crossCost": 15,
+      "savedPoints": 6,
+      "remainingNative": 48,
+      "remainingCross": 42
+    },
+    {
+      "level": 40,
+      "model": "linear",
+      "baseStat": 5,
+      "raceBonus": 40,
+      "weaponRequirement": 32,
+      "earnedPoints": 117,
+      "nativeCost": 0,
+      "crossCost": 27,
+      "savedPoints": 27,
+      "remainingNative": 117,
+      "remainingCross": 90
+    },
+    {
+      "level": 40,
+      "model": "bounded",
+      "baseStat": 5,
+      "raceBonus": 10,
+      "weaponRequirement": 32,
+      "earnedPoints": 117,
+      "nativeCost": 17,
+      "crossCost": 27,
+      "savedPoints": 10,
+      "remainingNative": 100,
+      "remainingCross": 90
+    },
+    {
+      "level": 50,
+      "model": "linear",
+      "baseStat": 5,
+      "raceBonus": 50,
+      "weaponRequirement": 38,
+      "earnedPoints": 147,
+      "nativeCost": 0,
+      "crossCost": 33,
+      "savedPoints": 33,
+      "remainingNative": 147,
+      "remainingCross": 114
+    },
+    {
+      "level": 50,
+      "model": "bounded",
+      "baseStat": 5,
+      "raceBonus": 12,
+      "weaponRequirement": 38,
+      "earnedPoints": 147,
+      "nativeCost": 21,
+      "crossCost": 33,
+      "savedPoints": 12,
+      "remainingNative": 126,
+      "remainingCross": 114
+    },
+    {
+      "level": 60,
+      "model": "linear",
+      "baseStat": 5,
+      "raceBonus": 60,
+      "weaponRequirement": 44,
+      "earnedPoints": 177,
+      "nativeCost": 0,
+      "crossCost": 39,
+      "savedPoints": 39,
+      "remainingNative": 177,
+      "remainingCross": 138
+    },
+    {
+      "level": 60,
+      "model": "bounded",
+      "baseStat": 5,
+      "raceBonus": 14,
+      "weaponRequirement": 44,
+      "earnedPoints": 177,
+      "nativeCost": 25,
+      "crossCost": 39,
+      "savedPoints": 14,
+      "remainingNative": 152,
+      "remainingCross": 138
+    },
+    {
+      "level": 70,
+      "model": "linear",
+      "baseStat": 5,
+      "raceBonus": 70,
+      "weaponRequirement": 50,
+      "earnedPoints": 207,
+      "nativeCost": 0,
+      "crossCost": 45,
+      "savedPoints": 45,
+      "remainingNative": 207,
+      "remainingCross": 162
+    },
+    {
+      "level": 70,
+      "model": "bounded",
+      "baseStat": 5,
+      "raceBonus": 16,
+      "weaponRequirement": 50,
+      "earnedPoints": 207,
+      "nativeCost": 29,
+      "crossCost": 45,
+      "savedPoints": 16,
+      "remainingNative": 178,
+      "remainingCross": 162
+    },
+    {
+      "level": 80,
+      "model": "linear",
+      "baseStat": 5,
+      "raceBonus": 80,
+      "weaponRequirement": 56,
+      "earnedPoints": 237,
+      "nativeCost": 0,
+      "crossCost": 51,
+      "savedPoints": 51,
+      "remainingNative": 237,
+      "remainingCross": 186
+    },
+    {
+      "level": 80,
+      "model": "bounded",
+      "baseStat": 5,
+      "raceBonus": 18,
+      "weaponRequirement": 56,
+      "earnedPoints": 237,
+      "nativeCost": 33,
+      "crossCost": 51,
+      "savedPoints": 18,
+      "remainingNative": 204,
+      "remainingCross": 186
+    },
+    {
+      "level": 90,
+      "model": "linear",
+      "baseStat": 5,
+      "raceBonus": 90,
+      "weaponRequirement": 62,
+      "earnedPoints": 267,
+      "nativeCost": 0,
+      "crossCost": 57,
+      "savedPoints": 57,
+      "remainingNative": 267,
+      "remainingCross": 210
+    },
+    {
+      "level": 90,
+      "model": "bounded",
+      "baseStat": 5,
+      "raceBonus": 20,
+      "weaponRequirement": 62,
+      "earnedPoints": 267,
+      "nativeCost": 37,
+      "crossCost": 57,
+      "savedPoints": 20,
+      "remainingNative": 230,
+      "remainingCross": 210
+    },
+    {
+      "level": 100,
+      "model": "linear",
+      "baseStat": 5,
+      "raceBonus": 100,
+      "weaponRequirement": 68,
+      "earnedPoints": 297,
+      "nativeCost": 0,
+      "crossCost": 63,
+      "savedPoints": 63,
+      "remainingNative": 297,
+      "remainingCross": 234
+    },
+    {
+      "level": 100,
+      "model": "bounded",
+      "baseStat": 5,
+      "raceBonus": 22,
+      "weaponRequirement": 68,
+      "earnedPoints": 297,
+      "nativeCost": 41,
+      "crossCost": 63,
+      "savedPoints": 22,
+      "remainingNative": 256,
+      "remainingCross": 234
+    }
+  ],
+  "mastery": [
+    {
+      "rank": 10,
+      "xp": 1200,
+      "activeHours": 0.3333333333333333,
+      "wallHoursAt60PercentCombat": 0.5555555555555556
+    },
+    {
+      "rank": 20,
+      "xp": 3600,
+      "activeHours": 1,
+      "wallHoursAt60PercentCombat": 1.6666666666666667
+    },
+    {
+      "rank": 40,
+      "xp": 12000,
+      "activeHours": 3.3333333333333335,
+      "wallHoursAt60PercentCombat": 5.555555555555556
+    },
+    {
+      "rank": 50,
+      "xp": 18000,
+      "activeHours": 5,
+      "wallHoursAt60PercentCombat": 8.333333333333334
+    },
+    {
+      "rank": 70,
+      "xp": 33600,
+      "activeHours": 9.333333333333334,
+      "wallHoursAt60PercentCombat": 15.555555555555557
+    },
+    {
+      "rank": 100,
+      "xp": 66000,
+      "activeHours": 18.333333333333332,
+      "wallHoursAt60PercentCombat": 30.555555555555554
+    }
+  ],
+  "modelChecks": {
+    "equalTrainingCreditAcrossHitRates": true,
+    "priorWeaponProgressRetained": true,
+    "ineffectiveActionsGiveZero": true,
+    "oneOffensiveCreditPerSecond": true
+  }
+}

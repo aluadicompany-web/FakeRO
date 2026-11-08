@@ -1,0 +1,35 @@
+{
+  "name": "fakero-yggdrasil",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx server/index.ts",
+    "build": "tsc --noEmit && vite build",
+    "start": "NODE_ENV=production tsx server/index.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "balance": "tsx scripts/balance.ts",
+    "test:browser": "node scripts/playtest.mjs",
+    "test:appearance": "node scripts/playtest-appearance.mjs",
+    "test:world": "node scripts/playtest-world.mjs",
+    "test:maps": "tsx scripts/playtest-all-maps.ts",
+    "test:worldboss": "tsx scripts/playtest-worldboss.ts",
+    "test:central": "tsx scripts/playtest-central.ts",
+    "test:animations": "tsx scripts/playtest-animations.ts",
+    "export:monsters": "tsx scripts/export-monsters.ts",
+    "test:hud": "tsx scripts/playtest-hud.ts",
+    "gm:create": "tsx scripts/create-gm.ts",
+    "test:accounts": "tsx scripts/playtest-accounts.ts"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0",
+    "vite": "^7.2.2",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/ws": "^8.18.1",
+    "playwright": "^1.65.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

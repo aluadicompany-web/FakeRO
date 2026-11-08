@@ -1,0 +1,738 @@
+{
+  "status": "world-layout-proposal-not-runtime",
+  "cityNames": "Central confirmed; six racial city names proposed",
+  "regions": [
+    {
+      "id": "ember",
+      "race": "muspel",
+      "city": "Emberheim",
+      "thai": "เอมเบอร์ไฮม์",
+      "direction": "ใต้",
+      "biome": "เชิงภูเขาไฟ หินบะซอลต์ และป่าเถ้าถ่าน",
+      "cityStyle": "กำแพงหินดำ หลังคาแดง รางระบายไอร้อน",
+      "specialBuildings": [
+        "ลานฝึกบนหินบะซอลต์",
+        "อาคารสภาเปลวเพลิง"
+      ],
+      "fields": [
+        "ถนนหินอุ่น",
+        "ป่าเถ้าถ่าน",
+        "รอยแยกบะซอลต์"
+      ],
+      "boss": "Ashfang",
+      "bossThai": "แอชแฟง — ราชันเขี้ยวเถ้า",
+      "marker": "B1",
+      "arena": "ปล่องเถ้าสงัด",
+      "landmarks": [
+        "สะพานหินข้ามธารร้อน",
+        "เตาหลอมร้าง",
+        "แท่นสังเกตปล่อง"
+      ],
+      "encounter": "หมูป่าเกราะเถ้า พุ่งตามแนวที่เตือนและพ่นเถ้า แยกทางยืนกับจังหวะหลบ",
+      "resources": "แร่เหล็ก หินทนไฟ เศษโลหะ",
+      "connections": [
+        "aur",
+        "skug"
+      ]
+    },
+    {
+      "id": "ljos",
+      "race": "alf",
+      "city": "Ljosgard",
+      "thai": "ลยอสการ์ด",
+      "direction": "ตะวันตกเฉียงเหนือ",
+      "biome": "ป่าเรือนยอด ลำธาร และซากอารามในป่า",
+      "cityStyle": "บ้านไม้สว่างเชื่อมระเบียง หลังคาเขียว โคนไม้ใหญ่",
+      "specialBuildings": [
+        "เรือนสังเกตป่า",
+        "เรือนเพาะสมุนไพร"
+      ],
+      "fields": [
+        "ทางเดินใบไม้",
+        "ป่าเรือนยอด",
+        "ป่ารากพัน"
+      ],
+      "boss": "Thyrnroot",
+      "bossThai": "เธิร์นรูท — ผู้เฝ้ารากหนาม",
+      "marker": "B2",
+      "arena": "โพรงมหาพฤกษา",
+      "landmarks": [
+        "สะพานไม้เหนือคลอง",
+        "อารามเถาวัลย์ร้าง",
+        "ต้นไม้กลวงขนาดใหญ่"
+      ],
+      "encounter": "ผู้พิทักษ์พฤกษาที่ผิดปกติ ใช้รากแบ่งพื้นที่และเรียกหน่อ ต้องจัดตำแหน่งและเป้าหมาย",
+      "resources": "ไม้ เส้นใย สมุนไพร",
+      "connections": [
+        "skug",
+        "eir"
+      ]
+    },
+    {
+      "id": "eir",
+      "race": "jotun",
+      "city": "Eirfjord",
+      "thai": "เอียร์ฟยอร์ด",
+      "direction": "เหนือ",
+      "biome": "หุบเขาหิมะ น้ำพุละลายน้ำแข็ง และทะเลสาบเย็น",
+      "cityStyle": "หินขาว หลังคาฟ้า ทางน้ำอุ่น ธีมผู้เยียวยาไม่ใช่ป้อมเกราะหนัก",
+      "specialBuildings": [
+        "วิหารธารชีวิต",
+        "หอจารึกการเยียวยา"
+      ],
+      "fields": [
+        "ทางน้ำอุ่น",
+        "หุบเขาน้ำค้าง",
+        "ทะเลสาบผนึก"
+      ],
+      "boss": "Hrimveil",
+      "bossThai": "ฮริมเวล — ม่านน้ำค้าง",
+      "marker": "B3",
+      "arena": "วิหารน้ำพุเยือกแข็ง",
+      "landmarks": [
+        "สะพานธารน้ำละลาย",
+        "หอระฆังหิมะ",
+        "ซากวิหารน้ำพุ"
+      ],
+      "encounter": "วิญญาณน้ำเย็นผิดปกติ เปลี่ยนแนวพื้นน้ำแข็งและจังหวะโจมตีเป็นระลอก มีสัญญาณก่อนพื้นที่อันตราย",
+      "resources": "แร่โทนเย็น สมุนไพรหิมะ ปลาเขตหนาว",
+      "connections": [
+        "ljos",
+        "vana"
+      ]
+    },
+    {
+      "id": "vana",
+      "race": "vanir",
+      "city": "Vanaholt",
+      "thai": "วานาโฮลต์",
+      "direction": "ตะวันออกเฉียงเหนือ",
+      "biome": "ป่ารูน ทุ่งผลึก และซากหอดูดาว",
+      "cityStyle": "หินม่วงอ่อน ไม้สว่าง วงรูนและระเบียงเปิด",
+      "specialBuildings": [
+        "หอศึกษารูน",
+        "หอดูดาวประจำเมือง"
+      ],
+      "fields": [
+        "ทางประทีปรูน",
+        "ทุ่งผลึก",
+        "ซากดาวตก"
+      ],
+      "boss": "Seidra",
+      "bossThai": "เซดรา — ผีเสื้อกระจกดารา",
+      "marker": "B4",
+      "arena": "หอดูดาวแตกสลาย",
+      "landmarks": [
+        "เสาหินรูน",
+        "สะพานผลึกเตี้ย",
+        "วงแหวนหอดูดาวพัง"
+      ],
+      "encounter": "ผีเสื้อเวทสร้างภาพสะท้อนและลำแสง ผู้เล่นอ่านตัวจริงและหามุมยืน ไม่ใช้สุ่มฆ่าทันที",
+      "resources": "ผลึก ผงแร่ วัตถุดิบเวท",
+      "connections": [
+        "eir",
+        "aur"
+      ]
+    },
+    {
+      "id": "aur",
+      "race": "nid",
+      "city": "Aurvik",
+      "thai": "ออร์วิก",
+      "direction": "ตะวันออกเฉียงใต้",
+      "biome": "หน้าผา เหมืองขั้นบันได แม่น้ำและโกดังขนส่ง",
+      "cityStyle": "อาคารหินกับไม้ หลังคาโอเคอร์ เครนและรางแร่ขนาดเล็ก",
+      "specialBuildings": [
+        "โรงช่างรูน",
+        "ท่าขนส่งแร่"
+      ],
+      "fields": [
+        "ถนนเกวียน",
+        "เหมืองผิวดิน",
+        "เหมืองชั้นลึก"
+      ],
+      "boss": "Grjotmaw",
+      "bossThai": "กริออตมอว์ — เขี้ยวศิลา",
+      "marker": "B5",
+      "arena": "โถงเหมืองร้าง",
+      "landmarks": [
+        "เครนเหมืองเก่า",
+        "รางแร่และสะพาน",
+        "ลานหินถล่ม"
+      ],
+      "encounter": "สัตว์เกราะหินแห่งเหมือง มีช่วงเกราะปิด/เปิดและพุ่งกระแทกเสาหิน ต้องอ่านจังหวะโจมตี",
+      "resources": "แร่ ไม้ค้ำเหมือง เศษวัสดุผลิต",
+      "connections": [
+        "vana",
+        "ember"
+      ]
+    },
+    {
+      "id": "skug",
+      "race": "skug",
+      "city": "Skuggahav",
+      "thai": "สกุกกาฮาฟ",
+      "direction": "ตะวันตกเฉียงใต้",
+      "biome": "พื้นที่ชุ่มน้ำ ป่าหมอก ซากท่าเรือและโบสถ์จม",
+      "cityStyle": "ไม้ดำ หลังคาถ่าน สะพานทางเดิน โคมสีอุ่น ยังคงอ่านทางได้ชัด",
+      "specialBuildings": [
+        "หอเฝ้าหมอก",
+        "ท่าเรือสะพานดำ"
+      ],
+      "fields": [
+        "ถนนสะพานไม้",
+        "บึงแสงหิ่งห้อย",
+        "ท่าเรือจม"
+      ],
+      "boss": "Nokkveil",
+      "bossThai": "น็อกเวล — ผู้เฝ้าระฆังจม",
+      "marker": "B6",
+      "arena": "โบสถ์ระฆังจมน้ำ",
+      "landmarks": [
+        "ประภาคารร้าง",
+        "ระฆังแตกริมบึง",
+        "พื้นโบสถ์โผล่พ้นน้ำ"
+      ],
+      "encounter": "ภูตหมอกและเสียงระฆัง ใช้เงาลวงกับคลื่นเป็นแนว ทางหลบมองเห็นได้ ไม่ซ่อนหลุมตายโดยไร้สัญญาณ",
+      "resources": "ปลา สมุนไพรบึง เส้นใย ไม้ชุ่มน้ำ",
+      "connections": [
+        "ember",
+        "ljos"
+      ]
+    }
+  ],
+  "centralBuildings": [
+    {
+      "id": "root_hall",
+      "name": "หอผนึกรากโลก",
+      "purpose": "จุดศูนย์กลางเมือง ห้องรอ/ทางเข้าMain Quest รากอิกดราซิลคลุมอาคาร"
+    },
+    {
+      "id": "market",
+      "name": "ตลาด Silfr",
+      "purpose": "ร้านเช่าและพื้นที่พ่อค้า รวมประกาศสินค้ากับบริการช่าง"
+    },
+    {
+      "id": "forge",
+      "name": "ลานเตาหลอม",
+      "purpose": "พื้นที่ช่างผู้เล่นเปิดบริการและสถานีผลิต ไม่ให้NPCแทนผู้สร้างของแดง"
+    },
+    {
+      "id": "warehouse",
+      "name": "คลังกลาง",
+      "purpose": "จุดบริการฝากของ รูปแบบคลังส่วนตัว/บัญชียังรอกำหนด"
+    },
+    {
+      "id": "waygate",
+      "name": "ลานวาร์ป",
+      "purpose": "NPCไปจุดที่ตัวละครเคยค้นพบแล้ว ไม่ปลดล็อกเมืองฟรีทุกแห่ง"
+    },
+    {
+      "id": "inn",
+      "name": "โรงเตี๊ยมและจุดบันทึก",
+      "purpose": "จุดพักและตั้งเมืองเกิดตามระบบที่จะกำหนด"
+    },
+    {
+      "id": "supplies",
+      "name": "ร้านเสบียง",
+      "purpose": "ยาพื้นฐานและเครื่องมือ ซื้อขายด้วยSilfrตามกฎราคา"
+    },
+    {
+      "id": "party_board",
+      "name": "ลานรวมปาร์ตี้",
+      "purpose": "กระดานประกาศหาเพื่อน/เตรียมMain Quest ไม่ใช่ระบบกิลด์ใหม่"
+    },
+    {
+      "id": "council",
+      "name": "หอสภาหกเผ่า",
+      "purpose": "แสดงเหตุการณ์เผ่าและความคืบหน้าทั้งserver ยังไม่กำหนดอำนาจปกครองใหม่"
+    },
+    {
+      "id": "artisan",
+      "name": "ตรอกฝึกอาชีพ",
+      "purpose": "ทางเข้าถึงการฝึกอาวุธ/รวบรวม/ผลิตพื้นฐานสำหรับทุกเผ่า"
+    },
+    {
+      "id": "kitchen",
+      "name": "ครัวและลานเตรียมเสบียง",
+      "purpose": "สถานีทำอาหารและจุดเรียนรู้อาชีพ"
+    },
+    {
+      "id": "quay",
+      "name": "ท่าและบึงพักเมือง",
+      "purpose": "จุดตกปลาฝึกหัดและพื้นที่สังคม ไม่สร้างบ้านหรือสัตว์ขี่ในรอบนี้"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "central_city",
+      "kind": "city",
+      "name": "Central",
+      "pvp": "safe",
+      "region": null
+    },
+    {
+      "id": "central_commons",
+      "kind": "field",
+      "name": "ทุ่งชุมนุมกลาง",
+      "pvp": "safe",
+      "region": null
+    },
+    {
+      "id": "ember_city",
+      "kind": "racial_city",
+      "name": "Emberheim",
+      "pvp": "home_attacks_visitor_no_retaliation",
+      "region": "ember"
+    },
+    {
+      "id": "ember_field_1",
+      "kind": "field",
+      "name": "ถนนหินอุ่น",
+      "pvp": "safe",
+      "region": "ember"
+    },
+    {
+      "id": "ember_field_2",
+      "kind": "field",
+      "name": "ป่าเถ้าถ่าน",
+      "pvp": "safe",
+      "region": "ember"
+    },
+    {
+      "id": "ember_field_3",
+      "kind": "field",
+      "name": "รอยแยกบะซอลต์",
+      "pvp": "safe",
+      "region": "ember"
+    },
+    {
+      "id": "ember_boss",
+      "kind": "world_boss_arena",
+      "name": "ปล่องเถ้าสงัด",
+      "pvp": "safe",
+      "region": "ember"
+    },
+    {
+      "id": "ljos_city",
+      "kind": "racial_city",
+      "name": "Ljosgard",
+      "pvp": "home_attacks_visitor_no_retaliation",
+      "region": "ljos"
+    },
+    {
+      "id": "ljos_field_1",
+      "kind": "field",
+      "name": "ทางเดินใบไม้",
+      "pvp": "safe",
+      "region": "ljos"
+    },
+    {
+      "id": "ljos_field_2",
+      "kind": "field",
+      "name": "ป่าเรือนยอด",
+      "pvp": "safe",
+      "region": "ljos"
+    },
+    {
+      "id": "ljos_field_3",
+      "kind": "field",
+      "name": "ป่ารากพัน",
+      "pvp": "safe",
+      "region": "ljos"
+    },
+    {
+      "id": "ljos_boss",
+      "kind": "world_boss_arena",
+      "name": "โพรงมหาพฤกษา",
+      "pvp": "safe",
+      "region": "ljos"
+    },
+    {
+      "id": "eir_city",
+      "kind": "racial_city",
+      "name": "Eirfjord",
+      "pvp": "home_attacks_visitor_no_retaliation",
+      "region": "eir"
+    },
+    {
+      "id": "eir_field_1",
+      "kind": "field",
+      "name": "ทางน้ำอุ่น",
+      "pvp": "safe",
+      "region": "eir"
+    },
+    {
+      "id": "eir_field_2",
+      "kind": "field",
+      "name": "หุบเขาน้ำค้าง",
+      "pvp": "safe",
+      "region": "eir"
+    },
+    {
+      "id": "eir_field_3",
+      "kind": "field",
+      "name": "ทะเลสาบผนึก",
+      "pvp": "safe",
+      "region": "eir"
+    },
+    {
+      "id": "eir_boss",
+      "kind": "world_boss_arena",
+      "name": "วิหารน้ำพุเยือกแข็ง",
+      "pvp": "safe",
+      "region": "eir"
+    },
+    {
+      "id": "vana_city",
+      "kind": "racial_city",
+      "name": "Vanaholt",
+      "pvp": "home_attacks_visitor_no_retaliation",
+      "region": "vana"
+    },
+    {
+      "id": "vana_field_1",
+      "kind": "field",
+      "name": "ทางประทีปรูน",
+      "pvp": "safe",
+      "region": "vana"
+    },
+    {
+      "id": "vana_field_2",
+      "kind": "field",
+      "name": "ทุ่งผลึก",
+      "pvp": "safe",
+      "region": "vana"
+    },
+    {
+      "id": "vana_field_3",
+      "kind": "field",
+      "name": "ซากดาวตก",
+      "pvp": "safe",
+      "region": "vana"
+    },
+    {
+      "id": "vana_boss",
+      "kind": "world_boss_arena",
+      "name": "หอดูดาวแตกสลาย",
+      "pvp": "safe",
+      "region": "vana"
+    },
+    {
+      "id": "aur_city",
+      "kind": "racial_city",
+      "name": "Aurvik",
+      "pvp": "home_attacks_visitor_no_retaliation",
+      "region": "aur"
+    },
+    {
+      "id": "aur_field_1",
+      "kind": "field",
+      "name": "ถนนเกวียน",
+      "pvp": "safe",
+      "region": "aur"
+    },
+    {
+      "id": "aur_field_2",
+      "kind": "field",
+      "name": "เหมืองผิวดิน",
+      "pvp": "safe",
+      "region": "aur"
+    },
+    {
+      "id": "aur_field_3",
+      "kind": "field",
+      "name": "เหมืองชั้นลึก",
+      "pvp": "safe",
+      "region": "aur"
+    },
+    {
+      "id": "aur_boss",
+      "kind": "world_boss_arena",
+      "name": "โถงเหมืองร้าง",
+      "pvp": "safe",
+      "region": "aur"
+    },
+    {
+      "id": "skug_city",
+      "kind": "racial_city",
+      "name": "Skuggahav",
+      "pvp": "home_attacks_visitor_no_retaliation",
+      "region": "skug"
+    },
+    {
+      "id": "skug_field_1",
+      "kind": "field",
+      "name": "ถนนสะพานไม้",
+      "pvp": "safe",
+      "region": "skug"
+    },
+    {
+      "id": "skug_field_2",
+      "kind": "field",
+      "name": "บึงแสงหิ่งห้อย",
+      "pvp": "safe",
+      "region": "skug"
+    },
+    {
+      "id": "skug_field_3",
+      "kind": "field",
+      "name": "ท่าเรือจม",
+      "pvp": "safe",
+      "region": "skug"
+    },
+    {
+      "id": "skug_boss",
+      "kind": "world_boss_arena",
+      "name": "โบสถ์ระฆังจมน้ำ",
+      "pvp": "safe",
+      "region": "skug"
+    },
+    {
+      "id": "red_ember_rift",
+      "kind": "red_zone",
+      "name": "รอยแยกเถ้าคราม",
+      "pvp": "red_zone",
+      "region": null
+    },
+    {
+      "id": "red_frost_scar",
+      "kind": "red_zone",
+      "name": "รอยแผลน้ำค้าง",
+      "pvp": "red_zone",
+      "region": null
+    }
+  ],
+  "edges": [
+    {
+      "a": "central_city",
+      "b": "central_commons",
+      "kind": "walk"
+    },
+    {
+      "a": "ember_city",
+      "b": "ember_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "central_commons",
+      "b": "ember_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "ember_field_1",
+      "b": "ember_field_2",
+      "kind": "walk"
+    },
+    {
+      "a": "ember_field_2",
+      "b": "ember_field_3",
+      "kind": "walk"
+    },
+    {
+      "a": "ember_field_2",
+      "b": "ember_boss",
+      "kind": "optional_branch"
+    },
+    {
+      "a": "ljos_city",
+      "b": "ljos_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "central_commons",
+      "b": "ljos_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "ljos_field_1",
+      "b": "ljos_field_2",
+      "kind": "walk"
+    },
+    {
+      "a": "ljos_field_2",
+      "b": "ljos_field_3",
+      "kind": "walk"
+    },
+    {
+      "a": "ljos_field_2",
+      "b": "ljos_boss",
+      "kind": "optional_branch"
+    },
+    {
+      "a": "eir_city",
+      "b": "eir_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "central_commons",
+      "b": "eir_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "eir_field_1",
+      "b": "eir_field_2",
+      "kind": "walk"
+    },
+    {
+      "a": "eir_field_2",
+      "b": "eir_field_3",
+      "kind": "walk"
+    },
+    {
+      "a": "eir_field_2",
+      "b": "eir_boss",
+      "kind": "optional_branch"
+    },
+    {
+      "a": "vana_city",
+      "b": "vana_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "central_commons",
+      "b": "vana_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "vana_field_1",
+      "b": "vana_field_2",
+      "kind": "walk"
+    },
+    {
+      "a": "vana_field_2",
+      "b": "vana_field_3",
+      "kind": "walk"
+    },
+    {
+      "a": "vana_field_2",
+      "b": "vana_boss",
+      "kind": "optional_branch"
+    },
+    {
+      "a": "aur_city",
+      "b": "aur_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "central_commons",
+      "b": "aur_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "aur_field_1",
+      "b": "aur_field_2",
+      "kind": "walk"
+    },
+    {
+      "a": "aur_field_2",
+      "b": "aur_field_3",
+      "kind": "walk"
+    },
+    {
+      "a": "aur_field_2",
+      "b": "aur_boss",
+      "kind": "optional_branch"
+    },
+    {
+      "a": "skug_city",
+      "b": "skug_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "central_commons",
+      "b": "skug_field_1",
+      "kind": "walk"
+    },
+    {
+      "a": "skug_field_1",
+      "b": "skug_field_2",
+      "kind": "walk"
+    },
+    {
+      "a": "skug_field_2",
+      "b": "skug_field_3",
+      "kind": "walk"
+    },
+    {
+      "a": "skug_field_2",
+      "b": "skug_boss",
+      "kind": "optional_branch"
+    },
+    {
+      "a": "ljos_field_1",
+      "b": "eir_field_1",
+      "kind": "neutral_ring_road"
+    },
+    {
+      "a": "eir_field_1",
+      "b": "vana_field_1",
+      "kind": "neutral_ring_road"
+    },
+    {
+      "a": "vana_field_1",
+      "b": "aur_field_1",
+      "kind": "neutral_ring_road"
+    },
+    {
+      "a": "aur_field_1",
+      "b": "ember_field_1",
+      "kind": "neutral_ring_road"
+    },
+    {
+      "a": "ember_field_1",
+      "b": "skug_field_1",
+      "kind": "neutral_ring_road"
+    },
+    {
+      "a": "skug_field_1",
+      "b": "ljos_field_1",
+      "kind": "neutral_ring_road"
+    },
+    {
+      "a": "aur_field_2",
+      "b": "red_ember_rift",
+      "kind": "optional_red_branch"
+    },
+    {
+      "a": "ember_field_2",
+      "b": "red_ember_rift",
+      "kind": "optional_red_branch"
+    },
+    {
+      "a": "ljos_field_2",
+      "b": "red_frost_scar",
+      "kind": "optional_red_branch"
+    },
+    {
+      "a": "eir_field_2",
+      "b": "red_frost_scar",
+      "kind": "optional_red_branch"
+    }
+  ],
+  "redzones": [
+    {
+      "id": "red_ember_rift",
+      "marker": "R1",
+      "name": "รอยแยกเถ้าคราม",
+      "between": [
+        "aur",
+        "ember"
+      ],
+      "resources": "มอนสเตอร์EXPสูงในบริบทเหมือง/หินร้อน"
+    },
+    {
+      "id": "red_frost_scar",
+      "marker": "R2",
+      "name": "รอยแผลน้ำค้าง",
+      "between": [
+        "ljos",
+        "eir"
+      ],
+      "resources": "มอนสเตอร์EXPสูงในบริบทป่า/หิมะ"
+    }
+  ],
+  "mainQuestEntrance": "central_city/root_hall",
+  "mainQuestFloorCount": null,
+  "bossXP": 0
+}

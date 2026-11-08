@@ -1,0 +1,33 @@
+services:
+  game:
+    build: .
+    init: true
+    restart: unless-stopped
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:3000:3000"
+    environment:
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost:3000}
+      GM_USERNAME: ${GM_USERNAME:-worldkeeper}
+      GM_PASSWORD: ${GM_PASSWORD:?Set a strong GM_PASSWORD in .env before starting}
+    volumes:
+      - world-data:/data
+  https:
+    image: caddy:2-alpine
+    profiles: [https]
+    restart: unless-stopped
+    environment:
+      PUBLIC_HOST: ${PUBLIC_HOST:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      game:
+        condition: service_healthy
+volumes:
+  world-data:
+  caddy-data:
+  caddy-config:
