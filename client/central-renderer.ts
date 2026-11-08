@@ -1,6 +1,7 @@
+import {rootTerrain} from './root-terrain';
 import {CENTRAL_GARDENS,CENTRAL_PLAZA,CENTRAL_MARKET_SLOTS,CENTRAL_MARKET_LANE} from '../shared/central';
 import {findPath,propEntrance,type GameMap} from '../shared/maps';
-export function capitalFloor(c:CanvasRenderingContext2D,map:GameMap,material:(index:number,size?:number)=>HTMLCanvasElement){const pos=(x:number,y:number)=>({x:map.size*24+(x-y)*24,y:(x+y)*12});
+export function capitalFloor(c:CanvasRenderingContext2D,map:GameMap,material:(index:number,size?:number)=>HTMLCanvasElement,details?:(index:number)=>HTMLCanvasElement){const pos=(x:number,y:number)=>({x:map.size*24+(x-y)*24,y:(x+y)*12});
  const area=(x:number,y:number,w:number,h:number)=>{const points=[pos(x,y),pos(x+w,y),pos(x+w,y+h),pos(x,y+h)];c.beginPath();points.forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.closePath();};
  area(6,8,19,43);c.fillStyle=c.createPattern(material(2,90),'repeat')!;c.fill();c.strokeStyle='#c6aa77';c.lineWidth=4;c.stroke();
  for(const garden of CENTRAL_GARDENS){area(garden.x,garden.y,garden.w,garden.h);c.fillStyle='#648956';c.fill();c.strokeStyle='#eee4c6';c.lineWidth=3;c.stroke();}
@@ -16,5 +17,6 @@ export function capitalFloor(c:CanvasRenderingContext2D,map:GameMap,material:(in
  const plaza=pos(CENTRAL_PLAZA.x,CENTRAL_PLAZA.y);for(const [r,color]of [[270,'#ad946a'],[263,'#eadbb8'],[250,'#8faaa7'],[243,'#eee4cd']]as const){c.fillStyle=color;c.beginPath();c.ellipse(plaza.x,plaza.y,r,r*.5,0,0,Math.PI*2);c.fill();}
  c.save();c.beginPath();c.ellipse(plaza.x,plaza.y,242,121,0,0,Math.PI*2);c.clip();c.globalAlpha=.2;c.fillStyle=c.createPattern(material(0,96),'repeat')!;c.fillRect(plaza.x-243,plaza.y-122,486,244);c.restore();
  const colors=['#c85d4c','#579655','#6aaacb','#9772b6','#c4a14b','#424852'];for(let i=0;i<6;i++){const angle=i*Math.PI/3;c.fillStyle=colors[i];c.beginPath();c.ellipse(plaza.x+Math.cos(angle)*222,plaza.y+Math.sin(angle)*111,13,6.5,0,0,Math.PI*2);c.fill();}
+ rootTerrain(c,map,details);
  const arrival=pos(map.spawn.x,map.spawn.y);c.strokeStyle='#b9a06b';c.lineWidth=3;c.beginPath();c.ellipse(arrival.x,arrival.y,55,27.5,0,0,Math.PI*2);c.stroke();
 }

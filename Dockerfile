@@ -17,6 +17,7 @@ COPY --from=build --chown=node:node /app/server ./server
 COPY --from=build --chown=node:node /app/shared ./shared
 COPY --from=build --chown=node:node /app/scripts/create-gm.ts ./scripts/create-gm.ts
 COPY --from=build --chown=node:node /app/docs/world/world-layout.json ./docs/world/world-layout.json
+COPY --from=build --chown=node:node /app/docs/equipment/baseline-10-100/catalog.json ./docs/equipment/baseline-10-100/catalog.json
 RUN mkdir -p /data /app/.data && chown node:node /data /app/.data
 USER node
 VOLUME /data

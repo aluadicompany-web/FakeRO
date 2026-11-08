@@ -1,3 +1,4 @@
+import {GUIDE} from './adventure.js';
 import type {GameMap,Point,Prop} from './maps.js';
 const cityRandom=(id:string)=>{let seed=2166136261;for(const c of id)seed=Math.imul(seed^c.charCodeAt(0),16777619);return()=>{seed=(seed+0x6d2b79f5)|0;let t=Math.imul(seed^(seed>>>15),1|seed);t^=t+Math.imul(t^(t>>>7),61|t);return((t^(t>>>14))>>>0)/4294967296;};};
 export const CENTRAL_SIZE=64;
@@ -8,6 +9,7 @@ const marketRows=[10,13,16,19,22,25,28,31,34,37,43,46];
 export const CENTRAL_MARKET_SLOTS=Array.from({length:24},(_,i)=>({id:`central-stall-${String(i+1).padStart(2,'0')}`,number:i+1,x:i%2===0?8:20,y:marketRows[Math.floor(i/2)],w:3,h:2,approach:{x:i%2===0?12.5:18.5,y:marketRows[Math.floor(i/2)]+1},flipX:i%2===1}));
 const servicePositions:Record<string,{x:number;y:number;w:number;h:number}>={root_hall:{x:28,y:14,w:8,h:7},market:{x:9,y:4,w:5,h:4},forge:{x:47,y:27,w:5,h:4},warehouse:{x:3,y:34,w:3,h:4},waygate:{x:43,y:9,w:5,h:4},inn:{x:25,y:49,w:5,h:4},supplies:{x:51,y:46,w:5,h:4},party_board:{x:25,y:5,w:4,h:4},council:{x:36,y:5,w:5,h:4},artisan:{x:43,y:46,w:5,h:4},kitchen:{x:32,y:48,w:5,h:4},quay:{x:4,y:49,w:5,h:4}};
 export function centralLandmarks(map:GameMap){map.size=CENTRAL_SIZE;map.spawn={x:32.5,y:43.5};for(const p of map.props)if(servicePositions[p.id])Object.assign(p,servicePositions[p.id]);for(const portal of map.portals){portal.x=32.5;portal.y=2.5;}
+ map.props.push({id:GUIDE.id,kind:'npc',x:GUIDE.x-.5,y:GUIDE.y-.5,w:1,h:1,art:0,name:GUIDE.name,blocking:false,service:'guide',approach:{x:GUIDE.x,y:GUIDE.y+1},description:'คำแนะนำสำหรับผู้เดินทางใหม่และพื้นที่ฟื้นฟูรอบน้ำพุ'});
  map.props.push({id:'capital-fountain',kind:'decor',x:31,y:33,w:2,h:2,art:0,name:'น้ำพุหกเผ่า'},{id:'capital-pond',kind:'water',x:3,y:55,w:10,h:5,art:0,name:'บึงสวนคาราวาน'});
  for(const slot of CENTRAL_MARKET_SLOTS){const random=cityRandom(slot.id),variant=Math.floor(random()*3),goods=2+Math.floor(random()*6);map.props.push({...slot,kind:'decor',art:variant===0?3:variant===1?10:11,atlas:variant===0?undefined:'districts',marketSlot:slot.number,name:`แผง ${String(slot.number).padStart(2,'0')}`,service:'info',description:`แผงตลาดริมถนนหมายเลข ${slot.number} · เตรียมพื้นที่สำหรับพ่อค้า ระบบเช่าและซื้อขายจะพัฒนาต่อ`});
   for(let j=0;j<2;j++)map.props.push({id:slot.id+'-goods-'+j,kind:'decor',atlas:'citylife',art:j===0?goods:8+Math.floor(random()*3),x:slot.x+(slot.flipX?.15:2),y:slot.y+.35+j*.9,w:.7,h:.7,blocking:false,flipX:slot.flipX,name:''});

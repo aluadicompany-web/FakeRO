@@ -5,7 +5,7 @@ import layout from '../docs/world/world-layout.json';
 import type {Race} from './rules.js';
 export type Biome='grass'|'snow'|'ember'|'rune'|'ore'|'marsh';
 export interface Point{x:number;y:number}
-export interface Prop extends Point{id:string;kind:'building'|'tree'|'rock'|'crystal'|'ruin'|'water'|'decor'|'hedge';w:number;h:number;art:number;name:string;atlas?:'districts'|'citylife';approach?:Point;flipX?:boolean;blocking?:boolean;marketSlot?:number;service?:'bind'|'warp'|'heal'|'info'|'tower';description?:string}
+export interface Prop extends Point{id:string;kind:'building'|'tree'|'rock'|'crystal'|'ruin'|'water'|'decor'|'hedge'|'npc';w:number;h:number;art:number;name:string;atlas?:'districts'|'citylife';approach?:Point;flipX?:boolean;blocking?:boolean;marketSlot?:number;service?:'bind'|'warp'|'heal'|'info'|'tower'|'guide';description?:string}
 export interface Portal extends Point{id:string;to:string;name:string;arrival:Point}
 export interface GameMap{id:string;name:string;kind:string;region:string|null;biome:Biome;rule:'safe'|'home'|'red';homeRace?:Race;level:number;levelRange?:{min:number;max:number};grid:Point;props:Prop[];portals:Portal[];boss?:{name:string;archetype:number};size:number;spawn:Point}
 export const MAP_SIZE=28;

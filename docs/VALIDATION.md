@@ -1,3 +1,5 @@
+> อัปเดต Central/อาวุธ/ประชากร:64 unit/integration tests ผ่าน ดู [ADVENTURE-UPDATE.md](ADVENTURE-UPDATE.md) และคำสั่ง test:adventure สำหรับกรณีใหม่
+
 > อัปเดตภาพตัวละครรุ่น3: unit/integration54กรณีผ่าน ตรวจภาพ12ชุด ทรงผม10แบบ ผม6สี ตา5สี และผู้เล่นจริงครบ12ตัวละคร/24ภาพชุดหน้า–หลัง ดู [Art direction](ART-DIRECTION.md) สำหรับขอบเขตและคำสั่งทดสอบล่าสุด
 
 # ผลตรวจต้นแบบ 0.1

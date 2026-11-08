@@ -22,4 +22,6 @@ GMเป็นroleฝั่งฐานข้อมูล ทุกคำสั�
 
 ยังไม่มีการกู้รหัสผ่านทางอีเมล การลบ/เปลี่ยนชื่อตัวละคร หรือหลายตัวละครต่อบัญชี บัญชีเก่าแบบrecoveryที่ยังไม่ผูกยังเข้าเกมแบบเดิมผ่านAPIได้เพื่อรองรับการย้ายข้อมูล แต่APIสร้างตัวละครใหม่ต้องเข้าสู่บัญชีเสมอ
 
-`npm test`ผ่าน52กรณี รวมhash,ownership transaction,migration,Central spawnทุกเผ่า,HTTP/WS10คน,การปฏิเสธสิทธิ์GM,GM auditและsessionหลังlogout `npm run test:accounts`ทดสอบสมัคร/รหัสยืนยัน/แต่งตัว/สร้างตัว/ล็อกอินใหม่/reload/GM toolsผ่านเบราว์เซอร์ พร้อมภาพdesktop/mobileในartifacts/accounts DockerproductionทดสอบbootstrapGMและรักษาตัวละครในvolumeหลังrestartแล้ว
+`npm test`ผ่าน64กรณี รวมhash,ownership transaction,migration,Central spawnทุกเผ่า,HTTP/WS10คน,การปฏิเสธสิทธิ์GM,GM auditและsessionหลังlogout `npm run test:accounts`ทดสอบสมัคร/รหัสยืนยัน/แต่งตัว/สร้างตัว/ล็อกอินใหม่/reload/GM toolsผ่านเบราว์เซอร์ พร้อมภาพdesktop/mobileในartifacts/accounts DockerproductionทดสอบbootstrapGMและรักษาตัวละครในvolumeหลังrestartแล้ว
+
+การกลับไปหน้าแต่งตัว GM คงcharacterIDและความคืบหน้า ดู [อัปเดตเกม](ADVENTURE-UPDATE.md) สำหรับสิทธิ์ คลังอาวุธ และการใช้งานล่าสุด

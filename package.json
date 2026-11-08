@@ -21,7 +21,10 @@
     "test:accounts": "tsx scripts/playtest-accounts.ts",
     "test:character-art": "tsx scripts/playtest-character-art.ts",
     "art:characters": "node scripts/pack-character-art.mjs && python3 scripts/pack-character-formats.py",
-    "test:character-cast": "tsx scripts/playtest-character-cast.ts"
+    "test:character-cast": "tsx scripts/playtest-character-cast.ts",
+    "test:adventure": "tsx scripts/playtest-adventure.ts",
+    "balance:adventure": "tsx scripts/adventure-balance.ts",
+    "art:adventure": "node scripts/pack-adventure-art.mjs && python3 scripts/pack-adventure-formats.py"
   },
   "dependencies": {
     "phaser": "^3.90.0",

@@ -7,3 +7,14 @@ export function drawWeapon(g:Phaser.GameObjects.Graphics,id:WeaponId,offhand=fal
  if(id==='axe'){g.fillStyle(wood);g.fillRect(-2,-35,4,44);g.fillStyle(blade);g.fillPoints([{x:0,y:-36},{x:19,y:-42},{x:23,y:-24},{x:0,y:-20}],true);g.strokePoints([{x:0,y:-36},{x:19,y:-42},{x:23,y:-24},{x:0,y:-20}],true);return;}
  const size=id==='greatsword'?48:id==='katana'?44:id==='knife'||id==='dagger'?20:34;g.fillStyle(blade);g.fillPoints([{x:-3,y:-8},{x:-3,y:-size},{x:0,y:-size-8},{x:4,y:-size},{x:3,y:-8}],true);g.strokePoints([{x:-3,y:-8},{x:-3,y:-size},{x:0,y:-size-8},{x:4,y:-size},{x:3,y:-8}],true);g.lineStyle(1,edge);g.lineBetween(0,-12,0,-size);g.fillStyle(0xd0af68);g.fillRect(-8,-8,16,3);
 }
+
+// The held sprite is anchored at its actual handle, not at the centre of its inventory icon.
+import grips from '../shared/weapon-grips.json';
+import {EQUIPMENT_BY_ID} from '../shared/items';
+export function preloadEquipmentArt(scene:Phaser.Scene){for(const rarity of ['white','blue'])scene.load.spritesheet('equipment-'+rarity,`/art/weapons/${rarity}.webp`,{frameWidth:128,frameHeight:160});}
+export function weaponGripKind(id:WeaponId){return ['bow','shortbow','longbow'].includes(id)?'bow':['greatsword','greathammer','staff'].includes(id)?'two':'single';}
+export class HeldWeapon extends Phaser.GameObjects.Container{
+ image:Phaser.GameObjects.Image;fallback:Phaser.GameObjects.Graphics;
+ constructor(scene:Phaser.Scene){super(scene,0,0);scene.add.existing(this);this.image=scene.add.image(0,0,'__WHITE').setVisible(false);this.fallback=scene.add.graphics();this.add([this.image,this.fallback]);}
+ setWeapon(id:WeaponId,catalogId?:string,offhand=false){const item=catalogId?EQUIPMENT_BY_ID.get(catalogId):undefined,profile=offhand?'shield':id;if(profile==='axe'&&!item){this.image.setVisible(false);this.fallback.setVisible(true);drawWeapon(this.fallback,id);return;}this.fallback.clear().setVisible(false);const columns:Record<string,number>={knife:5,sword:0,greatsword:1,shield:2,staff:3,wand:4,dagger:5,bow:6,hammer:7,sword_shield:0,hammer_shield:7,greathammer:7,longbow:6,shortbow:6,katana:0,dual_swords:0},frame=item?.frame??columns[profile]??0,rarity=item?.rarity||'white',grip=grips.grips[rarity][frame],height=offhand?33:({knife:25,sword:49,greatsword:72,shield:35,staff:69,wand:35,dagger:31,bow:65,hammer:41,sword_shield:49,hammer_shield:41,greathammer:66,longbow:82,shortbow:51,katana:63,dual_swords:43}as Record<string,number>)[id]||48;this.image.setTexture('equipment-'+rarity,frame).setOrigin(grip.x,grip.y).setScale(height/160).setVisible(true);}
+}

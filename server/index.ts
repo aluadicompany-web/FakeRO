@@ -6,7 +6,7 @@ import {validAppearance} from '../shared/appearance.js';
 import {World} from './world.js';
 import {Store,token} from './store.js';
 import {validUsername,validPassword} from './password.js';
-import {bootstrapGM,gmAction} from './gm.js';
+import {bootstrapGM,gmAction,editGMAppearance} from './gm.js';
 const port=Number(process.env.PORT||3000),host=process.env.HOST||'127.0.0.1';
 const store=new Store(process.env.DB_PATH||'.data/world.sqlite');
 await bootstrapGM(store);
@@ -40,7 +40,7 @@ const server=http.createServer(async(req,res)=>{
    if(limited(`gm:${account.id}`,30,60000))return reply(res,429,{error:'คำสั่ง GM มากเกินไป'});
    const command=await body(req);if(!command||typeof command!=='object'||Array.isArray(command))return reply(res,400,{error:'คำสั่งไม่ถูกต้อง'});
    if(!id)return reply(res,409,{error:'สร้างตัวละครและเข้าเกมก่อน'});
-   try{const hero=gmAction(world,id,command);store.audit(account.id,String(command.action),{hero:id,mapId:hero.mapId,level:hero.level});checkpoint();return reply(res,200,{ok:true,hero});}catch(e){return reply(res,400,{error:(e as Error).message});}
+   try{if(command.action==='appearance'){if(clients.has(id))return reply(res,409,{error:'กลับสู่หน้าแต่งตัว GM ก่อน'});const saved=store.get(id);if(!saved)throw Error('ไม่พบตัวละคร');const hero=editGMAppearance(saved,command);store.save(hero);store.audit(account.id,'appearance',{hero:id,race:hero.race,appearance:hero.appearance});return reply(res,200,{hero,account});}const hero=gmAction(world,id,command);store.audit(account.id,String(command.action),{hero:id,mapId:hero.mapId,level:hero.level});checkpoint();if(command.action==='editor')clients.get(id)?.close(1000,'GM editor');return reply(res,200,{ok:true,hero});}catch(e){return reply(res,400,{error:(e as Error).message});}
   }
   if(limited(`auth:${ip}:${req.url}`,12,60000))return reply(res,429,{error:'ลองใหม่ในอีก 1 นาที'});
   const b=await body(req);if(!b||typeof b!=='object'||Array.isArray(b))return reply(res,400,{error:'ข้อมูลไม่ถูกต้อง'});
@@ -89,8 +89,8 @@ server.on('upgrade',(req,socket,head)=>{
  if(req.url!=='/socket'||!originOK(req)||!id||!h){socket.write('HTTP/1.1 403 Forbidden\r\n\r\n');socket.destroy();return;}
  if(clients.has(id)||clients.size>=10){socket.write('HTTP/1.1 409 Conflict\r\n\r\n');socket.destroy();return;}
  wss.handleUpgrade(req,socket,head,ws=>{
-  clients.set(id,ws);alive.set(ws,true);ws.on('pong',()=>alive.set(ws,true));world.add(h);world.actors.get(id)!.ready=false;let messages=0,windowStart=Date.now();
-  ws.on('message',raw=>{if(Date.now()-windowStart>1000){windowStart=Date.now();messages=0;}if(++messages>25){ws.close(1008,'Rate limit');return;}try{const m=JSON.parse(raw.toString());if(!m||typeof m!=='object'||Array.isArray(m))return;world.command(id,m);if(['stat','warp','use','claimDelivery','weapon'].includes(m.type))checkpoint();}catch{/* malformed commands have no effect */}});
+  clients.set(id,ws);alive.set(ws,true);ws.on('pong',()=>alive.set(ws,true));world.add(h,store.resolveAccount(cookie(req))?.role==='gm');world.actors.get(id)!.ready=false;let messages=0,windowStart=Date.now();
+  ws.on('message',raw=>{if(Date.now()-windowStart>1000){windowStart=Date.now();messages=0;}if(++messages>25){ws.close(1008,'Rate limit');return;}try{const m=JSON.parse(raw.toString());if(!m||typeof m!=='object'||Array.isArray(m))return;world.command(id,m);if(['stat','warp','use','claimDelivery','weapon','equip'].includes(m.type))checkpoint();}catch{/* malformed commands have no effect */}});
   ws.on('error',()=>ws.close());
   ws.on('close',()=>{const a=world.actors.get(id);if(a)checkpoint();world.actors.delete(id);clients.delete(id);});
  });

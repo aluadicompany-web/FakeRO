@@ -1,0 +1,19 @@
+import design from '../docs/equipment/baseline-10-100/catalog.json';
+import type {Hero,Attributes} from './rules.js';
+import type {WeaponId} from './weapons.js';
+export const EQUIPMENT_LEVELS=[10,20,40,60,80,100]as const;
+export const EQUIPMENT_TYPES=['longsword','greatsword','shield','staff','wand','dagger','bow','light_hammer']as const;
+const profiles:Record<string,WeaponId>={longsword:'sword',greatsword:'greatsword',shield:'shield',staff:'staff',wand:'wand',dagger:'dagger',bow:'bow',light_hammer:'hammer'};
+export interface EquipmentDefinition{id:string;name:string;level:number;rarity:'white'|'blue';type:string;profile:WeaponId;power:number;powerType:string;requirements:Partial<Attributes>;frame:number;source:string}
+export const EQUIPMENT:EquipmentDefinition[]=design.items.map(item=>{const level=item.required_level,primary=item.weapon_type==='bow'?'dex':item.weapon_type==='staff'||item.weapon_type==='wand'?'int':item.weapon_type==='shield'?'vit':item.weapon_type==='dagger'?'dex':'str',requirements:Partial<Attributes>={[primary]:Math.ceil(8+level*.35)};if(item.weapon_type==='dagger')requirements.agi=Math.ceil(4+level*.12);return{id:item.item_id,name:item.name_th,level,rarity:item.rarity as 'white'|'blue',type:item.weapon_type,profile:profiles[item.weapon_type],power:Math.round((8+level*1.2)*(item.rarity==='blue'?1.12:1)),powerType:item.power_type,requirements,frame:EQUIPMENT_LEVELS.indexOf(level as typeof EQUIPMENT_LEVELS[number])*8+EQUIPMENT_TYPES.indexOf(item.weapon_type as typeof EQUIPMENT_TYPES[number]),source:item.source};});
+export const EQUIPMENT_BY_ID=new Map(EQUIPMENT.map(item=>[item.id,item]));
+export function meetsRequirements(item:EquipmentDefinition,level:number,stats:Attributes){return level>=item.level&&Object.entries(item.requirements).every(([k,v])=>stats[k as keyof Attributes]>=v!);}
+export function equippedCatalog(h:Hero){const instance=h.loot?.find(item=>item.id===h.equippedItem);return instance?.catalogId?EQUIPMENT_BY_ID.get(instance.catalogId):undefined;}
+export function equipmentArt(item:EquipmentDefinition){return{sheet:'/art/weapons/'+item.rarity+'.webp',frame:item.frame};}
+export function offhandCatalog(h:Hero){const instance=h.loot?.find(item=>item.id===h.offhandItem);return instance?.catalogId?EQUIPMENT_BY_ID.get(instance.catalogId):undefined;}
+export function equipItem(h:Hero,id:string,stats:Attributes){if(id==='starter-knife'){h.weapon='knife';h.equippedItem=undefined;h.equippedCatalogId=undefined;h.offhandItem=undefined;h.offhandCatalogId=undefined;return;}
+ const instance=h.loot.find(item=>item.id===id),item=instance?.catalogId?EQUIPMENT_BY_ID.get(instance.catalogId):undefined;if(!item||!meetsRequirements(item,h.level,stats))throw Error('เลเวลหรือสเตตัสยังไม่ถึงเงื่อนไข หรือไม่มีอาวุธในกระเป๋า');
+ const oneHand=['knife','sword','dagger','hammer','wand','sword_shield','hammer_shield'];if(item.type==='shield'&&oneHand.includes(h.weapon||'knife')){h.offhandItem=instance!.id;h.offhandCatalogId=item.id;if(h.weapon==='sword')h.weapon='sword_shield';if(h.weapon==='hammer')h.weapon='hammer_shield';return;}
+ h.equippedItem=instance!.id;h.equippedCatalogId=item.id;h.weapon=item.profile;const shield=offhandCatalog(h);if(!oneHand.includes(item.profile)||!shield||!meetsRequirements(shield,h.level,stats)){h.offhandItem=undefined;h.offhandCatalogId=undefined;}else if(item.profile==='sword')h.weapon='sword_shield';else if(item.profile==='hammer')h.weapon='hammer_shield';
+}
+export function validateEquipment(h:Hero,stats:Attributes){const main=equippedCatalog(h);if(h.equippedItem&&(!main||!meetsRequirements(main,h.level,stats))){equipItem(h,'starter-knife',stats);return;}const shield=offhandCatalog(h);if(h.offhandItem&&(!shield||!meetsRequirements(shield,h.level,stats))){h.offhandItem=undefined;h.offhandCatalogId=undefined;if(h.weapon==='sword_shield')h.weapon='sword';if(h.weapon==='hammer_shield')h.weapon='hammer';}}
