@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import {handJoints,walkCycle} from '../shared/hero-pose';
+import {handJoints,walkCycle,oneHandRestAngle,palmAnchor} from '../shared/hero-pose';
 import handAnchors from '../shared/hand-anchors.json';
 import {HAIR_COLORS,EYE_COLORS} from '../shared/appearance';
 import {CHARACTER_PARTS,CHARACTER_FRAME,CHARACTER_RACES,characterFrames,CHARACTER_ART_VERSION} from '../shared/character-art';
@@ -34,7 +34,7 @@ export class HeroRig extends Phaser.GameObjects.Container{
  }
  const id=(action==='attack'?motion?.weapon:h.weapon)||'knife',heldCatalog=action==='attack'?motion?.catalogId:h.equippedCatalogId,heldOffhand=action==='attack'?motion?.offhandCatalogId:h.offhandCatalogId,kind=weaponGripKind(id),weaponKey=id+'-'+(heldCatalog||'')+'-'+(heldOffhand||'');
  const frame=characterFrames(h.race,h.appearance.gender,h.appearance.hair,facing).body;
- const localHand=(name:'armL'|'armR')=>{const point=handAnchors[name][frame],rest=this.rest.get(name)!;return{x:point.x-rest.x,y:point.y-rest.y};};
+ const localHand=(name:'armL'|'armR')=>{const point=palmAnchor(handAnchors[name][frame]),rest=this.rest.get(name)!;return{x:point.x-rest.x,y:point.y-rest.y};};
  const main=this.joints.get(hands.right)!,off=this.joints.get(hands.left)!,mainPoint=localHand(hands.right as 'armL'|'armR'),offPoint=localHand(hands.left as 'armL'|'armR');
  if(this.weapon.parentContainer!==main){this.weapon.parentContainer?.remove(this.weapon);main.addAt(this.weapon,0);}if(this.secondary.parentContainer!==off){this.secondary.parentContainer?.remove(this.secondary);off.addAt(this.secondary,0);}
  this.weapon.setPosition(mainPoint.x,mainPoint.y);this.secondary.setPosition(offPoint.x,offPoint.y);
@@ -55,7 +55,7 @@ export class HeroRig extends Phaser.GameObjects.Container{
   const grip={x:outward*(17+swing*4),y:-35},draw={x:grip.x-outward*(5+swing*11),y:grip.y+2};reach(main,mainPoint,grip);reach(off,offPoint,draw);this.weapon.setScale(1/main.scaleX);this.weapon.rotation=-main.rotation;
   if(action==='attack'){const size=id==='longbow'?33:id==='shortbow'?21:27;this.bowString.lineStyle(.7,0xffeed3,.9);this.bowString.beginPath();this.bowString.moveTo(grip.x,grip.y-size);this.bowString.lineTo(draw.x,draw.y);this.bowString.lineTo(grip.x,grip.y+size);this.bowString.strokePath();}
  }else{
-  this.weapon.rotation=outward*.42;
+  this.weapon.rotation=action==='attack'?outward*.42:oneHandRestAngle(facing,id);
   if(action==='attack'){const style=weaponById(id).style;if(['slash','cleave','draw','double'].includes(style))main.rotation=outward*(-.75+p*1.6);else if(['smash','quake','bash'].includes(style))main.rotation=outward*(-.9+swing*1.5);else if(style==='thrust'){main.rotation=outward*.35;main.x+=outward*swing*6;}else main.rotation=outward*(.2+swing*.5);if(style==='double')off.rotation=-main.rotation;}
   else{main.rotation=outward*.08+walk*.08;if(this.secondary.visible)off.rotation=-outward*.1;}
  }

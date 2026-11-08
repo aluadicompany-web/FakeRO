@@ -4,7 +4,7 @@
 
 Atlas `armL`/`armR` are pieces on the left/right of the source image, not anatomical names. `shared/hero-pose.ts` resolves anatomical right for each of the eight facings, accounting for rear art and global reflection. Main weapon always mounts on that hand. Offhand shields/second swords mount on the opposite hand. Two-handed weapons keep the right hand as their main grip and solve the other arm toward the second grip. Bows are held in the right hand with the left hand drawing the string, following the requested right-hand main-weapon rule.
 
-The hilt anchors come from the lower opaque glove pixels in all 24 arm atlas frames (`shared/hand-anchors.json`). Rigs update their attachment positions when direction, costume or gender changes. Weapon sprites draw underneath the glove rather than above it. Idle blades angle away from the face. Windup art and weapon cooldown rules remain tied to the existing authoritative motion.
+The hilt anchors come from the lower opaque glove pixels in all 24 arm atlas frames (`shared/hand-anchors.json`). Rigs update their attachment positions when direction, costume or gender changes. Weapon sprites draw underneath the glove rather than above it. Front-view short blades rest forward across the waist; their handles sit inside the closed palm rather than pointing back behind the forearm. Windup art and weapon cooldown rules remain tied to the existing authoritative motion.
 
 Walking phase accumulates distance from the interpolated ground position of the rendered character. One complete left/right stride spans 1.28 world tiles. Each leg has alternating lift/stance, restrained hip rotation and a small body response; no wall-clock foot animation while standing. Teleports/map changes do not count as steps. This is still the original layered sprite rig, not newly drawn animation strips.
 
@@ -26,4 +26,10 @@ Ground earth now fades via an irregular noisy distance field into the existing p
 
 ## Validation
 
-`npm test`: 66 tests cover game rules and the handedness/gait regressions. `npm run test:refinement`: real browser checks 25 slots, live rig pixels, equipment/status tabs, allocating a point, sword+shield then bow swapping, six viewport sizes and actual walking in all eight facings. Screenshots are stored in ignored `artifacts/refinement/`. Existing adventure, HUD (seven layouts and actual combat), and all 17 weapon combat playtests pass as additional regression coverage. The final visual pass also walks through the hall entrance into root_trial. Run `npm run build` before browser tests.
+`npm test`: 67 tests cover game rules and the handedness/gait regressions. `npm run test:refinement`: real browser checks 25 slots, live rig pixels, equipment/status tabs, allocating a point, sword+shield then bow swapping, six viewport sizes and actual walking in all eight facings. Screenshots are stored in ignored `artifacts/refinement/`. Existing adventure, HUD (seven layouts and actual combat), and all 17 weapon combat playtests pass as additional regression coverage. The final visual pass also walks through the hall entrance into root_trial. Run `npm run build` before browser tests.
+
+## Front knife grip correction
+
+The starter knife uses white atlas frame 5. Its longer leather handle is centred near pixel row 115, while the earlier generic 84%-height pivot fell near the pommel. The explicit calibration is preserved in the art packer. Palm anchors sit one display pixel above the glove-bottom landmarks. Front short-blade resting angles follow the costume artwork facing direction, so the blade extends forward across the waist; reflected and rear views keep the correct right hand. The same HeroRig feeds the map and inventory preview.
+
+`npm run test:weapon-grip` captures the actual rig at enlarged scale, both genders across eight facings, and eight one-hand styles in idle/attack poses. The real inventory playtest also equips the starter knife and saves `artifacts/refinement/starter-knife-real-inventory.png`. No game assets or accounts are changed by the isolated pose gallery.

@@ -26,7 +26,8 @@
     "balance:adventure": "tsx scripts/adventure-balance.ts",
     "art:adventure": "node scripts/pack-adventure-art.mjs && python3 scripts/pack-adventure-formats.py",
     "test:refinement": "tsx scripts/playtest-refinement.ts",
-    "art:tower": "python3 scripts/pack-tower-art.py"
+    "art:tower": "python3 scripts/pack-tower-art.py",
+    "test:weapon-grip": "tsx scripts/playtest-weapon-grip.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",
