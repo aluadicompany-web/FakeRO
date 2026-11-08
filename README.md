@@ -18,7 +18,7 @@ npm start
 
 ภาพตัวละครเป็น **SDอนิเมะลงสีรุ่น3** ใช้ภาพชุด/ใบหน้าเดียวกันในหน้าสร้าง ภาพโปรไฟล์และแมพ ไม่ใช้ตัวละครทรงเหลี่ยมต้นแบบเดิม รายละเอียดใน [Art direction](docs/ART-DIRECTION.md)
 
-ดู [หน้ากระเป๋า / มือขวา / Central ใหม่](docs/CHARACTER-INVENTORY-REFINEMENT.md) และ [อัปเดต Central / อาวุธ / มอนสเตอร์](docs/ADVENTURE-UPDATE.md): เดินเร็วขึ้น มีMPจริง จุดพักน้ำพุ NPC Eira อาวุธขาว–ฟ้า96ชิ้น และมอนสเตอร์กระจาย18–28ตัวต่อแมพผจญภัย
+ดู [ท่าโจมตีและคอมโบตามความเร็ว](docs/COMBAT-ANIMATION.md), [หน้ากระเป๋า / มือขวา / Central ใหม่](docs/CHARACTER-INVENTORY-REFINEMENT.md) และ [อัปเดต Central / อาวุธ / มอนสเตอร์](docs/ADVENTURE-UPDATE.md): เดินเร็วขึ้น มีMPจริง จุดพักน้ำพุ NPC Eira อาวุธขาว–ฟ้า96ชิ้น และมอนสเตอร์กระจาย18–28ตัวต่อแมพผจญภัย
 
 ## วิธีเล่น
 

@@ -26,7 +26,7 @@ Ground earth now fades via an irregular noisy distance field into the existing p
 
 ## Validation
 
-`npm test`: 67 tests cover game rules and the handedness/gait regressions. `npm run test:refinement`: real browser checks 25 slots, live rig pixels, equipment/status tabs, allocating a point, sword+shield then bow swapping, six viewport sizes and actual walking in all eight facings. Screenshots are stored in ignored `artifacts/refinement/`. Existing adventure, HUD (seven layouts and actual combat), and all 17 weapon combat playtests pass as additional regression coverage. The final visual pass also walks through the hall entrance into root_trial. Run `npm run build` before browser tests.
+`npm test`: 76 tests cover game rules and the handedness/gait regressions. `npm run test:refinement`: real browser checks 25 slots, live rig pixels, equipment/status tabs, allocating a point, sword+shield then bow swapping, six viewport sizes and actual walking in all eight facings. Screenshots are stored in ignored `artifacts/refinement/`. Existing adventure, HUD (seven layouts and actual combat), and all 17 weapon combat playtests pass as additional regression coverage. The final visual pass also walks through the hall entrance into root_trial. Run `npm run build` before browser tests.
 
 ## Front knife grip correction
 

@@ -1,3 +1,4 @@
+import type {AttackClip} from './attack-animation.js';
 import {equippedCatalog,offhandCatalog,meetsRequirements} from './items.js';
 import {MOVEMENT_SPEED} from './adventure.js';
 import {weaponById,type WeaponId} from './weapons.js';
@@ -38,7 +39,7 @@ export function newHero(id:string,name:string,race:Race,appearance?:AppearanceIn
  const h:Hero={id,name,race,appearance:appearanceOrDefault(appearance),level:1,xp:0,points:0,stats:{str:5,agi:5,vit:5,int:5,dex:5,luk:5},hp:1,mp:1,x:14.5,y:22.5,kills:0,mapId:'central_city',visited:['central_city'],bindMap:'central_city',coins:0,loot:[],deliveries:[]};const spawn=MAP_BY_ID.get('central_city')!.spawn;h.x=spawn.x;h.y=spawn.y;h.hp=derived(h).maxHp;h.mp=derived(h).maxMp;return h;
 }
 export const WORLD_SIZE=28;
-export interface Motion {action:'idle'|'walk'|'attack'|'hurt'|'dead';facing:number;since:number;until:number;weapon?:WeaponId;catalogId?:string;offhandCatalogId?:string}
-export interface CombatEffect {id:number;sourceId:string;targetId?:string;mapId:string;style:string;from:{x:number;y:number};to:{x:number;y:number};start:number;impact:number;end:number;color:number;critical?:boolean}
+export interface Motion {attack?:AttackClip;hurtAt?:number;action:'idle'|'walk'|'attack'|'hurt'|'dead';facing:number;since:number;until:number;weapon?:WeaponId;catalogId?:string;offhandCatalogId?:string}
+export interface CombatEffect {attack?:AttackClip;releaseAt?:number;id:number;sourceId:string;targetId?:string;mapId:string;style:string;from:{x:number;y:number};to:{x:number;y:number};start:number;impact:number;end:number;color:number;critical?:boolean}
 export interface Mob {species?:string;id:string;name:string;x:number;y:number;hp:number;maxHp:number;level:number;deadUntil:number;mapId:string;boss?:boolean;archetype?:number;worldBoss?:import('./norse.js').WorldBossType}
 export interface Snapshot {motions?:Record<string,Motion>;effects?:CombatEffect[];serverTime?:number;mapId:string;self:string;players:Hero[];mobs:Mob[];online:number;events:{id:number;x:number;y:number;text:string;color:string}[];telegraph?:{x:number;y:number;radius:number;until:number}[];message?:string;rootTrialCleared?:boolean;worldBoss?:{nextSpawnAt:number;serverTime:number;active?:{id:string;name:string;mapId:string;hp:number;maxHp:number}}}
