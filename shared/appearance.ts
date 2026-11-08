@@ -27,7 +27,7 @@ export const STARTER_OUTFITS:Record<Race,{name:string;description:string;main:st
  nid:{name:'Golden Provisioner',description:'เสื้อกั๊กทองทับเชิ้ต ผ้ากันเปื้อน และกระเป๋าเครื่องมือ',main:'#bb9548',dark:'#785a32',trim:'#eddeb1',className:'Merchant'},
  skug:{name:'Nightstep Initiate',description:'เสื้อดำชายแยก ผ้าคลุมสั้น และตะเข็บเทาที่อ่านง่าย',main:'#292c32',dark:'#15191e',trim:'#858e98',className:'Thief'}
 };
-// Original SD pixel-style art; shared by preview and the game renderer.
+// Painted SD anime layers; shared atlas indices across creator, portrait and renderer.
 export function avatarSVG(race:Race,input:AppearanceInput):string {
  const a=appearanceOrDefault(input);
  return spriteSVG(race,a,STARTER_OUTFITS[race],HAIR_COLORS[a.hairColor].hex,EYE_COLORS[a.eyes].hex);

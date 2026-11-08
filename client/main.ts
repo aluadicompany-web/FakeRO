@@ -1,6 +1,6 @@
 import {MONSTER_BY_ID,MONSTER_FAMILIES} from '../shared/monsters';
 import {showBestiary} from './bestiary';
-import {HeroRig} from './hero-rig';
+import {HeroRig,preloadHeroArt} from './hero-rig';
 import {CreatureRig,prepareAnimationAtlas} from './creature-rig';
 import {CombatFX} from './combat-fx';
 import {WEAPONS,weaponById} from '../shared/weapons';
@@ -104,11 +104,11 @@ class Grove extends Phaser.Scene {
  fx!:CombatFX;
  entities=new Map<string,Phaser.GameObjects.Container>();ring!:Phaser.GameObjects.Ellipse;zoom=1;mapId='';mapViews:Phaser.GameObjects.GameObject[]=[];castViews:Phaser.GameObjects.GameObject[]=[];
  constructor(){super('grove');}
- preload(){for(const key of ['forest','frost','ember','wilds'])for(const suffix of ['','-back'])this.load.image('mob-'+key+suffix,`/art/monsters/${key}${suffix}.webp`);for(const key of ['mapboss','worldboss','rootboss'])for(const suffix of ['','-back'])this.load.image('anim-'+key+suffix,`/art/monsters/${key}${suffix}.webp`);for(const key of ['materials','portals','nature','capital','districts','citylife'])this.load.image(key,`/art/world/${key}.png`);this.load.image('terrain','/art/world/terrain.png');this.load.image('buildings','/art/world/buildings.png');}
+ preload(){preloadHeroArt(this);for(const key of ['forest','frost','ember','wilds'])for(const suffix of ['','-back'])this.load.image('mob-'+key+suffix,`/art/monsters/${key}${suffix}.webp`);for(const key of ['mapboss','worldboss','rootboss'])for(const suffix of ['','-back'])this.load.image('anim-'+key+suffix,`/art/monsters/${key}${suffix}.webp`);for(const key of ['materials','portals','nature','capital','districts','citylife'])this.load.image(key,`/art/world/${key}.png`);this.load.image('terrain','/art/world/terrain.png');this.load.image('buildings','/art/world/buildings.png');}
  create(){
   this.cameras.main.setBackgroundColor('#a1d8eb');sliceAtlas(this,'buildings',3,3);sliceAtlas(this,'portals',3,2);sliceAtlas(this,'nature',4,3);sliceAtlas(this,'capital',4,3);sliceAtlas(this,'districts',4,3);sliceAtlas(this,'citylife',4,3);document.body.dataset.citylifeTextures=String(Array.from({length:12},(_,i)=>this.textures.exists(`citylife-${i}`)).filter(Boolean).length);document.body.dataset.districtTextures=String(Array.from({length:12},(_,i)=>this.textures.exists(`districts-${i}`)).filter(Boolean).length);document.body.dataset.capitalTextures=String(Array.from({length:12},(_,i)=>this.textures.exists(`capital-${i}`)).filter(Boolean).length);document.body.dataset.natureTextures=String(Array.from({length:12},(_,i)=>this.textures.exists(`nature-${i}`)).filter(Boolean).length);
   window.addEventListener('game-zoom',((e:CustomEvent)=>{this.zoom=Phaser.Math.Clamp(this.zoom+e.detail,.35,1.15);this.cameras.main.setZoom(this.zoom);})as EventListener);
-  let animationFrames=0;for(const key of ['forest','frost','ember','wilds'])animationFrames+=prepareAnimationAtlas(this,'mob-'+key,6);for(const key of ['mapboss','worldboss','rootboss'])animationFrames+=prepareAnimationAtlas(this,'anim-'+key,key==='rootboss'?1:6);document.body.dataset.animationFrames=String(animationFrames);this.fx=new CombatFX(this);sceneReady=true;send({type:'ready'});window.addEventListener('show-bestiary',()=>showBestiary(this));
+  let animationFrames=0;for(const key of ['forest','frost','ember','wilds'])animationFrames+=prepareAnimationAtlas(this,'mob-'+key,6);for(const key of ['mapboss','worldboss','rootboss'])animationFrames+=prepareAnimationAtlas(this,'anim-'+key,key==='rootboss'?1:6);document.body.dataset.animationFrames=String(animationFrames);this.fx=new CombatFX(this);document.body.dataset.characterArt='painted-sd-v3';sceneReady=true;send({type:'ready'});window.addEventListener('show-bestiary',()=>showBestiary(this));
   this.ring=this.add.ellipse(0,0,36,18).setStrokeStyle(2,0xe8d89d).setVisible(false).setDepth(2000);
   this.input.on('pointerdown',(pointer:Phaser.Input.Pointer)=>{if(!state||document.querySelector('#world-panel')||document.querySelector('.modal'))return;const q=this.cameras.main.getWorldPoint(pointer.x,pointer.y),map=MAP_BY_ID.get(state.mapId)!;
    const gate=map.portals.find(g=>{const p=iso(g.x,g.y);return Math.abs(p.x-q.x)<65&&Math.abs(p.y-q.y)<50;});if(gate){send({type:'use',id:gate.id});return;}

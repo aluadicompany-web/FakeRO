@@ -1,0 +1,44 @@
+// Asset preparation only: crop transparent cells, align neck/feet, separate colour masks
+// and joint pieces. All illustration comes from the two original generated source atlases.
+import {chromium} from 'playwright';
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+const body='data:image/png;base64,'+readFileSync('docs/art/characters-v3-costumes-source.png').toString('base64');
+const heads='data:image/png;base64,'+readFileSync('docs/art/characters-v3-heads-source.png').toString('base64');
+const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
+try{const page=await browser.newPage();const result=await page.evaluate(async({body,heads})=>{
+ const W=256,H=384;const canvas=(w=W,h=H)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c;};
+ const load=src=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=src;});
+ const files={},meta={version:3,frameWidth:W,frameHeight:H,runtimeWidth:128,runtimeHeight:192,bodyFrames:24,headFrames:20,bodyScale:0,headScale:.48,coverage:[]};
+ function cleanCell(image,col,row,cols,rows){const sx=Math.round(col*image.width/cols),sy=Math.round(row*image.height/rows),w=Math.round((col+1)*image.width/cols)-sx,h=Math.round((row+1)*image.height/rows)-sy;const c=canvas(w,h),ctx=c.getContext('2d');ctx.drawImage(image,-sx,-sy);const pixels=ctx.getImageData(0,0,w,h),d=pixels.data,seen=new Uint8Array(w*h),queue=new Int32Array(w*h);let best=[];
+  for(let start=0;start<w*h;start++){if(seen[start]||d[start*4+3]<32)continue;let count=0,end=1;queue[0]=start;seen[start]=1;for(let i=0;i<end;i++){const k=queue[i],x=k%w,y=(k/w)|0;count++;for(const n of [x>0?k-1:-1,x+1<w?k+1:-1,y>0?k-w:-1,y+1<h?k+w:-1])if(n>=0&&!seen[n]&&d[n*4+3]>=32){seen[n]=1;queue[end++]=n;}}if(count>best.length)best=Array.from(queue.subarray(0,end));}
+  if(best.length<500)throw Error('Missing illustration cell');const keep=new Uint8Array(w*h);let x0=w,y0=h,x1=0,y1=0;for(const k of best){const x=k%w,y=(k/w)|0;x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)if(x+dx>=0&&x+dx<w&&y+dy>=0&&y+dy<h)keep[(y+dy)*w+x+dx]=1;}for(let k=0;k<w*h;k++)if(!keep[k])d[k*4+3]=0;ctx.putImageData(pixels,0,0);return{c,x0,y0,x1,y1,width:x1-x0+1,height:y1-y0+1};
+ }
+ const rawBody=await load(body),rawHeads=await load(heads),bodyCells=[],headCells=[];for(let r=0;r<4;r++)for(let c=0;c<6;c++)bodyCells.push(cleanCell(rawBody,c,r,6,4));for(let r=0;r<4;r++)for(let c=0;c<5;c++)headCells.push(cleanCell(rawHeads,c,r,5,4));
+ const heights=bodyCells.map(c=>c.height).sort((a,b)=>a-b);const scale=224/heights[12];meta.bodyScale=scale;
+ const normalizedBody=bodyCells.map(cell=>{const c=canvas(),g=c.getContext('2d'),d=cell.c.getContext('2d').getImageData(0,0,cell.c.width,cell.c.height).data;let sum=0,n=0;for(let y=cell.y0;y<=cell.y0+5;y++)for(let x=cell.x0;x<=cell.x1;x++)if(d[(y*cell.c.width+x)*4+3]>80){sum+=x;n++;}const neck=n?sum/n:(cell.x0+cell.x1)/2;g.drawImage(cell.c,128-neck*scale,376-cell.y1*scale,cell.c.width*scale,cell.c.height*scale);return c;});
+ const isHair=(r,g,b)=>b>r*1.13&&b-r>12&&b>g*.94;const isEye=(r,g,b)=>r>45&&r>g*1.35&&b>g*1.25&&r>=b*.8;
+ const normHeads=headCells.map((cell,index)=>{const d=cell.c.getContext('2d').getImageData(0,0,cell.c.width,cell.c.height).data;let skinBottom=0;for(let y=cell.y0;y<=cell.y1;y++)for(let x=cell.x0;x<=cell.x1;x++){const i=(y*cell.c.width+x)*4;if(d[i+3]>100&&d[i]>120&&d[i]>d[i+1]+15&&d[i+1]>d[i+2]+5)skinBottom=Math.max(skinBottom,y);}if(!skinBottom)skinBottom=cell.y1;let sum=0,n=0;for(let y=skinBottom-7;y<=skinBottom;y++)for(let x=cell.x0;x<=cell.x1;x++){const i=(y*cell.c.width+x)*4;if(d[i+3]>100&&d[i]>120&&d[i]>d[i+1]+15&&d[i+1]>d[i+2]+5){sum+=x;n++;}}const neck=n?sum/n:(cell.x0+cell.x1)/2,c=canvas();c.getContext('2d').drawImage(cell.c,128-neck*.48,172-skinBottom*.48,cell.c.width*.48,cell.c.height*.48);return c;});
+ function pack(cells,cols,size=1){const rows=Math.ceil(cells.length/cols),c=canvas(cols*W*size,rows*H*size),g=c.getContext('2d');cells.forEach((cell,i)=>g.drawImage(cell,(i%cols)*W*size,Math.floor(i/cols)*H*size,W*size,H*size));return c;}
+ function save(name,c){files[name]=c.toDataURL('image/png').split(',')[1];}
+ const parts={body:[],armL:[],armR:[],legL:[],legR:[]};
+ for(let f=0;f<24;f++){const source=normalizedBody[f],src=source.getContext('2d').getImageData(0,0,W,H),layers=Object.fromEntries(Object.keys(parts).map(k=>[k,new ImageData(W,H)]));const race=f%6,legY=[291,301,342,322,311,307][race];
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){const i=(y*W+x)*4;if(!src.data[i+3])continue;let part='body';const armTop=177,armBottom=race===2?265:267;const leftCut=101-Math.max(0,y-194)*.14,rightCut=157+Math.max(0,y-194)*.18;
+   if(y>=armTop&&y<armBottom&&x<leftCut)part='armL';else if(y>=armTop&&y<armBottom&&x>rightCut)part='armR';else if(y>=legY&&x>72&&x<194)part=x<130?'legL':'legR';layers[part].data.set(src.data.subarray(i,i+4),i);
+  }
+  let mismatch=0;for(let i=3;i<src.data.length;i+=4){let a=0;for(const layer of Object.values(layers))a+=layer.data[i];if(a!==src.data[i])mismatch++;}if(mismatch)throw Error('Part coverage mismatch');meta.coverage.push({frame:f,missingPixels:mismatch});for(const [name,layer]of Object.entries(layers)){const c=canvas();c.getContext('2d').putImageData(layer,0,0);parts[name].push(c);}
+ }
+ const headParts={base:[],hair:[],eyes:[]};
+ for(let f=0;f<20;f++){const raw=normHeads[f].getContext('2d').getImageData(0,0,W,H),base=new ImageData(new Uint8ClampedArray(raw.data),W,H),hair=new ImageData(W,H),eyes=new ImageData(W,H);let hairPixels=0,eyePixels=0;
+  for(let i=0;i<raw.data.length;i+=4){const [r,g,b,a]=raw.data.slice(i,i+4);if(a<1)continue;const px=(i/4)%W,py=Math.floor(i/4/W),neutral=Math.max(r,g,b)-Math.min(r,g,b)<40&&(Math.min(r,g,b)>135||Math.max(r,g,b)<80);let neighbourHair=false;if(neutral)for(let dy=-3;dy<=3&&!neighbourHair;dy++)for(let dx=-3;dx<=3;dx++){const nx=px+dx,ny=py+dy;if(nx<0||ny<0||nx>=W||ny>=H)continue;const j=(ny*W+nx)*4;if(raw.data[j+3]>40&&isHair(raw.data[j],raw.data[j+1],raw.data[j+2])){neighbourHair=true;break;}}const mode=isHair(r,g,b)||neighbourHair?'hair':isEye(r,g,b)?'eyes':null;if(!mode)continue;const target=mode==='hair'?hair:eyes;const luminance=mode==='hair'?Math.min(255,Math.round(45+b*.77)):Math.min(255,Math.round(60+r*.75));target.data.set([luminance,luminance,luminance,a],i);base.data[i+3]=0;if(mode==='hair')hairPixels++;else eyePixels++;}
+  if(hairPixels<1200||f<10&&eyePixels<15)throw Error(`Colour masks missing in head ${f}: ${hairPixels}/${eyePixels}`);
+  for(const [key,image]of Object.entries({base,hair,eyes})){const c=canvas();c.getContext('2d').putImageData(image,0,0);headParts[key].push(c);}
+ }
+ save('costumes',pack(normalizedBody,6));for(const [name,cells]of Object.entries(parts))save('rig-'+name,pack(cells,6,.5));for(const [name,cells]of Object.entries(headParts)){save('heads-'+name,pack(cells,5));save('rig-heads-'+name,pack(cells,5,.5));}
+ // Contact sheet uses the same colour masks and layer ordering as the shipped renderer.
+ const sheet=canvas(6*256,2*384),g=sheet.getContext('2d'),colours=['#ce5260','#54a27b','#6faed6','#9677c6','#d9b45c','#42414f'];g.fillStyle='#e5eee6';g.fillRect(0,0,sheet.width,sheet.height);
+ function tint(source,hex){const c=canvas(),ctx=c.getContext('2d'),raw=source.getContext('2d').getImageData(0,0,W,H),rgb=hex.slice(1).match(/../g).map(v=>parseInt(v,16));for(let i=0;i<raw.data.length;i+=4){for(let k=0;k<3;k++)raw.data[i+k]=raw.data[i+k]*rgb[k]/255;}ctx.putImageData(raw,0,0);return c;}
+ for(let gender=0;gender<2;gender++)for(let race=0;race<6;race++){const cell=canvas(),ctx=cell.getContext('2d'),head=gender*5+(race%5),layers=[headParts.base[head],tint(headParts.hair[head],colours[race]),tint(headParts.eyes[head],'#875636')];const long=gender===0?[1,2].includes(head%5):[1,4].includes(head%5);if(long){ctx.save();ctx.beginPath();ctx.rect(0,163,W,H-163);ctx.clip();for(const l of layers)ctx.drawImage(l,0,0);ctx.restore();}ctx.drawImage(normalizedBody[gender*6+race],0,0);ctx.save();if(long){ctx.beginPath();ctx.rect(0,0,W,163);ctx.clip();}for(const l of layers)ctx.drawImage(l,0,0);ctx.restore();g.drawImage(cell,race*256,gender*384);}
+ save('contact-sheet',sheet);return{files,meta};
+},{body,heads});
+mkdirSync('artifacts/characters-v3',{recursive:true});for(const [name,base64]of Object.entries(result.files)){const path=name==='contact-sheet'?'artifacts/characters-v3/contact-sheet.png':`public/art/characters/${name}.png`;writeFileSync(path,Buffer.from(base64,'base64'));}writeFileSync('public/art/characters/manifest.json',JSON.stringify(result.meta,null,2)+'\n');console.log(`Packed ${Object.keys(result.files).length} sheets; all 24 costume rigs preserve every source pixel`);
+}finally{await browser.close();}

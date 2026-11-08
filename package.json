@@ -18,7 +18,10 @@
     "export:monsters": "tsx scripts/export-monsters.ts",
     "test:hud": "tsx scripts/playtest-hud.ts",
     "gm:create": "tsx scripts/create-gm.ts",
-    "test:accounts": "tsx scripts/playtest-accounts.ts"
+    "test:accounts": "tsx scripts/playtest-accounts.ts",
+    "test:character-art": "tsx scripts/playtest-character-art.ts",
+    "art:characters": "node scripts/pack-character-art.mjs && python3 scripts/pack-character-formats.py",
+    "test:character-cast": "tsx scripts/playtest-character-cast.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",

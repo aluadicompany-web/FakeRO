@@ -1,0 +1,109 @@
+{
+  "version": 3,
+  "frameWidth": 256,
+  "frameHeight": 384,
+  "runtimeWidth": 128,
+  "runtimeHeight": 192,
+  "bodyFrames": 24,
+  "headFrames": 20,
+  "bodyScale": 0.9739130434782609,
+  "headScale": 0.48,
+  "coverage": [
+    {
+      "frame": 0,
+      "missingPixels": 0
+    },
+    {
+      "frame": 1,
+      "missingPixels": 0
+    },
+    {
+      "frame": 2,
+      "missingPixels": 0
+    },
+    {
+      "frame": 3,
+      "missingPixels": 0
+    },
+    {
+      "frame": 4,
+      "missingPixels": 0
+    },
+    {
+      "frame": 5,
+      "missingPixels": 0
+    },
+    {
+      "frame": 6,
+      "missingPixels": 0
+    },
+    {
+      "frame": 7,
+      "missingPixels": 0
+    },
+    {
+      "frame": 8,
+      "missingPixels": 0
+    },
+    {
+      "frame": 9,
+      "missingPixels": 0
+    },
+    {
+      "frame": 10,
+      "missingPixels": 0
+    },
+    {
+      "frame": 11,
+      "missingPixels": 0
+    },
+    {
+      "frame": 12,
+      "missingPixels": 0
+    },
+    {
+      "frame": 13,
+      "missingPixels": 0
+    },
+    {
+      "frame": 14,
+      "missingPixels": 0
+    },
+    {
+      "frame": 15,
+      "missingPixels": 0
+    },
+    {
+      "frame": 16,
+      "missingPixels": 0
+    },
+    {
+      "frame": 17,
+      "missingPixels": 0
+    },
+    {
+      "frame": 18,
+      "missingPixels": 0
+    },
+    {
+      "frame": 19,
+      "missingPixels": 0
+    },
+    {
+      "frame": 20,
+      "missingPixels": 0
+    },
+    {
+      "frame": 21,
+      "missingPixels": 0
+    },
+    {
+      "frame": 22,
+      "missingPixels": 0
+    },
+    {
+      "frame": 23,
+      "missingPixels": 0
+    }
+  ]
+}
