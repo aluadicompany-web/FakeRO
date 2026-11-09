@@ -1,0 +1,87 @@
+{
+  "version": 2,
+  "frameSize": 192,
+  "families": [
+    "one",
+    "two",
+    "bow",
+    "walk"
+  ],
+  "phases": 8,
+  "outfits": 12,
+  "directions": 8,
+  "atlas": {
+    "muspel-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    },
+    "alf-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    },
+    "jotun-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    },
+    "vanir-male": {
+      "width": 2048,
+      "height": 4096,
+      "rgbaBytes": 33554432,
+      "frames": 800
+    },
+    "nid-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    },
+    "skug-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    },
+    "muspel-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    },
+    "alf-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    },
+    "jotun-female": {
+      "width": 2048,
+      "height": 4096,
+      "rgbaBytes": 33554432,
+      "frames": 800
+    },
+    "vanir-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    },
+    "nid-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    },
+    "skug-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 800
+    }
+  }
+}

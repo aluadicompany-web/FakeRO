@@ -1,22 +1,43 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {FINAL_CHARACTER_ANIMATIONS as art,finalBodyFrame} from '../shared/final-animation.js';
+import {COHERENT_ART as coherent,CLIP_FAMILIES,coherentFrame,coherentPhase} from '../shared/coherent-animation.js';
+import {attackTiming} from '../shared/attack-animation.js';
 import heads from '../shared/heads-hd.json';
 import {RACES,newHero,derived} from '../shared/rules.js';
 import {gmAction} from '../server/gm.js';
 import {Store} from '../server/store.js';
 import {World} from '../server/world.js';
 import {existsSync} from 'node:fs';
-test('twelve final outfits have all eight directions and 24 registered whole-body poses',()=>{
- assert.equal(art.bodyFrames,2304);assert.equal(art.frames.length,2304);assert.equal(art.poses.length,24);
- for(let body=0;body<96;body++)for(let pose=0;pose<24;pose++){
-  const f=finalBodyFrame(body,pose);assert.equal(f.body,body);assert.equal(f.pose,pose);assert.equal(f.id,body*24+pose);
-  for(const point of [f.neck,f.palms.right,f.palms.left])assert.ok(Number.isFinite(point.x)&&Number.isFinite(point.y));
-  if(pose>=20)assert.ok(Math.hypot(f.palms.right.x-f.palms.left.x,f.palms.right.y-f.palms.left.y)<=10,'two hands stay adjacent on one hilt '+f.id);
-  if(pose!==15&&!f.rightBehindBody)assert.equal(f.onArt.right,true,`${f.race} ${f.gender} facing ${f.facing} pose ${pose} exposed right grip touches painted art`);
+test('twelve final outfits have coherent eight-phase tracks with literal glove evidence',()=>{
+ assert.equal(coherent.frames.length,3072);
+ for(let body=0;body<96;body++)for(const family of CLIP_FAMILIES)for(let phase=0;phase<8;phase++){
+  const f=coherentFrame(body,family,phase),raw=coherent.frames[f.id];assert.equal(f.body,body);assert.equal(f.family,family);assert.equal(f.phase,phase);
+  for(const p of [f.neck,f.palms.right,f.palms.left])assert.ok(Number.isFinite(p.x)&&Number.isFinite(p.y));
+  assert.ok(raw.evidence.collarDistance<=6);assert.ok(raw.evidence.rightColorPixels>0||raw.mainHidden);
+  assert.ok(!raw.evidence.registration.includes('legacy'));assert.ok(Math.abs(f.headRotation!)<=.28);assert.equal(f.headScale,.86);
+  if(family==='two'){
+   const dx=f.palms.left.x-f.palms.right.x,dy=f.palms.left.y-f.palms.right.y,a=f.weaponAngle!;
+   assert.ok(Math.abs(dx*Math.cos(a)+dy*Math.sin(a))<.001,'both fists lie on the same shaft '+f.id);
+  }
+  if(family!=='walk'&&phase===7){const first=coherentFrame(body,family,0);assert.deepEqual(f.palms,first.palms);assert.deepEqual(f.neck,first.neck);assert.equal(f.weaponAngle,first.weaponAngle);}
  }
- for(const spec of Object.values(art.atlas))assert.ok(spec.width<=4096&&spec.height<=4096);
- for(const race of RACES)for(const gender of ['male','female'])for(let facing=0;facing<8;facing++)assert.ok(existsSync(`public/art/final-frames/${race.id}-${gender}-${facing}.webp`));
+ for(const spec of Object.values(coherent.atlas))assert.ok(spec.width<=4096&&spec.height<=4096);
+});
+test('forward and return cuts reach the same painted impact at the server hit time at every speed',()=>{
+ for(const weapon of ['sword','greatsword','longbow','staff','knife'] as const)for(const interval of [300,500,740,1200])for(let step=0;step<4;step++){
+  const clip={...attackTiming(weapon,interval),index:step,step,sequence:step};
+  assert.equal(coherentPhase('attack',0,weapon,clip.windup,clip),4);
+  assert.equal(coherentPhase('attack',0,weapon,clip.duration,clip),['staff','knife'].includes(weapon)?0:step%2===1&&weapon!=='longbow'?0:7);
+  let previous=coherentPhase('attack',0,weapon,0,clip);
+  for(let t=1;t<clip.duration;t++) {const phase=coherentPhase('attack',0,weapon,t,clip);assert.ok(Math.abs(phase-previous)<=1,'no disconnected pose jumps');previous=phase;}
+ }
+});
+test('walking keeps a steady carry direction instead of following unrelated green speckles',()=>{
+ for(let body=0;body<96;body++)for(let phase=0;phase<8;phase++){
+  const a=coherentFrame(body,'walk',phase),b=coherentFrame(body,'walk',(phase+1)%8);
+  const delta=Math.atan2(Math.sin(a.weaponAngle!-b.weaponAngle!),Math.cos(a.weaponAngle!-b.weaponAngle!));
+  assert.ok(Math.abs(delta)<.2);assert.equal(a.projection,1);
+ }
 });
 test('HD heads retain independent face, hair, iris and expression layers for all hairstyles and directions',()=>{
  assert.equal(heads.frameSize,384);assert.equal(heads.heads.length,80);
