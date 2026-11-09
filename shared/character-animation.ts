@@ -24,7 +24,7 @@ export function spritePose(action:string,now:number,since:number,travel:number,w
 /** Frame-local item orientation, not an interpolated bone or inverse-kinematics solver. */
 export function frameWeaponAngle(weapon:WeaponId,facing:number,pose:number,palms:{right:{x:number;y:number};left:{x:number;y:number}}){
  const aim=Math.atan2(Math.sin(facing*Math.PI/4)*.55,Math.cos(facing*Math.PI/4)),two=['greatsword','greathammer'].includes(weapon),bow=['bow','longbow','shortbow'].includes(weapon);
- if(weapon==='staff'&&(pose<=5||pose===12||pose>=14))return Math.cos(facing*Math.PI/4)<0?-.18:.18;
+ if(weapon==='staff'&&(pose<=5||pose===12||pose>=14))return (palms.right.x<0?-1:1)*.28;
  if(two&&[11,12,8].includes(pose))return Math.atan2(palms.right.y-palms.left.y,palms.right.x-palms.left.x)+Math.PI/2;
  if(bow)return aim;
  if(pose<=5||pose>=14)return oneHandRestAngle(facing,weapon);

@@ -69,6 +69,8 @@ def validate_rows(im,expected,name):
    if y-start>20:bands.append((start,y))
    start=None
  assert len(bands)==expected,('Wrong painted row count',name,'expected',expected,'observed',bands)
+import runpy
+side_reader=runpy.run_path(str(ROOT/'scripts/side-profile-art.py'))['load_side_profiles'](SRC,groups,clean)
 source_cache={}
 overrides=json.loads((SRC/'registration-overrides.json').read_text())
 frames=[];entries=[[],[]];neutral={};missing=[]
@@ -80,10 +82,13 @@ for facing in range(8):
    if source not in source_cache:
     source_cache[source]=Image.open(source).convert('RGBA');validate_rows(source_cache[source],rows,source.name)
    im=source_cache[source];seed=cell(im,0,row,rows);a,_,neck0,hands0=markers(seed);box=bbox(seed);neck0=neck0 or ((box[0]+box[2])/2,box[1]+2);scale=112/max(1,box[3]-neck0[1]);tx=96-neck0[0]*scale;ty=188-box[3]*scale
+   side_seed=side_reader(name,sex,facing,0) if facing in [0,4] else None
    for pose in range(16):
     raw=cell(im,pose,row,rows);a,mask,neck,hands=markers(raw);marker_neck=neck is not None;marker_hands=len(hands);box=bbox(raw);assert box,('Empty painted pose',source,row,pose)
-    if neck is None:missing.append([name,sex,facing,pose,'neck']);neck=neck0 if pose!=15 else (box[0]+6 if facing in [3,4,5] else box[2]-6,(box[1]+box[3])/2)
-    if len(hands)<2:missing.append([name,sex,facing,pose,'hands',len(hands)])
+    if neck is None:
+     if not(facing in [0,4] and pose<=5):missing.append([name,sex,facing,pose,'neck'])
+     neck=neck0 if pose!=15 else (box[0]+6 if facing in [3,4,5] else box[2]-6,(box[1]+box[3])/2)
+    if len(hands)<2 and not(facing in [0,4] and pose<=5):missing.append([name,sex,facing,pose,'hands',len(hands)])
     baseline=list(hands0)
     if len(baseline)==1:baseline.append((2*neck0[0]-baseline[0][0],baseline[0][1]))
     if not baseline:baseline=[(neck0[0]-12,neck0[1]+55),(neck0[0]+12,neck0[1]+55)]
@@ -96,8 +101,14 @@ for facing in range(8):
      elif abs(hands[0][0]-base_right[0])<=abs(hands[0][0]-base_left[0]):right,left=hands[0],base_left
      else:right,left=base_right,hands[0]
     else:right,left=base_right,base_left
-    painted=clean(a,mask);painted=painted.resize((max(1,round(raw.width*scale)),max(1,round(raw.height*scale))),Image.Resampling.LANCZOS);canvas=Image.new('RGBA',(SIZE,SIZE));canvas.alpha_composite(painted,(round(tx),round(ty)));body=facing*12+sex*6+race;idx=body*16+pose;key='body-'+str(idx);entries[sex].append((key,canvas))
-    palms={k:point(v,scale,tx,ty) for k,v in [('right',right),('left',left)]};override=overrides.get(str(idx),{});neck_world=point(neck,scale,tx,ty)
+    painted=clean(a,mask)
+    if facing in [0,4] and pose<=5:
+     painted,neck,right,left,repair_source,repair_row,actual_hands,actual_neck=side_reader(name,sex,facing,pose);side_box=bbox(side_seed[0]);side_scale=112/max(1,side_box[3]-side_seed[1][1]);paint_scale=side_scale;paint_tx=96-side_seed[1][0]*side_scale;paint_ty=188-side_box[3]*side_scale;marker_neck=actual_neck;marker_hands=actual_hands
+     if actual_hands<2:missing.append([name,sex,facing,pose,'hands',actual_hands])
+     if not actual_neck:missing.append([name,sex,facing,pose,'neck'])
+    else:paint_scale=scale;paint_tx=tx;paint_ty=ty
+    painted=painted.resize((max(1,round(painted.width*paint_scale)),max(1,round(painted.height*paint_scale))),Image.Resampling.LANCZOS);canvas=Image.new('RGBA',(SIZE,SIZE));canvas.alpha_composite(painted,(round(paint_tx),round(paint_ty)));body=facing*12+sex*6+race;idx=body*16+pose;key='body-'+str(idx);entries[sex].append((key,canvas))
+    palms={k:point(v,paint_scale,paint_tx,paint_ty) for k,v in [('right',right),('left',left)]};override=overrides.get(str(idx),{});neck_world=point(neck,paint_scale,paint_tx,paint_ty)
     for side in ['right','left']:
      if side+'Offset' in override:palms[side]={axis:round(neck_world[axis]+override[side+'Offset'][axis],3) for axis in ['x','y']}
     if pose!=15:
@@ -105,7 +116,7 @@ for facing in range(8):
     gloves=Image.new('RGBA',(SIZE,SIZE));alpha=np.zeros((SIZE,SIZE),np.uint8);yy,xx=np.indices(alpha.shape)
     for hand in palms.values():alpha[((xx-(hand['x']*2+96))**2+(yy-(hand['y']*2+192))**2)<(3.3*2)**2]=255
     glove=np.array(canvas);glove[:,:,3]=np.minimum(glove[:,:,3],alpha);entries[sex].append(('hands-'+str(idx),Image.fromarray(glove)))
-    meta={'id':idx,'body':body,'pose':pose,'race':name,'gender':['male','female'][sex],'facing':facing,'neck':point(neck,scale,tx,ty),'palms':palms,'headPose':'fallen' if pose==15 else 'normal','headTurn':('left' if neck[0]<(box[0]+box[2])/2 else 'right') if pose==15 else 'none','source':source.name,'row':row,'column':pose,'markerHands':marker_hands,'markerNeck':marker_neck,'rightBehindBody':override.get('rightBehindBody',False)};frames.append(meta)
+    meta={'id':idx,'body':body,'pose':pose,'race':name,'gender':['male','female'][sex],'facing':facing,'neck':neck_world,'palms':palms,'headPose':'fallen' if pose==15 else 'normal','headTurn':('left' if neck[0]<(box[0]+box[2])/2 else 'right') if pose==15 else 'none','source':repair_source if facing in [0,4] and pose<=5 else source.name,'row':repair_row if facing in [0,4] and pose<=5 else row,'column':pose,'markerHands':marker_hands,'markerNeck':marker_neck,'rightBehindBody':override.get('rightBehindBody',facing==4 and pose<=5)};frames.append(meta)
     if pose==0:neutral[body]=canvas
 # Neutral grid powers the same creator/portrait as live frame-zero outfits.
 grid=Image.new('RGBA',(6*SIZE,16*SIZE))
@@ -116,5 +127,13 @@ old=ROOT/'public/art/characters-v4';heads=Image.open(old/'head-atlas.png').conve
 for key,f in spec['frames'].items():
  box=f['frame'];pos=f['spriteSourceSize'];crop=heads.crop((box['x'],box['y'],box['x']+box['w'],box['y']+box['h']));canvas=Image.new('RGBA',(SIZE,SIZE));canvas.alpha_composite(crop,(pos['x']+32,pos['y']));head_entries.append((key,canvas));
  for side,angle in [('left',90),('right',-90)]:head_entries.append(('fallen-'+side+'-'+key,canvas.rotate(angle,Image.Resampling.BICUBIC,center=(96,86))))
-frames.sort(key=lambda f:f['id']);stats={'male':atlas(entries[0],'body-male'),'female':atlas(entries[1],'body-female'),'head':atlas(head_entries,'head')};manifest={'version':5,'frameWidth':SIZE,'frameHeight':SIZE,'poses':POSES,'bodyFrames':len(frames),'paintedSourceFrames':len(frames),'directions':8,'outfits':12,'atlas':stats,'frames':frames}
+head_sockets={}
+for key,im in head_entries:
+ if key.startswith('base-'):
+  a=np.array(im);ys,xs=np.where(a[:,:,3]>180)
+  if len(ys):
+   yy,xx=np.indices(a.shape[:2]);bottom=ys.max();near=(a[:,:,3]>180)&(yy>=bottom-2);py,px=np.where(near);head_sockets[key[5:]]={'x':round((float(px.mean())-96)/2,3),'y':round((int(py.max())-192)/2,3)}
+for head in range(80):
+ if str(head) not in head_sockets:head_sockets[str(head)]=head_sockets.get(str(head//5*5),{'x':0,'y':-53.5}).copy()
+frames.sort(key=lambda f:f['id']);stats={'male':atlas(entries[0],'body-male'),'female':atlas(entries[1],'body-female'),'head':atlas(head_entries,'head')};manifest={'headSockets':head_sockets,'version':5,'frameWidth':SIZE,'frameHeight':SIZE,'poses':POSES,'bodyFrames':len(frames),'paintedSourceFrames':len(frames),'directions':8,'outfits':12,'atlas':stats,'frames':frames}
 (ROOT/'shared/character-animation.json').write_text(json.dumps(manifest,separators=(',',':'))+'\n');(OUT/'manifest.json').write_text(json.dumps({k:v for k,v in manifest.items() if k!='frames'},indent=2)+'\n');(OUT/'registration-report.json').write_text(json.dumps({'frames':len(frames),'missingMarkers':missing},indent=2)+'\n');print(json.dumps({'frames':len(frames),'missingMarkers':len(missing),'atlas':stats}))

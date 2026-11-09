@@ -1,4 +1,1556 @@
 {
-  "1020": {"rightOffset": {"x": 3, "y": 12}, "leftOffset": {"x": -3, "y": 12}, "rightBehindBody": true, "reason": "Vanir male NW spell gather: both hands are occluded in front of the chest; item must render behind the back."},
-  "1068": {"rightOffset": {"x": 3, "y": 12}, "leftOffset": {"x": -3, "y": 12}, "rightBehindBody": true, "reason": "Muspel female NW spell gather: both hands are occluded in front of the chest; item must render behind the back."}
+  "1020": {
+    "rightOffset": {
+      "x": 3,
+      "y": 12
+    },
+    "leftOffset": {
+      "x": -3,
+      "y": 12
+    },
+    "rightBehindBody": true,
+    "reason": "Vanir male NW spell gather: both hands are occluded in front of the chest; item must render behind the back."
+  },
+  "1068": {
+    "rightOffset": {
+      "x": 3,
+      "y": 12
+    },
+    "leftOffset": {
+      "x": -3,
+      "y": 12
+    },
+    "rightBehindBody": true,
+    "reason": "Muspel female NW spell gather: both hands are occluded in front of the chest; item must render behind the back."
+  },
+  "960": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand.",
+    "leftOffset": {
+      "x": -12,
+      "y": 28
+    }
+  },
+  "961": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand.",
+    "leftOffset": {
+      "x": -12,
+      "y": 28
+    }
+  },
+  "962": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand.",
+    "leftOffset": {
+      "x": -12,
+      "y": 28
+    }
+  },
+  "963": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand.",
+    "leftOffset": {
+      "x": -12,
+      "y": 28
+    }
+  },
+  "964": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand.",
+    "leftOffset": {
+      "x": -12,
+      "y": 28
+    }
+  },
+  "965": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand.",
+    "leftOffset": {
+      "x": -12,
+      "y": 28
+    }
+  },
+  "1344": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1345": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1346": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1347": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1348": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1349": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "976": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "977": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "978": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "979": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "980": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "981": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1360": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1361": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1362": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1363": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1364": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1365": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "992": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "993": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "994": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "995": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "996": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "997": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1376": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1377": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1378": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1379": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1380": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1381": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1008": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1009": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1010": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1011": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1012": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1013": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1392": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1393": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1394": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1395": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1396": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1397": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1024": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1025": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1026": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1027": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1028": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1029": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1408": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1409": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1410": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1411": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1412": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1413": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1040": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1041": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1042": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1043": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1044": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1045": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1232": {
+    "rightOffset": {
+      "x": 14,
+      "y": 28
+    },
+    "leftOffset": {
+      "x": -14,
+      "y": 28
+    },
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1233": {
+    "rightOffset": {
+      "x": 14,
+      "y": 28
+    },
+    "leftOffset": {
+      "x": -14,
+      "y": 28
+    },
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1234": {
+    "rightOffset": {
+      "x": 14,
+      "y": 28
+    },
+    "leftOffset": {
+      "x": -14,
+      "y": 28
+    },
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1235": {
+    "rightOffset": {
+      "x": 14,
+      "y": 28
+    },
+    "leftOffset": {
+      "x": -14,
+      "y": 28
+    },
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1236": {
+    "rightOffset": {
+      "x": 14,
+      "y": 28
+    },
+    "leftOffset": {
+      "x": -14,
+      "y": 28
+    },
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1237": {
+    "rightOffset": {
+      "x": 14,
+      "y": 28
+    },
+    "leftOffset": {
+      "x": -14,
+      "y": 28
+    },
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1424": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1425": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1426": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1427": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1428": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1429": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1056": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1057": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1058": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1059": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1060": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1061": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1440": {
+    "rightOffset": {
+      "x": 9.288,
+      "y": 30.314
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1441": {
+    "rightOffset": {
+      "x": 9.288,
+      "y": 30.314
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1442": {
+    "rightOffset": {
+      "x": 9.288,
+      "y": 30.314
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1443": {
+    "rightOffset": {
+      "x": 9.288,
+      "y": 30.314
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1444": {
+    "rightOffset": {
+      "x": 9.288,
+      "y": 30.314
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1445": {
+    "rightOffset": {
+      "x": 9.288,
+      "y": 30.314
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1072": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1073": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1074": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1075": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1076": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1077": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1456": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1457": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1458": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1459": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1460": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1461": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1088": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1089": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1090": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1091": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1092": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1093": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1472": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1473": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1474": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1475": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1476": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1477": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1104": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1105": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1106": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1107": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1108": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1109": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1120": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1121": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1122": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1123": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1124": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1125": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1504": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1505": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1506": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1507": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1508": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1509": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1136": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1137": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1138": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1139": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1140": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1141": {
+    "rightOffset": {
+      "x": 4,
+      "y": 27
+    },
+    "rightBehindBody": true,
+    "reason": "Reviewed rear carry registration: visible glove at outer hip, far glove occluded in front of torso; never use belt buckle as a hand."
+  },
+  "1520": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1521": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1522": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1523": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1524": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1525": {
+    "rightOffset": {
+      "x": 12.0,
+      "y": 28.0
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1488": {
+    "rightOffset": {
+      "x": 10.566,
+      "y": 29.088
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1489": {
+    "rightOffset": {
+      "x": 10.566,
+      "y": 29.088
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1490": {
+    "rightOffset": {
+      "x": 10.566,
+      "y": 29.088
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1491": {
+    "rightOffset": {
+      "x": 10.566,
+      "y": 29.088
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1492": {
+    "rightOffset": {
+      "x": 10.566,
+      "y": 29.088
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  },
+  "1493": {
+    "rightOffset": {
+      "x": 10.566,
+      "y": 29.088
+    },
+    "leftOffset": {
+      "x": -4,
+      "y": 27
+    },
+    "rightBehindBody": false,
+    "reason": "NE carry: register near right glove throughout breath/walk; far left glove is occluded in front, not at opposite belt buckle."
+  }
 }

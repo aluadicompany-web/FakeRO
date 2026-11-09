@@ -19,6 +19,7 @@ export class HeldWeapon extends Phaser.GameObjects.Container{
  constructor(scene:Phaser.Scene){super(scene,0,0);scene.add.existing(this);this.image=scene.add.image(0,0,'__WHITE').setVisible(false);this.fallback=scene.add.graphics().setVisible(false);this.add([this.image,this.fallback]);}
  localPoint(point:{x:number;y:number},relative?:Phaser.GameObjects.Container){const world=this.image.getWorldTransformMatrix().transformPoint(point.x-this.image.displayOriginX,point.y-this.image.displayOriginY,new Phaser.Math.Vector2());return relative?relative.getWorldTransformMatrix().applyInverse(world.x,world.y,new Phaser.Math.Vector2()):world;}
  bowEndpoints(relative:Phaser.GameObjects.Container){return this.bowEnds?.map(p=>this.localPoint(p,relative));}
+ tipInGripSpace(){return{x:this.image.x+(this.tipAnchor.x-this.image.displayOriginX)*this.image.scaleX,y:this.image.y+(this.tipAnchor.y-this.image.displayOriginY)*this.image.scaleY};}
  tipWorld(){return this.localPoint(this.tipAnchor);}
  primaryContactWorld(){return this.localPoint({x:100,y:100+this.gripOffset/this.image.scaleY});}
  supportContactWorld(){return this.localPoint({x:100,y:100+(this.gripOffset?0:this.supportGap/this.image.scaleY)});}

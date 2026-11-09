@@ -1,3 +1,4 @@
+import {headAttachment} from './character-attachment.js';
 import manifest from './character-rig.json';
 import animation from './character-animation.json';
 export const CHARACTER_ART_VERSION='painted-sd-v5';
@@ -14,4 +15,4 @@ export function characterFrames(race:string,gender:'male'|'female',hair:number,f
 }
 export function characterExpression(action:string,now:number,id:string,hurtAt?:number){if(action==='dead')return'closed';if(action==='hurt'||hurtAt!==undefined&&now-hurtAt>=0&&now-hurtAt<140)return'hurt';if(action==='attack'||action==='cast')return'open';let seed=0;for(const c of id)seed=(seed*31+c.charCodeAt(0))>>>0;const phase=(now+seed%4100)%4100;return phase>=3950&&phase<4050?'closed':'open';}
 /** Rendering attachment names are anatomical; directional art is already reflected and registered. */
-export function characterHeadOffset(body:number,head:number){const socket=animation.frames[body*16].neck,anchor=manifest.heads[head].neck;return{x:socket.x-anchor.x,y:socket.y-anchor.y};}
+export function characterHeadOffset(body:number,head:number){const socket=animation.frames[body*16].neck,anchor=manifest.heads[head].neck;const registered=headAttachment(head,socket,'normal');return{x:socket.x-anchor.x+(registered.x-socket.x),y:socket.y-anchor.y+(registered.y-socket.y-53)};}
