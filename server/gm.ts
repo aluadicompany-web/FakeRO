@@ -1,3 +1,5 @@
+import {SUPPLY_BY_ID,receive} from '../shared/supplies.js';
+import {makeSupply} from './inventory.js';
 import {randomUUID} from 'node:crypto';
 import {validUsername,validPassword} from './password.js';
 import type {Store} from './store.js';
@@ -14,7 +16,8 @@ export function gmAction(world:World,heroId:string,command:Record<string,unknown
  else if(command.action==='editor'){actor.ready=false;actor.path=[];actor.target=undefined;actor.playerTarget=undefined;actor.pending=undefined;}
  else if(command.action==='testBuild'){gmAction(world,heroId,{action:'level',level:100});for(const key of STAT_KEYS)while(h.stats[key]<45)allocate(h,key);h.hp=derived(h).maxHp;h.mp=derived(h).maxMp;}
  else if(command.action==='clearTestWeapons'){h.loot=h.loot.filter(item=>!item.testOnly);if(!h.loot.some(item=>item.id===h.offhandItem)){h.offhandItem=undefined;h.offhandCatalogId=undefined;if(h.weapon==='sword_shield')h.weapon='sword';if(h.weapon==='hammer_shield')h.weapon='hammer';}if(!h.loot.some(item=>item.id===h.equippedItem)){h.equippedItem=undefined;h.equippedCatalogId=undefined;h.weapon='knife';}}
- else if(command.action==='grantWeapon'){if(typeof command.catalogId!=='string'||!EQUIPMENT_BY_ID.has(command.catalogId))throw Error('ไม่พบอาวุธ');if(h.loot.length>=25)throw Error('กระเป๋าเต็ม');const item=EQUIPMENT_BY_ID.get(command.catalogId)!;h.loot.push({id:randomUUID(),catalogId:item.id,name:item.name,rarity:item.rarity,testOnly:true});}
+ else if(command.action==='grantItem'){if(typeof command.catalogId!=='string'||!SUPPLY_BY_ID.has(command.catalogId))throw Error('ไม่พบไอเท็ม');const item=makeSupply(command.catalogId);item.testOnly=true;if(!receive(h,item))throw Error('กระเป๋าเต็มหรือน้ำหนักเกิน');}
+ else if(command.action==='grantWeapon'){if(typeof command.catalogId!=='string'||!EQUIPMENT_BY_ID.has(command.catalogId))throw Error('ไม่พบอาวุธ');const item=EQUIPMENT_BY_ID.get(command.catalogId)!;if(!receive(h,{id:randomUUID(),catalogId:item.id,name:item.name,rarity:item.rarity,testOnly:true}))throw Error('กระเป๋าเต็มหรือน้ำหนักเกิน');}
  else throw Error('คำสั่ง GM ไม่ถูกต้อง');actor.attackChain=undefined;world.strikes=world.strikes.filter(s=>s.source!==h.id&&s.target!==h.id);actor.message='GM · ดำเนินการทดสอบแล้ว';return h;
 }
 

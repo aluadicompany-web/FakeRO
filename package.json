@@ -38,7 +38,9 @@
     "art:tower-guards": "python3 scripts/pack-tower-guards.py",
     "test:tower-guards": "tsx scripts/playtest-tower-guards.ts",
     "art:weapon-holding": "python3 scripts/pack-held-weapons.py && python3 scripts/pack-holding-bodies.py",
-    "test:weapon-holding": "tsx scripts/playtest-weapon-holding.ts"
+    "test:weapon-holding": "tsx scripts/playtest-weapon-holding.ts",
+    "art:items": "python3 scripts/pack-basic-items.py",
+    "test:items": "tsx scripts/playtest-items.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",

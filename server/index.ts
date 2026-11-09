@@ -90,7 +90,7 @@ server.on('upgrade',(req,socket,head)=>{
  if(clients.has(id)||clients.size>=10){socket.write('HTTP/1.1 409 Conflict\r\n\r\n');socket.destroy();return;}
  wss.handleUpgrade(req,socket,head,ws=>{
   clients.set(id,ws);alive.set(ws,true);ws.on('pong',()=>alive.set(ws,true));world.add(h,store.resolveAccount(cookie(req))?.role==='gm');world.actors.get(id)!.ready=false;let messages=0,windowStart=Date.now();
-  ws.on('message',raw=>{if(Date.now()-windowStart>1000){windowStart=Date.now();messages=0;}if(++messages>25){ws.close(1008,'Rate limit');return;}try{const m=JSON.parse(raw.toString());if(!m||typeof m!=='object'||Array.isArray(m))return;world.command(id,m);if(['stat','warp','use','enterTower','claimDelivery','weapon','equip'].includes(m.type))checkpoint();}catch{/* malformed commands have no effect */}});
+  ws.on('message',raw=>{if(Date.now()-windowStart>1000){windowStart=Date.now();messages=0;}if(++messages>25){ws.close(1008,'Rate limit');return;}try{const m=JSON.parse(raw.toString());if(!m||typeof m!=='object'||Array.isArray(m))return;world.command(id,m);if(['stat','warp','use','enterTower','claimDelivery','weapon','equip','useItem','dropItem','pickupItem','buyItem','sellItem','unequip','starterKit','cancelItem'].includes(m.type))checkpoint();}catch{/* malformed commands have no effect */}});
   ws.on('error',()=>ws.close());
   ws.on('close',()=>{const a=world.actors.get(id);if(a)checkpoint();world.actors.delete(id);clients.delete(id);});
  });
