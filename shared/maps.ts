@@ -5,7 +5,7 @@ import layout from '../docs/world/world-layout.json';
 import type {Race} from './rules.js';
 export type Biome='grass'|'snow'|'ember'|'rune'|'ore'|'marsh';
 export interface Point{x:number;y:number}
-export interface Prop extends Point{id:string;kind:'building'|'tree'|'rock'|'crystal'|'ruin'|'water'|'decor'|'hedge'|'npc';w:number;h:number;art:number;name:string;atlas?:'districts'|'citylife';approach?:Point;flipX?:boolean;blocking?:boolean;marketSlot?:number;service?:'bind'|'warp'|'heal'|'info'|'tower'|'guide'|'tower_guard';description?:string}
+export interface Prop extends Point{id:string;kind:'building'|'tree'|'rock'|'crystal'|'ruin'|'water'|'decor'|'hedge'|'npc';w:number;h:number;art:number;name:string;atlas?:'districts'|'citylife'|'central-v2';renderWidth?:number;renderHeight?:number;hidden?:boolean;groundAnchor?:Point;approach?:Point;flipX?:boolean;blocking?:boolean;marketSlot?:number;service?:'bind'|'warp'|'heal'|'info'|'tower'|'guide'|'tower_guard'|'training';description?:string}
 export interface Portal extends Point{id:string;to:string;name:string;arrival:Point}
 export interface GameMap{id:string;name:string;kind:string;region:string|null;biome:Biome;rule:'safe'|'home'|'red';homeRace?:Race;level:number;levelRange?:{min:number;max:number};grid:Point;props:Prop[];portals:Portal[];boss?:{name:string;archetype:number};size:number;spawn:Point}
 export const MAP_SIZE=28;
@@ -100,7 +100,7 @@ const capital=MAP_BY_ID.get('central_city')!;centralLandmarks(capital);const pro
 for(const target of [...capital.portals,...capital.props.filter(p=>p.service).map(propEntrance)])protectedCapital.push(target,...findPath(capital,capital.spawn,target));
 centralDetails(capital,protectedCapital);
 
-for(const map of MAPS)for(const gate of map.portals)if(gate.to==='central_city')gate.arrival=map.id==='root_trial'?{x:32.5,y:23.5}:{x:32.5,y:4.5};
+const commons=MAP_BY_ID.get('central_commons')!,back=commons.portals.find(p=>p.to==='central_city')!;back.arrival={x:4.5,y:71.5};const route=findPath(commons,commons.spawn,back),southPoint=route[Math.max(0,route.length-5)]||commons.spawn;commons.portals.push({id:'to-central_city-south',to:'central_city',name:'Central · ประตูใต้',...southPoint,arrival:{x:70.5,y:74.5}});capital.portals.find(p=>p.id==='to-central_commons-south')!.arrival={...southPoint};MAP_BY_ID.get('root_trial')!.portals.find(p=>p.to==='central_city')!.arrival={x:24.5,y:24.5};
 
 for(const map of MAPS){const entries=MONSTERS.filter(m=>m.mapId===map.id);if(entries.length){map.level=entries[0].level;map.levelRange={min:map.id.endsWith('_field_1')?1:entries[0].level,max:entries.at(-1)!.level};}if(map.rule==='red'){const entries=MONSTERS.filter(m=>m.region===(map.biome==='snow'?'eir':'ember')).slice(10,16);map.levelRange={min:entries[0].level,max:entries.at(-1)!.level};}}
 

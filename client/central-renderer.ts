@@ -1,22 +1,51 @@
-import {rootTerrain} from './root-terrain';
-import {CENTRAL_GARDENS,CENTRAL_PLAZA,CENTRAL_MARKET_SLOTS,CENTRAL_MARKET_LANE} from '../shared/central';
-import {findPath,propEntrance,type GameMap} from '../shared/maps';
-export function capitalFloor(c:CanvasRenderingContext2D,map:GameMap,material:(index:number,size?:number)=>HTMLCanvasElement,details?:(index:number)=>HTMLCanvasElement){const pos=(x:number,y:number)=>({x:map.size*24+(x-y)*24,y:(x+y)*12});
- const area=(x:number,y:number,w:number,h:number)=>{const points=[pos(x,y),pos(x+w,y),pos(x+w,y+h),pos(x,y+h)];c.beginPath();points.forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.closePath();};
- area(6,8,19,43);c.fillStyle=c.createPattern(material(2,90),'repeat')!;c.fill();c.strokeStyle='#c6aa77';c.lineWidth=4;c.stroke();
- for(const garden of CENTRAL_GARDENS){area(garden.x,garden.y,garden.w,garden.h);c.fillStyle='#648956';c.fill();c.strokeStyle='#eee4c6';c.lineWidth=3;c.stroke();}
- for(const b of map.props.filter(p=>p.kind==='building')){area(b.x-.3,b.y-.3,b.w+.6,b.h+.9);c.fillStyle=c.createPattern(material(b.service?2:1,95),'repeat')!;c.fill();c.strokeStyle='#b4a17e';c.lineWidth=2;c.stroke();}
- // Broad boulevards and a ring street read clearly above narrower market aisles.
- const line=(points:{x:number;y:number}[],width:number,color:string|CanvasPattern)=>{c.lineWidth=width;c.strokeStyle=color;c.beginPath();points.map(p=>pos(p.x,p.y)).forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.stroke();};c.lineJoin='round';c.lineCap='round';
- for(const width of [66,60,50]){const style=width===66?'#9c8966':width===60?'#e9d7a9':c.createPattern(material(0,78),'repeat')!;line([{x:32.5,y:2.5},{x:32.5,y:13}],width,style);line([{x:32.5,y:23},{x:32.5,y:60}],width,style);line([{x:3,y:42},{x:61,y:42}],width,style);}
- for(const width of [25,20]){const style=width===25?'#c4ad7a':c.createPattern(material(0,90),'repeat')!;line([{x:2.5,y:2.5},{x:61.5,y:2.5},{x:61.5,y:61.5},{x:2.5,y:61.5},{x:2.5,y:2.5}],width,style);}
- const lane=CENTRAL_MARKET_LANE;area(lane.x,lane.y,lane.w,lane.h);c.fillStyle=c.createPattern(material(0,78),'repeat')!;c.fill();c.strokeStyle='#cbb587';c.lineWidth=4;c.stroke();
- for(const slot of CENTRAL_MARKET_SLOTS){area(slot.x-.1,slot.y-.1,slot.w+.2,slot.h+.5);c.save();c.globalAlpha=.35;c.fillStyle=c.createPattern(material(4,80),'repeat')!;c.fill();c.restore();}
- // Service and storefront walks always follow the same collision-aware routes as gameplay.
- for(const goal of [...map.portals,...map.props.filter(p=>p.service&&!p.marketSlot).map(propEntrance)]){const route=findPath(map,map.spawn,goal);line([map.spawn,...route],13,'#e5d6b2');}
- const plaza=pos(CENTRAL_PLAZA.x,CENTRAL_PLAZA.y);for(const [r,color]of [[270,'#b9ad8d'],[266,'#eee4cd']]as const){c.fillStyle=r===266?c.createPattern(material(0,80),'repeat')!:color;c.beginPath();c.ellipse(plaza.x,plaza.y,r,r*.5,0,0,Math.PI*2);c.fill();}
- c.save();c.beginPath();c.ellipse(plaza.x,plaza.y,242,121,0,0,Math.PI*2);c.clip();c.globalAlpha=.08;c.fillStyle=c.createPattern(material(0,96),'repeat')!;c.fillRect(plaza.x-243,plaza.y-122,486,244);c.restore();
- const colors=['#c85d4c','#579655','#6aaacb','#9772b6','#c4a14b','#424852'];for(let i=0;i<6;i++){const angle=i*Math.PI/3;c.fillStyle=colors[i];c.beginPath();c.ellipse(plaza.x+Math.cos(angle)*222,plaza.y+Math.sin(angle)*111,13,6.5,0,0,Math.PI*2);c.fill();}
- rootTerrain(c,map,details);
- const arrival=pos(map.spawn.x,map.spawn.y);c.strokeStyle='#b9a06b';c.lineWidth=3;c.beginPath();c.ellipse(arrival.x,arrival.y,55,27.5,0,0,Math.PI*2);c.stroke();
+import Phaser from 'phaser';
+import {CENTRAL_PLAZA,CENTRAL_ROADS,CENTRAL_PONDS,CENTRAL_COLONNADE_RADIUS,CENTRAL_COLUMNS,CENTRAL_NPC_RESERVATIONS,colonnadeGap} from '../shared/central-layout';
+import {CENTRAL_REST_ZONE} from '../shared/adventure';
+import type {GameMap,Point,Prop} from '../shared/maps';
+const iso=(x:number,y:number)=>({x:(x-y)*48,y:(x+y)*24});
+export function preloadCapital(scene:Phaser.Scene){scene.load.atlas('central-v2','/art/world/central-v2/city.webp','/art/world/central-v2/city.json');scene.load.image('central-surfaces','/art/world/central-v2/surfaces.webp');}
+/** Every pavement shape is authored in the same world plane, then projected once. */
+export function capitalFloor(scene:Phaser.Scene,map:GameMap){const S=32,plan=document.createElement('canvas');plan.width=plan.height=map.size*S;const c=plan.getContext('2d')!,source=scene.textures.get('central-surfaces').getSourceImage()as HTMLImageElement;
+ const pattern=(index:number,size=128)=>{const tile=document.createElement('canvas');tile.width=tile.height=size;tile.getContext('2d')!.drawImage(source,index%3*256,Math.floor(index/3)*256,256,256,0,0,size,size);return c.createPattern(tile,'repeat')!;};
+ c.fillStyle=pattern(3,128);c.fillRect(0,0,plan.width,plan.height);c.fillStyle=pattern(0,120);c.fillRect(1.5*S,1.5*S,(map.size-3)*S,(map.size-3)*S);
+ c.fillStyle=pattern(2,150);c.fillRect(9.5*S,41*S,17.5*S,8*S);
+ const strokeRoad=(points:Point[],width:number,style:string|CanvasPattern)=>{c.beginPath();points.forEach((p,i)=>i?c.lineTo(p.x*S,p.y*S):c.moveTo(p.x*S,p.y*S));c.strokeStyle=style;c.lineWidth=width*S;c.stroke();};c.lineJoin='round';c.lineCap='round';
+ for(const road of CENTRAL_ROADS){strokeRoad(road.points,road.width+.45,'#b6a98f');strokeRoad(road.points,road.width+.25,'#d9d0b9');strokeRoad(road.points,road.width,pattern(['market','south','root','residential'].includes(road.id)?1:0,128));}
+ // A quiet northern forecourt beneath the roots, with an irregular organic soil edge.
+ const soil=document.createElement('canvas'),mask=document.createElement('canvas');soil.width=soil.height=mask.width=mask.height=16*S;const soilPaint=soil.getContext('2d')!,m=mask.getContext('2d')!;soilPaint.fillStyle=pattern(4,128);soilPaint.fillRect(0,0,soil.width,soil.height);const edge=Array.from({length:24},(_,i)=>{const a=i/24*Math.PI*2,r=6.5+Math.sin(i*1.7)*.35;return{x:(8+Math.cos(a)*r)*S,y:(8+Math.sin(a)*r)*S};});m.filter='blur(14px)';m.fillStyle='#fff';m.beginPath();m.moveTo((edge[0].x+edge.at(-1)!.x)/2,(edge[0].y+edge.at(-1)!.y)/2);edge.forEach((q,i)=>{const next=edge[(i+1)%edge.length];m.quadraticCurveTo(q.x,q.y,(q.x+next.x)/2,(q.y+next.y)/2);});m.closePath();m.fill();soilPaint.globalCompositeOperation='destination-in';soilPaint.drawImage(mask,0,0);c.drawImage(soil,9*S,9*S);
+
+ c.fillStyle=pattern(2,160);c.beginPath();c.ellipse(23*S,23*S,4.3*S,4.3*S,0,0,Math.PI*2);c.fill();
+ for(const pond of CENTRAL_PONDS){c.fillStyle=pattern(3,100);c.fillRect((pond.x-1)*S,(pond.y-1)*S,(pond.w+2)*S,(pond.h+2)*S);c.beginPath();c.roundRect(pond.x*S,pond.y*S,pond.w*S,pond.h*S,.5*S);c.fillStyle=pattern(5,170);c.fill();c.lineWidth=.25*S;c.strokeStyle='#d8d0ad';c.stroke();c.lineWidth=.07*S;c.strokeStyle='#f4edce';c.stroke();for(let i=1;i<6;i++){c.beginPath();c.moveTo((pond.x+.5)*S,(pond.y+i*pond.h/6)*S);c.bezierCurveTo((pond.x+pond.w*.3)*S,(pond.y+i*pond.h/6-.2)*S,(pond.x+pond.w*.6)*S,(pond.y+i*pond.h/6+.2)*S,(pond.x+pond.w-.5)*S,(pond.y+i*pond.h/6)*S);c.strokeStyle='#b6fff066';c.lineWidth=1.5;c.stroke();}}
+ const p=CENTRAL_PLAZA;for(const [r,fill]of [[p.radius+.8,'#d0b879'],[p.radius+.5,'#f5edd9'],[p.radius,pattern(2,150)]]as const){c.beginPath();c.arc(p.x*S,p.y*S,r*S,0,Math.PI*2);c.fillStyle=fill;c.fill();}
+ c.beginPath();c.arc(p.x*S,p.y*S,p.radius*S,0,Math.PI*2);c.fillStyle='rgba(250,246,230,.55)';c.fill();
+ // Concentric stone courses and radial joints follow the round plaza, not screen-space diamonds.
+ c.strokeStyle='#a9a08b55';c.lineWidth=1;for(let r=1;r<=p.radius;r+=.7){c.beginPath();c.arc(p.x*S,p.y*S,r*S,0,Math.PI*2);c.stroke();const n=Math.max(12,Math.round(r*7));for(let i=0;i<n;i++){const a=(i+(Math.floor(r/.7)%2)*.5)/n*Math.PI*2;c.beginPath();c.moveTo((p.x+Math.cos(a)*(r-.7))*S,(p.y+Math.sin(a)*(r-.7))*S);c.lineTo((p.x+Math.cos(a)*r)*S,(p.y+Math.sin(a)*r)*S);c.stroke();}}
+ c.beginPath();c.arc(p.x*S,p.y*S,(p.radius-.4)*S,0,Math.PI*2);c.lineWidth=.12*S;c.strokeStyle='#c0a66c';c.stroke();
+ for(const at of CENTRAL_NPC_RESERVATIONS){c.beginPath();c.arc(at.x*S,at.y*S,.35*S,0,Math.PI*2);c.fillStyle='#c5c3ac';c.fill();c.strokeStyle='#e5d5a0';c.lineWidth=2;c.stroke();}
+ // Small limestone landing pads connect actual doors to the street without drawing BFS spaghetti.
+ for(const b of map.props.filter(p=>p.kind==='building'&&p.id!=='root_hall'&&p.id!=='clock-tower')){c.fillStyle=pattern(0,120);c.fillRect((b.x-.25)*S,(b.y-.25)*S,(b.w+.5)*S,(b.h+1)*S);}
+ const canvas=document.createElement('canvas');canvas.width=map.size*48;canvas.height=map.size*24;const g=canvas.getContext('2d')!;g.setTransform(24/S,12/S,-24/S,12/S,map.size*24,0);g.drawImage(plan,0,0);const key='central-floor-v2';if(scene.textures.exists(key))scene.textures.remove(key);scene.textures.addCanvas(key,canvas);document.body.dataset.rootTerrain='soil-and-cracked-stone';document.body.dataset.centralLayout='2';
+ return scene.add.image(0,0,key).setOrigin(.5,0).setDisplaySize(map.size*96,map.size*48).setDepth(-10000);
+}
+function anchor(p:Prop){return p.groundAnchor??{x:p.x+p.w,y:p.y+p.h};}
+function paintedProp(scene:Phaser.Scene,p:Prop){const foot=anchor(p),at=iso(foot.x,foot.y),c=scene.add.container(at.x,at.y).setDepth(at.y+12);const image=scene.add.image(0,0,p.atlas==='districts'?'districts-8':'central-v2',p.atlas==='districts'?undefined:String(p.art)).setOrigin(.5,1);const width=p.renderHeight?p.renderHeight*image.width/image.height:p.renderWidth??(p.w+p.h)*48*1.08;image.setDisplaySize(width,width*image.height/image.width);c.add(image);c.setData('propId',p.id);const box={x:at.x,y:at.y,width,height:image.displayHeight};if(image.displayHeight>70)c.setData('occluder',{...box,fade:p.id==='root-court-gate'?.12:.4});if(p.service){c.setData('hitBox',box);c.add(scene.add.text(0,13,p.marketSlot?`แผง ${String(p.marketSlot).padStart(2,'0')}`:p.name,{fontFamily:'sans-serif',fontSize:p.marketSlot?'10px':'12px',color:'#f9edcd',backgroundColor:'#2a4143de',padding:{x:6,y:3}}).setOrigin(.5,0));}return c;}
+function arches(scene:Phaser.Scene){const out:Phaser.GameObjects.GameObject[]=[],C=CENTRAL_PLAZA,R=CENTRAL_COLONNADE_RADIUS;
+ const point=(a:number,z:number,r=R)=>{const p=iso(C.x+Math.cos(a)*r,C.y+Math.sin(a)*r);return{x:p.x,y:p.y-z};};
+ for(let i=0;i<CENTRAL_COLUMNS;i++){const a=i*Math.PI*2/CENTRAL_COLUMNS,b=(i+1)*Math.PI*2/CENTRAL_COLUMNS;if(colonnadeGap(a)||colonnadeGap(b))continue;const floor=point((a+b)/2,0),g=scene.add.graphics().setDepth(floor.y+13);const top:Point[]=[],bottom:Point[]=[];
+  for(let j=0;j<=12;j++){const t=j/12,angle=a+(b-a)*t;top.push(point(angle,196));bottom.push(point(angle,150+30*Math.sqrt(Math.max(0,1-(2*t-1)**2))));}
+  g.fillStyle(0xe7ddc5).fillPoints([...top,...bottom.reverse()],true);g.lineStyle(1,0xa19378,.7).strokePoints([...top,...bottom],true);g.lineStyle(2,0xc6ad72).strokePoints(bottom,false);const band=[point(a,200,R+.24),point(b,200,R+.24),point(b,207,R-.24),point(a,207,R-.24)];g.fillStyle(0x9d5648).fillPoints(band,true);g.lineStyle(1,0xe6ca8d).strokePoints(band,true);g.setData('occluder',{x:floor.x,y:floor.y,width:Math.max(26,Math.abs(top[0].x-top.at(-1)!.x)+20),height:208});out.push(g);
+ }return out;
+}
+function cityWalls(scene:Phaser.Scene,map:GameMap){const out:Phaser.GameObjects.GameObject[]=[];
+ for(const side of [0,1,2,3])for(let n=1;n<map.size-1;n++){const a=side===0?{x:n,y:1}:side===1?{x:map.size-1,y:n}:side===2?{x:n,y:map.size-1}:{x:1,y:n},b=side%2?{x:a.x,y:a.y+1}:{x:a.x+1,y:a.y};if(map.portals.some(p=>Math.hypot(p.x-(a.x+b.x)/2,p.y-(a.y+b.y)/2)<4))continue;const p=iso(a.x,a.y),q=iso(b.x,b.y),g=scene.add.graphics().setDepth(Math.max(p.y,q.y)+16),height=110;const face=[p,q,{x:q.x,y:q.y-height},{x:p.x,y:p.y-height}];g.fillStyle(side%2?0xb8b9aa:0xd9d4c0).fillPoints(face,true);g.lineStyle(1,0x7e887d,.5).strokePoints(face,true);
+  for(let z=18;z<height;z+=18){g.lineStyle(.7,0x959d8d,.7).lineBetween(p.x,p.y-z,q.x,q.y-z);const t=(Math.floor(z/18)%2)*.5+.25;g.lineBetween(p.x+(q.x-p.x)*t,p.y+(q.y-p.y)*t-z,p.x+(q.x-p.x)*t,p.y+(q.y-p.y)*t-z+16);}
+  g.lineStyle(4,0xf0e5c7).lineBetween(p.x,p.y-height,q.x,q.y-height);for(const t of [.12,.65]){const u={x:p.x+(q.x-p.x)*t,y:p.y+(q.y-p.y)*t-height};g.fillStyle(0xe4ddc7).fillPoints([{x:u.x,y:u.y},{x:u.x+12,y:u.y+(q.y-p.y)*.25},{x:u.x+12,y:u.y+(q.y-p.y)*.25-14},{x:u.x,y:u.y-14}],true);}g.setData('occluder',{x:(p.x+q.x)/2,y:Math.max(p.y,q.y),width:60,height:125});out.push(g);
+ }return out;
+}
+export function drawCapitalMap(scene:Phaser.Scene,map:GameMap){document.body.dataset.capitalSprites=String(scene.textures.get('central-v2').getFrameNames().length);const views:Phaser.GameObjects.GameObject[]=[capitalFloor(scene,map),...arches(scene),...cityWalls(scene,map)];for(const p of map.props)if(!p.hidden&&p.kind!=='npc'&&p.kind!=='water')views.push(paintedProp(scene,p));
+ for(const gate of map.portals){const at=iso(gate.x,gate.y),image=scene.add.image(at.x,at.y,'central-v2','10').setOrigin(.5,1).setDepth(at.y+20);image.setDisplaySize(390,390*image.height/image.width);image.setData('occluder',{x:at.x,y:at.y,width:390,height:image.displayHeight});image.setData('hitBox',{x:at.x,y:at.y,width:390,height:image.displayHeight});image.setData('portalId',gate.id);views.push(image,scene.add.ellipse(at.x,at.y+4,95,45,0xa5eeec,.2).setStrokeStyle(2,0xd4f7ed,.7).setDepth(at.y+1),scene.add.text(at.x,at.y+28,gate.name,{fontFamily:'sans-serif',fontSize:'13px',color:'#fff0cd',backgroundColor:'#263f45e8',padding:{x:8,y:5}}).setOrigin(.5).setDepth(at.y+40));}
+ const center=iso(CENTRAL_PLAZA.x,CENTRAL_PLAZA.y),r=CENTRAL_REST_ZONE.radius;views.push(scene.add.ellipse(center.x,center.y,r*Math.SQRT2*96,r*Math.SQRT2*48,0xbce6d6,.025).setDepth(-9900));
+ const text=iso(45,45);views.push(scene.add.text(text.x,text.y+45,'✧ ลานเริ่มต้น · ฟื้นฟู HP / MP ทั่วทั้งลาน',{fontFamily:'sans-serif',fontSize:'12px',color:'#648d7d',stroke:'#fff5df',strokeThickness:2}).setOrigin(.5).setDepth(-9800));
+ const gate=iso(23,23),glow=scene.add.ellipse(gate.x,gate.y-26,100,45,0x64e7ff,.16).setDepth(gate.y+3);scene.tweens.add({targets:glow,alpha:{from:.15,to:.45},duration:1600,yoyo:true,repeat:-1});views.push(glow);for(let i=0;i<8;i++){const mote=scene.add.circle(gate.x+(i-3.5)*11,gate.y-18,1.5,0xb6f7ff,.65).setDepth(gate.y+30);scene.tweens.add({targets:mote,y:mote.y-100,alpha:0,duration:1700+i*130,delay:i*170,repeat:-1});views.push(mote);}
+ return views;
 }

@@ -1,0 +1,664 @@
+{
+  "version": 2,
+  "size": 80,
+  "projection": "parallel isometric 2:1",
+  "plaza": {
+    "x": 40,
+    "y": 40,
+    "radius": 12.4
+  },
+  "healing": {
+    "mapId": "central_city",
+    "x": 40,
+    "y": 40,
+    "radius": 12.4,
+    "hpPerSecond": 0.06,
+    "mpPerSecond": 0.1
+  },
+  "spawn": {
+    "x": 44.5,
+    "y": 45.5
+  },
+  "guide": {
+    "id": "central-guide",
+    "name": "Eira · ผู้นำทาง",
+    "x": 44,
+    "y": 43,
+    "adultAge": 28
+  },
+  "reservedNpcs": [
+    {
+      "x": 34,
+      "y": 35
+    },
+    {
+      "x": 35,
+      "y": 34
+    },
+    {
+      "x": 36,
+      "y": 33
+    }
+  ],
+  "roads": [
+    {
+      "id": "market",
+      "width": 5.2,
+      "points": [
+        {
+          "x": 40,
+          "y": 40
+        },
+        {
+          "x": 8,
+          "y": 72
+        },
+        {
+          "x": 2.5,
+          "y": 71.5
+        }
+      ]
+    },
+    {
+      "id": "south",
+      "width": 6,
+      "points": [
+        {
+          "x": 40,
+          "y": 40
+        },
+        {
+          "x": 70.5,
+          "y": 70.5
+        },
+        {
+          "x": 70.5,
+          "y": 77.5
+        }
+      ]
+    },
+    {
+      "id": "root",
+      "width": 6,
+      "points": [
+        {
+          "x": 40,
+          "y": 40
+        },
+        {
+          "x": 23,
+          "y": 23
+        }
+      ]
+    },
+    {
+      "id": "residential",
+      "width": 5.2,
+      "points": [
+        {
+          "x": 40,
+          "y": 40
+        },
+        {
+          "x": 70,
+          "y": 10
+        }
+      ]
+    },
+    {
+      "id": "council",
+      "width": 3.5,
+      "points": [
+        {
+          "x": 29,
+          "y": 51
+        },
+        {
+          "x": 23.5,
+          "y": 44
+        },
+        {
+          "x": 13.5,
+          "y": 42
+        }
+      ]
+    },
+    {
+      "id": "supplies",
+      "width": 3,
+      "points": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 59,
+          "y": 30
+        },
+        {
+          "x": 59,
+          "y": 38
+        },
+        {
+          "x": 55,
+          "y": 38
+        }
+      ]
+    },
+    {
+      "id": "quests",
+      "width": 3,
+      "points": [
+        {
+          "x": 61,
+          "y": 61
+        },
+        {
+          "x": 53,
+          "y": 67
+        }
+      ]
+    }
+  ],
+  "ponds": [
+    {
+      "x": 45,
+      "y": 54,
+      "w": 5,
+      "h": 8
+    },
+    {
+      "x": 54,
+      "y": 45,
+      "w": 8,
+      "h": 5
+    }
+  ],
+  "colonnadeSegments": 48,
+  "portals": [
+    {
+      "id": "to-central_commons",
+      "to": "central_commons",
+      "name": "ประตูตะวันตก · ทุ่งกลาง",
+      "x": 2.5,
+      "y": 71.5,
+      "arrival": {
+        "x": 13.5,
+        "y": 3.5
+      }
+    },
+    {
+      "id": "to-central_commons-south",
+      "to": "central_commons",
+      "name": "ประตูทิศใต้ · ทุ่งกลาง",
+      "x": 70.5,
+      "y": 77.5,
+      "arrival": {
+        "x": 14.5,
+        "y": 6.5
+      }
+    }
+  ],
+  "homes": 123,
+  "trees": 51,
+  "marketSlots": [
+    {
+      "id": "central-stall-01",
+      "number": 1,
+      "x": 24,
+      "y": 48,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 26.8,
+        "y": 50.8
+      }
+    },
+    {
+      "id": "central-stall-02",
+      "number": 2,
+      "x": 30,
+      "y": 54,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 29.2,
+        "y": 53.2
+      }
+    },
+    {
+      "id": "central-stall-03",
+      "number": 3,
+      "x": 22.3,
+      "y": 49.7,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 25.1,
+        "y": 52.5
+      }
+    },
+    {
+      "id": "central-stall-04",
+      "number": 4,
+      "x": 28.3,
+      "y": 55.7,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 27.5,
+        "y": 54.900000000000006
+      }
+    },
+    {
+      "id": "central-stall-05",
+      "number": 5,
+      "x": 20.6,
+      "y": 51.4,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 23.400000000000002,
+        "y": 54.199999999999996
+      }
+    },
+    {
+      "id": "central-stall-06",
+      "number": 6,
+      "x": 26.6,
+      "y": 57.4,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 25.8,
+        "y": 56.6
+      }
+    },
+    {
+      "id": "central-stall-07",
+      "number": 7,
+      "x": 18.9,
+      "y": 53.1,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 21.7,
+        "y": 55.9
+      }
+    },
+    {
+      "id": "central-stall-08",
+      "number": 8,
+      "x": 24.9,
+      "y": 59.1,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 24.099999999999998,
+        "y": 58.300000000000004
+      }
+    },
+    {
+      "id": "central-stall-09",
+      "number": 9,
+      "x": 17.2,
+      "y": 54.8,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 20,
+        "y": 57.599999999999994
+      }
+    },
+    {
+      "id": "central-stall-10",
+      "number": 10,
+      "x": 23.2,
+      "y": 60.8,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 22.4,
+        "y": 60
+      }
+    },
+    {
+      "id": "central-stall-11",
+      "number": 11,
+      "x": 15.5,
+      "y": 56.5,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 18.3,
+        "y": 59.3
+      }
+    },
+    {
+      "id": "central-stall-12",
+      "number": 12,
+      "x": 21.5,
+      "y": 62.5,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 20.7,
+        "y": 61.7
+      }
+    },
+    {
+      "id": "central-stall-13",
+      "number": 13,
+      "x": 13.8,
+      "y": 58.2,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 16.6,
+        "y": 61
+      }
+    },
+    {
+      "id": "central-stall-14",
+      "number": 14,
+      "x": 19.8,
+      "y": 64.2,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 19,
+        "y": 63.400000000000006
+      }
+    },
+    {
+      "id": "central-stall-15",
+      "number": 15,
+      "x": 12.100000000000001,
+      "y": 59.9,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 14.900000000000002,
+        "y": 62.699999999999996
+      }
+    },
+    {
+      "id": "central-stall-16",
+      "number": 16,
+      "x": 18.1,
+      "y": 65.9,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 17.3,
+        "y": 65.1
+      }
+    },
+    {
+      "id": "central-stall-17",
+      "number": 17,
+      "x": 10.399999999999999,
+      "y": 61.599999999999994,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 13.2,
+        "y": 64.39999999999999
+      }
+    },
+    {
+      "id": "central-stall-18",
+      "number": 18,
+      "x": 16.4,
+      "y": 67.6,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 15.599999999999998,
+        "y": 66.8
+      }
+    },
+    {
+      "id": "central-stall-19",
+      "number": 19,
+      "x": 8.700000000000003,
+      "y": 63.3,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 11.500000000000004,
+        "y": 66.1
+      }
+    },
+    {
+      "id": "central-stall-20",
+      "number": 20,
+      "x": 14.700000000000003,
+      "y": 69.3,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 13.900000000000002,
+        "y": 68.5
+      }
+    },
+    {
+      "id": "central-stall-21",
+      "number": 21,
+      "x": 7,
+      "y": 65,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 9.8,
+        "y": 67.8
+      }
+    },
+    {
+      "id": "central-stall-22",
+      "number": 22,
+      "x": 13,
+      "y": 71,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 12.2,
+        "y": 70.2
+      }
+    },
+    {
+      "id": "central-stall-23",
+      "number": 23,
+      "x": 5.300000000000001,
+      "y": 66.7,
+      "w": 2,
+      "h": 2,
+      "bank": -1,
+      "approach": {
+        "x": 8.100000000000001,
+        "y": 69.5
+      }
+    },
+    {
+      "id": "central-stall-24",
+      "number": 24,
+      "x": 11.3,
+      "y": 72.7,
+      "w": 2,
+      "h": 2,
+      "bank": 1,
+      "approach": {
+        "x": 10.5,
+        "y": 71.9
+      }
+    }
+  ],
+  "services": [
+    {
+      "id": "clock-tower",
+      "name": "หอนาฬิกาแห่งการเริ่มต้น",
+      "service": "info",
+      "approach": {
+        "x": 40,
+        "y": 42.2
+      }
+    },
+    {
+      "id": "root_hall",
+      "name": "ประตูอิกดราซิล",
+      "service": "tower",
+      "approach": {
+        "x": 23,
+        "y": 23
+      }
+    },
+    {
+      "id": "council",
+      "name": "สภาสูงแห่งหกเผ่า",
+      "service": "info",
+      "approach": {
+        "x": 13.5,
+        "y": 42
+      }
+    },
+    {
+      "id": "forge",
+      "name": "โรงคราฟอาวุธ",
+      "service": "info",
+      "approach": {
+        "x": 23.5,
+        "y": 44
+      }
+    },
+    {
+      "id": "supplies",
+      "name": "ร้านเสบียงปีกสีแดง",
+      "service": "info",
+      "approach": {
+        "x": 55,
+        "y": 38
+      }
+    },
+    {
+      "id": "waygate",
+      "name": "ลานวาร์ปของ Central",
+      "service": "warp",
+      "approach": {
+        "x": 58,
+        "y": 22
+      }
+    },
+    {
+      "id": "inn",
+      "name": "โรงเตี๊ยมรุ่งอรุณ",
+      "service": "bind",
+      "approach": {
+        "x": 64,
+        "y": 16
+      }
+    },
+    {
+      "id": "warehouse",
+      "name": "คลังคาราวาน",
+      "service": "info",
+      "approach": {
+        "x": 68.5,
+        "y": 13
+      }
+    },
+    {
+      "id": "party_board",
+      "name": "บอร์ดข่าวสารและเควส",
+      "service": "info",
+      "approach": {
+        "x": 53,
+        "y": 67
+      }
+    },
+    {
+      "id": "market",
+      "name": "ตลาด Silfr · 24 แผง",
+      "service": "info",
+      "approach": {
+        "x": 28.5,
+        "y": 51
+      }
+    },
+    {
+      "id": "training-dummy-0",
+      "name": "หุ่นฟางฝึกต่อสู้",
+      "service": "training",
+      "approach": {
+        "x": 16.5,
+        "y": 46.5
+      }
+    },
+    {
+      "id": "training-dummy-1",
+      "name": "หุ่นฟางฝึกต่อสู้",
+      "service": "training",
+      "approach": {
+        "x": 20.5,
+        "y": 47.5
+      }
+    },
+    {
+      "id": "training-dummy-2",
+      "name": "หุ่นฟางฝึกต่อสู้",
+      "service": "training",
+      "approach": {
+        "x": 23.5,
+        "y": 47.5
+      }
+    },
+    {
+      "id": "root-guard-left",
+      "name": "ยามผนึกฝั่งซ้าย",
+      "service": "tower_guard",
+      "approach": {
+        "x": 23,
+        "y": 23
+      }
+    },
+    {
+      "id": "root-guard-right",
+      "name": "ยามผนึกฝั่งขวา",
+      "service": "tower_guard",
+      "approach": {
+        "x": 23,
+        "y": 23
+      }
+    },
+    {
+      "id": "central-guide",
+      "name": "Eira · ผู้นำทาง",
+      "service": "guide",
+      "approach": {
+        "x": 44,
+        "y": 44
+      }
+    }
+  ]
+}

@@ -1,5 +1,4 @@
-import {CENTRAL_REST_ZONE} from '../shared/adventure';
-import {capitalFloor} from './central-renderer';
+import {drawCapitalMap} from './central-renderer';
 import {landscape,landscapeRandom} from '../shared/landscape';
 import Phaser from 'phaser';
 import {MAP_BY_ID,findPath,nearestWalkable,type GameMap,type Prop} from '../shared/maps';
@@ -30,7 +29,7 @@ function ground(scene:Phaser.Scene,map:GameMap){if(scene.textures.exists('ground
  const random=landscapeRandom(map.id+'-ground'),config=landscape(map);
  const pos=(x:number,y:number)=>({x:map.size*24+(x-y)*24,y:(x+y)*12});
  if(map.kind.includes('city')){const index=map.biome==='ember'?1:map.biome==='rune'?5:map.biome==='marsh'?4:map.biome==='ore'?2:0;c.fillStyle=c.createPattern(material(scene,index,map.id==='central_city'?80:110),'repeat')!;c.fillRect(0,0,canvas.width,canvas.height);}
- if(map.id==='central_city')capitalFloor(c,map,(index,size)=>material(scene,index,size),index=>scene.textures.get('root-details-'+index).getSourceImage()as HTMLCanvasElement);
+
  // Uneven soil, moss and sunlight break up the repeating terrain without covering roads.
  const hues={grass:['#b2cf6c','#426b41','#e4d6a4'],snow:['#ffffff','#93b6c5','#c9dfd6'],ember:['#bf854f','#383c3e','#d6b179'],rune:['#b5b5df','#555f81','#b9c9a6'],ore:['#cdbb86','#827455','#e2ce9f'],marsh:['#92ab62','#244c48','#b5c49b']}[map.biome];
  if(!config.city)for(let i=0;i<260;i++){const q=pos(random()*28,random()*28),r=12+random()*53;c.save();c.translate(q.x,q.y);c.scale(1,.5);const gradient=c.createRadialGradient(0,0,0,0,0,r);gradient.addColorStop(0,hues[i%3]+'88');gradient.addColorStop(1,hues[i%3]+'00');c.fillStyle=gradient;c.fillRect(-r,-r,r*2,r*2);c.restore();}
@@ -60,7 +59,7 @@ function undergrowth(scene:Phaser.Scene,map:GameMap){const views:Phaser.GameObje
  }
  return views;
 }
-export function drawMap(scene:Phaser.Scene,mapId:string){const map=MAP_BY_ID.get(mapId)!,views:Phaser.GameObjects.GameObject[]=[];wallTextures(scene,map.id==='central_city');views.push(ground(scene,map),...undergrowth(scene,map));for(const p of map.props)if(p.kind!=='npc')views.push(propView(scene,map,p));
+export function drawMap(scene:Phaser.Scene,mapId:string){const map=MAP_BY_ID.get(mapId)!;if(mapId==='central_city')return drawCapitalMap(scene,map);const views:Phaser.GameObjects.GameObject[]=[];wallTextures(scene,map.id==='central_city');views.push(ground(scene,map),...undergrowth(scene,map));for(const p of map.props)if(p.kind!=='npc')views.push(propView(scene,map,p));
  if(map.kind.includes('city')){
   for(const side of [0,1,2,3])for(let cell=1;cell<map.size-1;cell++){
    if(Math.abs(cell-(map.id==='central_city'?32:14))<3&&(map.id!=='central_city'||side===0))continue;
@@ -69,8 +68,6 @@ export function drawMap(scene:Phaser.Scene,mapId:string){const map=MAP_BY_ID.get
   }
  }
  for(const gate of map.portals){const p=iso(gate.x,gate.y),target=MAP_BY_ID.get(gate.to)!;const color=target.rule==='red'?0xe25854:target.rule==='home'?0xe7bc70:0x7bd5d7;const ring=scene.add.ellipse(p.x,p.y,75,38,0xeffff3,.45).setStrokeStyle(3,color).setDepth(p.y);const icon=scene.add.image(p.x,p.y-7,`portals-${biomeIndex[map.biome]}`).setOrigin(.5,.65).setDisplaySize(100,70).setDepth(p.y+1);const label=scene.add.text(p.x,p.y+23,gate.name,{fontFamily:'sans-serif',fontSize:'12px',color:'#fff9de',backgroundColor:'#274957e8',padding:{x:8,y:5}}).setOrigin(.5,0).setDepth(p.y+60);views.push(ring,icon,label);if(map.id==='central_city'){const arch=scene.add.image(p.x,p.y-12,'capital-11').setOrigin(.5,.91);arch.setDisplaySize(235,235*arch.height/arch.width).setDepth(p.y+25);views.push(arch);}}
- if(map.id==='central_city'){for(const sign of [{x:28,y:40,text:'← ตลาด Silfr · 24 แผง'},{x:37,y:40,text:'ย่านช่างและวาร์ป →'},{x:32,y:25,text:'↑ หอผนึกรากโลก'},{x:32,y:48,text:'ย่านที่พักและสวน ↓'}]){const p=iso(sign.x,sign.y);views.push(scene.add.text(p.x,p.y-32,sign.text,{fontFamily:'sans-serif',fontSize:'14px',color:'#f4e2ae',backgroundColor:'#334a3fec',padding:{x:10,y:6}}).setOrigin(.5).setDepth(p.y+60));}}
- if(map.id==='central_city'){const rest=iso(32,34);views.push(scene.add.ellipse(rest.x,rest.y,CENTRAL_REST_ZONE.radius*Math.SQRT2*96,CENTRAL_REST_ZONE.radius*Math.SQRT2*48,0x86c9a4,.035).setStrokeStyle(1.5,0xc5e4c0,.32).setDepth(-9900));const p=iso(32,39.5);views.push(scene.add.text(p.x,p.y,'✧ ลานพักฟื้น · HP / MP',{fontFamily:'sans-serif',fontSize:'13px',color:'#dbf4d8',stroke:'#365f55',strokeThickness:3}).setOrigin(.5).setDepth(-9800));}
  if(map.kind.includes('city')){const p=iso(map.spawn.x,map.spawn.y);views.push(scene.add.ellipse(p.x,p.y,100,50,0x8cf5d0,.22).setStrokeStyle(2,0xc6fff0,.9).setDepth(p.y-1));}
  return views;
 }

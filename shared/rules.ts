@@ -1,3 +1,4 @@
+import {CENTRAL_LAYOUT_VERSION} from './central-layout.js';
 import {armorBonus} from './supplies.js';
 import type {AttackClip} from './attack-animation.js';
 import {equippedCatalog,offhandCatalog,meetsRequirements} from './items.js';
@@ -18,7 +19,7 @@ export const RACES = [
 ] as const;
 export type Race = typeof RACES[number]['id'];
 export interface LootItem{id:string;name:string;rarity:string;catalogId?:string;testOnly?:boolean;quantity?:number}
-export interface Hero { armor?:Partial<Record<import('./supplies.js').ArmorSlot,string>>;bagCapacity?:number;starterKitClaimed?:boolean;itemReadyAt?:number;itemCooldowns?:Record<string,number>;buffs?:{foodUntil?:number;hasteUntil?:number}; id:string; name:string; race:Race; appearance:Appearance; weapon?:WeaponId; equippedItem?:string; equippedCatalogId?:string;offhandItem?:string;offhandCatalogId?:string; attackReadyAt?:number; level:number; xp:number; points:number; stats:Attributes; hp:number; mp:number; x:number; y:number; kills:number; mapId:string; visited:string[]; bindMap:string; coins:number; loot:LootItem[];deliveries:LootItem[] }
+export interface Hero {centralLayoutVersion?:number; armor?:Partial<Record<import('./supplies.js').ArmorSlot,string>>;bagCapacity?:number;starterKitClaimed?:boolean;itemReadyAt?:number;itemCooldowns?:Record<string,number>;buffs?:{foodUntil?:number;hasteUntil?:number}; id:string; name:string; race:Race; appearance:Appearance; weapon?:WeaponId; equippedItem?:string; equippedCatalogId?:string;offhandItem?:string;offhandCatalogId?:string; attackReadyAt?:number; level:number; xp:number; points:number; stats:Attributes; hp:number; mp:number; x:number; y:number; kills:number; mapId:string; visited:string[]; bindMap:string; coins:number; loot:LootItem[];deliveries:LootItem[] }
 export function attributes(h:Hero):Attributes {
  const a={...h.stats}; const r=RACES.find(r=>r.id===h.race)!;
  a[r.bonus]+=3+Math.floor((h.level-1)/5); return a;
@@ -37,7 +38,7 @@ export function allocate(h:Hero,key:unknown):boolean {
  h.stats[key as Stat]++;h.points--;h.hp=Math.min(h.hp,derived(h).maxHp);return true;
 }
 export function newHero(id:string,name:string,race:Race,appearance?:AppearanceInput):Hero {
- const h:Hero={id,name,race,appearance:appearanceOrDefault(appearance),level:1,xp:0,points:0,stats:{str:5,agi:5,vit:5,int:5,dex:5,luk:5},hp:1,mp:1,x:14.5,y:22.5,kills:0,mapId:'central_city',visited:['central_city'],bindMap:'central_city',coins:0,loot:[],deliveries:[]};const spawn=MAP_BY_ID.get('central_city')!.spawn;h.x=spawn.x;h.y=spawn.y;h.hp=derived(h).maxHp;h.mp=derived(h).maxMp;return h;
+ const h:Hero={centralLayoutVersion:CENTRAL_LAYOUT_VERSION,id,name,race,appearance:appearanceOrDefault(appearance),level:1,xp:0,points:0,stats:{str:5,agi:5,vit:5,int:5,dex:5,luk:5},hp:1,mp:1,x:14.5,y:22.5,kills:0,mapId:'central_city',visited:['central_city'],bindMap:'central_city',coins:0,loot:[],deliveries:[]};const spawn=MAP_BY_ID.get('central_city')!.spawn;h.x=spawn.x;h.y=spawn.y;h.hp=derived(h).maxHp;h.mp=derived(h).maxMp;return h;
 }
 export const WORLD_SIZE=28;
 export interface Motion {attack?:AttackClip;hurtAt?:number;action:'idle'|'walk'|'attack'|'hurt'|'dead';facing:number;since:number;until:number;weapon?:WeaponId;catalogId?:string;offhandCatalogId?:string}
