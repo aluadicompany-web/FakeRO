@@ -31,7 +31,10 @@
     "test:combo-animation": "tsx scripts/playtest-combo-animation.ts",
     "test:combo-combat": "tsx scripts/playtest-combo-combat.ts",
     "art:characters:v4": "python3 scripts/pack-character-v4.py",
-    "test:character-v4": "tsx scripts/playtest-character-v4.ts"
+    "test:character-v4": "tsx scripts/playtest-character-v4.ts",
+    "art:characters:v5": "python3 scripts/pack-character-v5.py",
+    "test:character-frames": "tsx scripts/playtest-character-v4.ts",
+    "test:painted-frames": "tsx scripts/playtest-painted-frames.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",

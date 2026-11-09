@@ -1,0 +1,47 @@
+{
+  "version": 5,
+  "frameWidth": 192,
+  "frameHeight": 192,
+  "poses": [
+    "idle",
+    "breathe",
+    "walk-left",
+    "pass-left",
+    "walk-right",
+    "pass-right",
+    "slash-windup",
+    "slash-contact",
+    "slash-follow",
+    "reverse",
+    "thrust",
+    "overhead",
+    "cast-gather",
+    "cast-release",
+    "hurt",
+    "fallen"
+  ],
+  "bodyFrames": 1536,
+  "paintedSourceFrames": 1536,
+  "directions": 8,
+  "outfits": 12,
+  "atlas": {
+    "male": {
+      "width": 2048,
+      "height": 4096,
+      "frames": 1536,
+      "rgbaBytes": 33554432
+    },
+    "female": {
+      "width": 2048,
+      "height": 4096,
+      "frames": 1536,
+      "rgbaBytes": 33554432
+    },
+    "head": {
+      "width": 2048,
+      "height": 1024,
+      "frames": 1440,
+      "rgbaBytes": 8388608
+    }
+  }
+}

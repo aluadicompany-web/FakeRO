@@ -1,0 +1,4 @@
+{
+  "1020": {"rightOffset": {"x": 3, "y": 12}, "leftOffset": {"x": -3, "y": 12}, "rightBehindBody": true, "reason": "Vanir male NW spell gather: both hands are occluded in front of the chest; item must render behind the back."},
+  "1068": {"rightOffset": {"x": 3, "y": 12}, "leftOffset": {"x": -3, "y": 12}, "rightBehindBody": true, "reason": "Muspel female NW spell gather: both hands are occluded in front of the chest; item must render behind the back."}
+}

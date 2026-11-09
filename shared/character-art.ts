@@ -1,5 +1,6 @@
 import manifest from './character-rig.json';
-export const CHARACTER_ART_VERSION='painted-sd-v4';
+import animation from './character-animation.json';
+export const CHARACTER_ART_VERSION='painted-sd-v5';
 export const CHARACTER_RACES=['muspel','alf','jotun','vanir','nid','skug'] as const;
 export const CHARACTER_FRAME={width:256,height:384,runtimeWidth:128,runtimeHeight:192,footY:376};
 export const CHARACTER_PARTS=['body','cloth','armL','armR','gloveL','gloveR','legL','legR','bootL','bootR','upperArmL','upperArmR','forearmL','forearmR'] as const;
@@ -13,4 +14,4 @@ export function characterFrames(race:string,gender:'male'|'female',hair:number,f
 }
 export function characterExpression(action:string,now:number,id:string,hurtAt?:number){if(action==='dead')return'closed';if(action==='hurt'||hurtAt!==undefined&&now-hurtAt>=0&&now-hurtAt<140)return'hurt';if(action==='attack'||action==='cast')return'open';let seed=0;for(const c of id)seed=(seed*31+c.charCodeAt(0))>>>0;const phase=(now+seed%4100)%4100;return phase>=3950&&phase<4050?'closed':'open';}
 /** Rendering attachment names are anatomical; directional art is already reflected and registered. */
-export function characterHeadOffset(body:number,head:number){const socket=manifest.bodies[body].neck,anchor=manifest.heads[head].neck;return{x:socket.x-anchor.x,y:socket.y-anchor.y};}
+export function characterHeadOffset(body:number,head:number){const socket=animation.frames[body*16].neck,anchor=manifest.heads[head].neck;return{x:socket.x-anchor.x,y:socket.y-anchor.y};}
