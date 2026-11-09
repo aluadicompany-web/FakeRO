@@ -29,7 +29,9 @@
     "art:tower": "python3 scripts/pack-tower-art.py",
     "test:weapon-grip": "tsx scripts/playtest-weapon-grip.ts",
     "test:combo-animation": "tsx scripts/playtest-combo-animation.ts",
-    "test:combo-combat": "tsx scripts/playtest-combo-combat.ts"
+    "test:combo-combat": "tsx scripts/playtest-combo-combat.ts",
+    "art:characters:v4": "python3 scripts/pack-character-v4.py",
+    "test:character-v4": "tsx scripts/playtest-character-v4.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",

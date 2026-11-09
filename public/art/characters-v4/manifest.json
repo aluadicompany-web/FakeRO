@@ -1,0 +1,48 @@
+{
+  "version": 4,
+  "frameWidth": 128,
+  "frameHeight": 192,
+  "bodyFrames": 96,
+  "headFrames": 80,
+  "bodyColumns": 6,
+  "headColumns": 5,
+  "paintedBodyViews": 60,
+  "paintedHeadViews": 50,
+  "bodyParts": [
+    "body",
+    "cloth",
+    "armL",
+    "armR",
+    "gloveL",
+    "gloveR",
+    "legL",
+    "legR",
+    "bootL",
+    "bootR",
+    "upperArmL",
+    "upperArmR",
+    "forearmL",
+    "forearmR"
+  ],
+  "headParts": [
+    "base",
+    "hair-front",
+    "hair-back",
+    "eyes",
+    "lids"
+  ],
+  "atlas": {
+    "body": {
+      "width": 2048,
+      "height": 1024,
+      "frames": 1344,
+      "bytesRGBA": 8388608
+    },
+    "head": {
+      "width": 2048,
+      "height": 512,
+      "frames": 480,
+      "bytesRGBA": 4194304
+    }
+  }
+}

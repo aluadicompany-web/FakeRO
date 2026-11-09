@@ -28,7 +28,7 @@ export const STARTER_OUTFITS:Record<Race,{name:string;description:string;main:st
  skug:{name:'Nightstep Initiate',description:'เสื้อดำชายแยก ผ้าคลุมสั้น และตะเข็บเทาที่อ่านง่าย',main:'#292c32',dark:'#15191e',trim:'#858e98',className:'Thief'}
 };
 // Painted SD anime layers; shared atlas indices across creator, portrait and renderer.
-export function avatarSVG(race:Race,input:AppearanceInput):string {
+export function avatarSVG(race:Race,input:AppearanceInput,facing=1):string {
  const a=appearanceOrDefault(input);
- return spriteSVG(race,a,STARTER_OUTFITS[race],HAIR_COLORS[a.hairColor].hex,EYE_COLORS[a.eyes].hex);
+ return spriteSVG(race,a,STARTER_OUTFITS[race],HAIR_COLORS[a.hairColor].hex,EYE_COLORS[a.eyes].hex,facing);
 }
