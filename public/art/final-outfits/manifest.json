@@ -1,0 +1,661 @@
+{
+  "version": 1,
+  "status": "static-design-turnaround",
+  "width": 256,
+  "height": 384,
+  "neck": {
+    "x": 128,
+    "y": 144
+  },
+  "footY": 376,
+  "frames": [
+    {
+      "id": "final-muspel-male",
+      "race": "muspel",
+      "gender": "male",
+      "view": "front",
+      "asset": "muspel-male-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        56,
+        141,
+        203,
+        379
+      ],
+      "scale": 0.511013
+    },
+    {
+      "id": "final-muspel-male",
+      "race": "muspel",
+      "gender": "male",
+      "view": "side",
+      "asset": "muspel-male-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        71,
+        141,
+        177,
+        378
+      ],
+      "scale": 0.511013
+    },
+    {
+      "id": "final-muspel-male",
+      "race": "muspel",
+      "gender": "male",
+      "view": "back",
+      "asset": "muspel-male-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        55,
+        141,
+        204,
+        378
+      ],
+      "scale": 0.511013
+    },
+    {
+      "id": "final-muspel-female",
+      "race": "muspel",
+      "gender": "female",
+      "view": "front",
+      "asset": "muspel-female-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        61,
+        141,
+        201,
+        378
+      ],
+      "scale": 0.492569
+    },
+    {
+      "id": "final-muspel-female",
+      "race": "muspel",
+      "gender": "female",
+      "view": "side",
+      "asset": "muspel-female-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        80,
+        141,
+        178,
+        378
+      ],
+      "scale": 0.492569
+    },
+    {
+      "id": "final-muspel-female",
+      "race": "muspel",
+      "gender": "female",
+      "view": "back",
+      "asset": "muspel-female-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        53,
+        141,
+        202,
+        377
+      ],
+      "scale": 0.492569
+    },
+    {
+      "id": "final-alf-male",
+      "race": "alf",
+      "gender": "male",
+      "view": "front",
+      "asset": "alf-male-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        37,
+        141,
+        203,
+        379
+      ],
+      "scale": 0.495726
+    },
+    {
+      "id": "final-alf-male",
+      "race": "alf",
+      "gender": "male",
+      "view": "side",
+      "asset": "alf-male-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        67,
+        141,
+        165,
+        378
+      ],
+      "scale": 0.495726
+    },
+    {
+      "id": "final-alf-male",
+      "race": "alf",
+      "gender": "male",
+      "view": "back",
+      "asset": "alf-male-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        48,
+        141,
+        211,
+        378
+      ],
+      "scale": 0.495726
+    },
+    {
+      "id": "final-alf-female",
+      "race": "alf",
+      "gender": "female",
+      "view": "front",
+      "asset": "alf-female-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        41,
+        141,
+        203,
+        376
+      ],
+      "scale": 0.477366
+    },
+    {
+      "id": "final-alf-female",
+      "race": "alf",
+      "gender": "female",
+      "view": "side",
+      "asset": "alf-female-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        65,
+        141,
+        167,
+        378
+      ],
+      "scale": 0.477366
+    },
+    {
+      "id": "final-alf-female",
+      "race": "alf",
+      "gender": "female",
+      "view": "back",
+      "asset": "alf-female-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        51,
+        141,
+        202,
+        376
+      ],
+      "scale": 0.477366
+    },
+    {
+      "id": "final-jotun-male",
+      "race": "jotun",
+      "gender": "male",
+      "view": "front",
+      "asset": "jotun-male-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        23,
+        141,
+        206,
+        378
+      ],
+      "scale": 0.50655
+    },
+    {
+      "id": "final-jotun-male",
+      "race": "jotun",
+      "gender": "male",
+      "view": "side",
+      "asset": "jotun-male-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        50,
+        142,
+        174,
+        376
+      ],
+      "scale": 0.50655
+    },
+    {
+      "id": "final-jotun-male",
+      "race": "jotun",
+      "gender": "male",
+      "view": "back",
+      "asset": "jotun-male-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        44,
+        141,
+        212,
+        377
+      ],
+      "scale": 0.50655
+    },
+    {
+      "id": "final-jotun-female",
+      "race": "jotun",
+      "gender": "female",
+      "view": "front",
+      "asset": "jotun-female-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        24,
+        142,
+        204,
+        379
+      ],
+      "scale": 0.488421
+    },
+    {
+      "id": "final-jotun-female",
+      "race": "jotun",
+      "gender": "female",
+      "view": "side",
+      "asset": "jotun-female-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        48,
+        141,
+        177,
+        376
+      ],
+      "scale": 0.488421
+    },
+    {
+      "id": "final-jotun-female",
+      "race": "jotun",
+      "gender": "female",
+      "view": "back",
+      "asset": "jotun-female-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        42,
+        141,
+        216,
+        377
+      ],
+      "scale": 0.488421
+    },
+    {
+      "id": "final-vanir-male",
+      "race": "vanir",
+      "gender": "male",
+      "view": "front",
+      "asset": "vanir-male-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        47,
+        141,
+        205,
+        378
+      ],
+      "scale": 0.5
+    },
+    {
+      "id": "final-vanir-male",
+      "race": "vanir",
+      "gender": "male",
+      "view": "side",
+      "asset": "vanir-male-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        59,
+        141,
+        168,
+        378
+      ],
+      "scale": 0.5
+    },
+    {
+      "id": "final-vanir-male",
+      "race": "vanir",
+      "gender": "male",
+      "view": "back",
+      "asset": "vanir-male-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        48,
+        141,
+        207,
+        378
+      ],
+      "scale": 0.5
+    },
+    {
+      "id": "final-vanir-female",
+      "race": "vanir",
+      "gender": "female",
+      "view": "front",
+      "asset": "vanir-female-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        44,
+        142,
+        212,
+        377
+      ],
+      "scale": 0.479339
+    },
+    {
+      "id": "final-vanir-female",
+      "race": "vanir",
+      "gender": "female",
+      "view": "side",
+      "asset": "vanir-female-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        58,
+        142,
+        177,
+        378
+      ],
+      "scale": 0.479339
+    },
+    {
+      "id": "final-vanir-female",
+      "race": "vanir",
+      "gender": "female",
+      "view": "back",
+      "asset": "vanir-female-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        48,
+        141,
+        209,
+        376
+      ],
+      "scale": 0.479339
+    },
+    {
+      "id": "final-nid-male",
+      "race": "nid",
+      "gender": "male",
+      "view": "front",
+      "asset": "nid-male-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        31,
+        141,
+        216,
+        378
+      ],
+      "scale": 0.498925
+    },
+    {
+      "id": "final-nid-male",
+      "race": "nid",
+      "gender": "male",
+      "view": "side",
+      "asset": "nid-male-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        57,
+        141,
+        176,
+        377
+      ],
+      "scale": 0.498925
+    },
+    {
+      "id": "final-nid-male",
+      "race": "nid",
+      "gender": "male",
+      "view": "back",
+      "asset": "nid-male-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        37,
+        142,
+        217,
+        378
+      ],
+      "scale": 0.498925
+    },
+    {
+      "id": "final-nid-female",
+      "race": "nid",
+      "gender": "female",
+      "view": "front",
+      "asset": "nid-female-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        43,
+        141,
+        205,
+        379
+      ],
+      "scale": 0.487395
+    },
+    {
+      "id": "final-nid-female",
+      "race": "nid",
+      "gender": "female",
+      "view": "side",
+      "asset": "nid-female-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        63,
+        141,
+        176,
+        377
+      ],
+      "scale": 0.487395
+    },
+    {
+      "id": "final-nid-female",
+      "race": "nid",
+      "gender": "female",
+      "view": "back",
+      "asset": "nid-female-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        48,
+        141,
+        207,
+        378
+      ],
+      "scale": 0.487395
+    },
+    {
+      "id": "final-skug-male",
+      "race": "skug",
+      "gender": "male",
+      "view": "front",
+      "asset": "skug-male-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        49,
+        141,
+        205,
+        378
+      ],
+      "scale": 0.50989
+    },
+    {
+      "id": "final-skug-male",
+      "race": "skug",
+      "gender": "male",
+      "view": "side",
+      "asset": "skug-male-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        71,
+        142,
+        171,
+        378
+      ],
+      "scale": 0.50989
+    },
+    {
+      "id": "final-skug-male",
+      "race": "skug",
+      "gender": "male",
+      "view": "back",
+      "asset": "skug-male-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        53,
+        142,
+        201,
+        376
+      ],
+      "scale": 0.50989
+    },
+    {
+      "id": "final-skug-female",
+      "race": "skug",
+      "gender": "female",
+      "view": "front",
+      "asset": "skug-female-front.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        53,
+        141,
+        199,
+        378
+      ],
+      "scale": 0.490486
+    },
+    {
+      "id": "final-skug-female",
+      "race": "skug",
+      "gender": "female",
+      "view": "side",
+      "asset": "skug-female-side.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        75,
+        141,
+        167,
+        378
+      ],
+      "scale": 0.490486
+    },
+    {
+      "id": "final-skug-female",
+      "race": "skug",
+      "gender": "female",
+      "view": "back",
+      "asset": "skug-female-back.webp",
+      "neck": {
+        "x": 128,
+        "y": 144
+      },
+      "bounds": [
+        58,
+        141,
+        201,
+        376
+      ],
+      "scale": 0.490486
+    }
+  ]
+}

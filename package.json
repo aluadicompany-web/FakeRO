@@ -42,7 +42,9 @@
     "art:items": "python3 scripts/pack-basic-items.py",
     "test:items": "tsx scripts/playtest-items.ts",
     "art:central": "python3 scripts/pack-central-v2.py",
-    "test:central-v2": "tsx scripts/playtest-central-v2.ts"
+    "test:central-v2": "tsx scripts/playtest-central-v2.ts",
+    "art:final-outfits": "python3 scripts/pack-final-outfits.py",
+    "test:final-outfits": "tsx scripts/playtest-final-outfits.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",
