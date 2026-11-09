@@ -44,7 +44,12 @@
     "art:central": "python3 scripts/pack-central-v2.py",
     "test:central-v2": "tsx scripts/playtest-central-v2.ts",
     "art:final-outfits": "python3 scripts/pack-final-outfits.py",
-    "test:final-outfits": "tsx scripts/playtest-final-outfits.ts"
+    "test:final-outfits": "tsx scripts/playtest-final-outfits.ts",
+    "art:final-animation": "python3 scripts/pack-final-frames.py && python3 scripts/check-final-art.py",
+    "art:heads-hd": "python3 scripts/pack-heads-hd.py",
+    "test:final-animation": "tsx scripts/playtest-final-animation.ts",
+    "test:final-outfit-game": "tsx scripts/playtest-final-outfit-game.ts",
+    "art:final-previews": "python3 scripts/export-final-animation-previews.py"
   },
   "dependencies": {
     "phaser": "^3.90.0",

@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "frameSize": 192,
+  "outfits": 12,
+  "directions": 8,
+  "poses": [
+    "idle",
+    "breathe",
+    "walk-left",
+    "pass-left",
+    "walk-right",
+    "pass-right",
+    "slash-windup",
+    "slash-contact",
+    "slash-follow",
+    "reverse",
+    "thrust",
+    "overhead",
+    "cast-gather",
+    "cast-release",
+    "hurt",
+    "fallen",
+    "bow-ready",
+    "bow-nock",
+    "bow-draw",
+    "bow-release",
+    "two-ready",
+    "two-overhead",
+    "two-contact",
+    "two-follow"
+  ],
+  "bodyFrames": 2304,
+  "atlas": {
+    "muspel-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "alf-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "jotun-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "vanir-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "nid-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "skug-male": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "muspel-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "alf-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "jotun-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "vanir-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "nid-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    },
+    "skug-female": {
+      "width": 2048,
+      "height": 2048,
+      "rgbaBytes": 16777216,
+      "frames": 384
+    }
+  }
+}

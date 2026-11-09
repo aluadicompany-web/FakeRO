@@ -1,7 +1,7 @@
 import type {Race} from './rules.js';
 import type {AppearanceInput} from './appearance.js';
 import {appearanceOrDefault,HAIR_COLORS,EYE_COLORS} from './appearance.js';
-import {characterFrames,CHARACTER_ASSET_ROOT} from './character-art.js';
+import {characterFrames} from './character-art.js';
 import {headAttachment} from './character-attachment.js';
 export const FINAL_OUTFIT_VIEWS=['front','side','back'] as const;
 export type FinalOutfitView=typeof FINAL_OUTFIT_VIEWS[number];
@@ -21,6 +21,6 @@ export function finalOutfitAsset(race:Race,gender:'male'|'female',view:FinalOutf
 export function finalOutfitSVG(race:Race,input:AppearanceInput,view:FinalOutfitView='front',bodyOnly=false){
  const a=appearanceOrDefault(input),facing=view==='front'?1:view==='side'?0:6,f=characterFrames(race,a.gender,a.hair,facing),p=headAttachment(f.head,{x:0,y:-58},'normal'),offset={x:p.x-f.headMeta.neck.x,y:p.y-f.headMeta.neck.y-53},id=`final-${race}-${a.gender}-${a.hair}-${a.hairColor}-${a.eyes}-${view}`;
  const filter=(name:string,color:string)=>`<filter id="${id}-${name}" filterUnits="userSpaceOnUse" x="0" y="0" width="256" height="384" color-interpolation-filters="sRGB"><feComponentTransfer>${color.slice(1).match(/../g)!.map((s,i)=>`<feFunc${['R','G','B'][i]} type="linear" slope="${parseInt(s,16)/255}"/>`).join('')}</feComponentTransfer></filter>`;
- const layer=(part:string,tint?:string)=>`<g transform="translate(${offset.x*4} ${offset.y*4})"><svg width="256" height="384" viewBox="0 0 256 384" overflow="hidden"><image href="${CHARACTER_ASSET_ROOT}heads-${part}.webp" x="${-(f.head%5)*256}" y="${-Math.floor(f.head/5)*384}" width="1280" height="6144"${tint?` filter="url(#${id}-${tint})"`:''}/></svg></g>`;
+ const layer=(part:string,tint?:string)=>`<g transform="translate(${offset.x*4} ${offset.y*4})"><svg width="256" height="384" viewBox="0 0 256 384" overflow="hidden"><image href="/art/heads-hd/${part}-${f.head}.webp" width="256" height="384"${tint?` filter="url(#${id}-${tint})"`:''}/></svg></g>`;
  const back=bodyOnly?'':layer('hair-back','hair');return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 384" role="img" aria-label="${FINAL_OUTFITS[race].name} ${a.gender} ${view}" data-outfit="${finalOutfitId(race,a.gender)}" data-view="${view}"><defs>${filter('hair',HAIR_COLORS[a.hairColor].hex)}${filter('eyes',EYE_COLORS[a.eyes].hex)}</defs>${f.headMeta.hairOverBody?'':back}<image href="${finalOutfitAsset(race,a.gender,view)}" width="256" height="384"/>${f.headMeta.hairOverBody?back:''}${bodyOnly?'':layer('base')+layer('hair-front','hair')+layer('eyes','eyes')}</svg>`;
 }

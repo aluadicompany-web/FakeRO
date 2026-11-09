@@ -19,7 +19,7 @@ export const RACES = [
 ] as const;
 export type Race = typeof RACES[number]['id'];
 export interface LootItem{id:string;name:string;rarity:string;catalogId?:string;testOnly?:boolean;quantity?:number}
-export interface Hero {centralLayoutVersion?:number; armor?:Partial<Record<import('./supplies.js').ArmorSlot,string>>;bagCapacity?:number;starterKitClaimed?:boolean;itemReadyAt?:number;itemCooldowns?:Record<string,number>;buffs?:{foodUntil?:number;hasteUntil?:number}; id:string; name:string; race:Race; appearance:Appearance; weapon?:WeaponId; equippedItem?:string; equippedCatalogId?:string;offhandItem?:string;offhandCatalogId?:string; attackReadyAt?:number; level:number; xp:number; points:number; stats:Attributes; hp:number; mp:number; x:number; y:number; kills:number; mapId:string; visited:string[]; bindMap:string; coins:number; loot:LootItem[];deliveries:LootItem[] }
+export interface Hero {outfitTier?:'final';centralLayoutVersion?:number; armor?:Partial<Record<import('./supplies.js').ArmorSlot,string>>;bagCapacity?:number;starterKitClaimed?:boolean;itemReadyAt?:number;itemCooldowns?:Record<string,number>;buffs?:{foodUntil?:number;hasteUntil?:number}; id:string; name:string; race:Race; appearance:Appearance; weapon?:WeaponId; equippedItem?:string; equippedCatalogId?:string;offhandItem?:string;offhandCatalogId?:string; attackReadyAt?:number; level:number; xp:number; points:number; stats:Attributes; hp:number; mp:number; x:number; y:number; kills:number; mapId:string; visited:string[]; bindMap:string; coins:number; loot:LootItem[];deliveries:LootItem[] }
 export function attributes(h:Hero):Attributes {
  const a={...h.stats}; const r=RACES.find(r=>r.id===h.race)!;
  a[r.bonus]+=3+Math.floor((h.level-1)/5); return a;

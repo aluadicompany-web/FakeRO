@@ -14,7 +14,7 @@ export function offhandRestAngle(facing:number){return facing>=5?Math.PI+.2:Math
 export function groundSafeCarryAngle(angle:number,palmY:number,tip:{x:number;y:number},side:1|-1){
  const tipY=(a:number)=>palmY+Math.sin(a)*tip.x+Math.cos(a)*tip.y;
  if(tipY(angle)<=-3)return angle;
- let spread=Math.min(Math.PI/2,Math.abs(angle-Math.PI));
+ let spread=Math.min(Math.PI/2,Math.abs(Math.atan2(Math.sin(angle-Math.PI),Math.cos(angle-Math.PI))));
  while(spread<Math.PI/2){spread=Math.min(Math.PI/2,spread+.025);const candidate=Math.PI-side*spread;if(tipY(candidate)<=-3)return candidate;}
  return Math.PI-side*Math.PI/2;
 }
