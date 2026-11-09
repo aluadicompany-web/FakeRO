@@ -36,7 +36,9 @@
     "test:character-frames": "tsx scripts/playtest-character-v4.ts",
     "test:painted-frames": "tsx scripts/playtest-painted-frames.ts",
     "art:tower-guards": "python3 scripts/pack-tower-guards.py",
-    "test:tower-guards": "tsx scripts/playtest-tower-guards.ts"
+    "test:tower-guards": "tsx scripts/playtest-tower-guards.ts",
+    "art:weapon-holding": "python3 scripts/pack-held-weapons.py && python3 scripts/pack-holding-bodies.py",
+    "test:weapon-holding": "tsx scripts/playtest-weapon-holding.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",
