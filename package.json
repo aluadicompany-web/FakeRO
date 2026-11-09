@@ -34,7 +34,9 @@
     "test:character-v4": "tsx scripts/playtest-character-v4.ts",
     "art:characters:v5": "python3 scripts/pack-character-v5.py",
     "test:character-frames": "tsx scripts/playtest-character-v4.ts",
-    "test:painted-frames": "tsx scripts/playtest-painted-frames.ts"
+    "test:painted-frames": "tsx scripts/playtest-painted-frames.ts",
+    "art:tower-guards": "python3 scripts/pack-tower-guards.py",
+    "test:tower-guards": "tsx scripts/playtest-tower-guards.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",

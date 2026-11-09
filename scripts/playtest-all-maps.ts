@@ -11,7 +11,7 @@ try{await new Promise<void>((resolve,reject)=>{const timer=setTimeout(()=>reject
  await page.locator('[data-warp="central_city"]').click();await page.waitForFunction(()=>document.body.dataset.worldRendered==='central_city',undefined,{timeout:15000});
  }
  if(map.id==='skug_boss'){await page.mouse.click(640+3*48*.9,400+(-3*24+30)*.9-60);await page.waitForFunction(()=>Number(document.body.dataset.castWarning)>0,undefined,{timeout:10000});await page.screenshot({path:'artifacts/world/all-maps/boss-live-telegraph.png'});}
- if(map.id==='central_city'){await page.locator('#map-open').click();await page.locator('[data-route="root_hall"]').click();await page.waitForFunction(()=>document.body.dataset.worldRendered==='root_trial',undefined,{timeout:45000});await page.screenshot({path:'artifacts/world/all-maps/root-entry-walk.png'});}
+ if(map.id==='central_city'){await page.locator('#map-open').click();await page.locator('[data-route="root_hall"]').click();await page.locator('#tower-confirm').click({timeout:45000});await page.waitForFunction(()=>document.body.dataset.worldRendered==='root_trial',undefined,{timeout:45000});await page.screenshot({path:'artifacts/world/all-maps/root-entry-walk.png'});}
 console.log('PASS '+map.id);}finally{await context.close();}}
  console.log(JSON.stringify({renderedMaps:selected.length,allCityBiomes:MAPS.filter(m=>m.kind.includes('city')).every(m=>selected.includes(m)),bossRooms:selected.filter(m=>m.boss).length,pageErrors:0}));
 }finally{await browser?.close();child.kill('SIGTERM');await new Promise<void>(r=>{if(child.exitCode!==null)r();else child.once('exit',()=>r());});rmSync(dir,{recursive:true,force:true});}
