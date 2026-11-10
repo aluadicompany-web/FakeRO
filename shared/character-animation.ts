@@ -12,7 +12,7 @@ export function attackSpritePose(weapon:WeaponId,clip:AttackClip,elapsed:number)
  if(elapsed<0)return 0;if(elapsed<clip.windup*.28)return 0;if(elapsed<clip.windup)return wind;
  if(elapsed<Math.min(clip.duration,clip.windup+clip.interval*.13))return contact;
  if(elapsed<clip.duration*.91)return style==='arrow'||style==='pulse'||style==='bolt'?12:8;
- return clip.length>=3?wind:0;
+ return 0; // Finish in guard; do not jump back into the next windup before the next attack.
 }
 export function spritePose(action:string,now:number,since:number,travel:number,weapon:WeaponId,clip?:AttackClip){
  if(action==='walk')return [2,3,4,5][Math.floor(((travel/WALK_STRIDE)%1+1)%1*4)];

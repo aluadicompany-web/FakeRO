@@ -1,5 +1,6 @@
+import {STARTER_HEAD_SCALE,STARTER_HEAD_OVERLAP,starterHeadRotation,starterTwoHandGrip} from '../shared/starter-motion';
 import Phaser from 'phaser';
-import {holdingBody,holdingPose,holdingStyle,holdingLayers,twoHandGrip} from '../shared/weapon-holding';
+import {holdingBody,holdingPose,holdingStyle,holdingLayers} from '../shared/weapon-holding';
 import {finalBodyFrame,finalBodyTexture} from '../shared/final-animation';
 import {coherentFamily,coherentFrame,coherentLogicalPose,coherentPhase,manualCoherentFrame} from '../shared/coherent-animation';
 import type {ClipFamily,PaintedFrame} from '../shared/painted-frame';
@@ -66,7 +67,7 @@ export class HeroRig extends Phaser.GameObjects.Container{
     meta=coherentFrame(look.body,family,phase);
    }
    if(meta.family)this.pose=coherentLogicalPose(meta.family,meta.phase!);
-  }else meta=this.pose>=16?holdingBody(look.body,this.pose):bodyPoseFrame(look.body,this.pose);
+  }else{meta=this.pose>=16?holdingBody(look.body,this.pose):bodyPoseFrame(look.body,this.pose);meta={...meta,headScale:STARTER_HEAD_SCALE,headOverlap:STARTER_HEAD_OVERLAP,headRotation:meta.headPose==='fallen'?0:starterHeadRotation(meta.id)};}
   this.frameMeta=meta;
   if(final&&!finalArtReady(this.scene,h.race,h.appearance.gender)){this.setData('artReady',false);this.setVisible(false);return;}
   this.setVisible(true);this.setData('artReady',true);this.setScale(1);this.setRotation(0);this.setAlpha(1);
@@ -94,7 +95,7 @@ export class HeroRig extends Phaser.GameObjects.Container{
   const two=meta.family?meta.family==='two':holdingStyle(id)==='two',bow=holdingStyle(id)==='bow',aim=Math.atan2(Math.sin(facing*Math.PI/4)*.55,Math.cos(facing*Math.PI/4));
   let mainAngle:number,lower=false,gap=0;
   if(meta.family){mainAngle=meta.weaponAngle!;lower=meta.gripLower??false;gap=two?Math.hypot(meta.palms.right.x-meta.palms.left.x,meta.palms.right.y-meta.palms.left.y):0;}
-  else{const grip=twoHandGrip(facing,meta.palms.right,meta.palms.left,action==='attack'&&!!clip&&elapsed>=clip.windup);mainAngle=bow?0:two&&this.pose>=20?grip.angle:frameWeaponAngle(id,facing,this.pose,meta.palms);lower=two&&this.pose>=20&&grip.lower;gap=grip.gap;}
+  else{const grip=starterTwoHandGrip(facing,this.pose,meta.palms);mainAngle=bow?0:two&&this.pose>=20?grip.angle:frameWeaponAngle(id,facing,this.pose,meta.palms);lower=two&&this.pose>=20&&grip.lower;gap=grip.gap;}
   const view=meta.family&&!bow&&(meta.projection??1)<.6?(facing>=5?5:6):undefined;
   this.weapon.selectPose(facing,meta.family&&!bow?0:this.pose,clip?.step??0,view).setGripLower(lower,gap).setPosition(0,0).setRotation(id==='shield'?0:mainAngle).setScale(1);
   const offAngle=meta.family?(meta.palms.left.x<meta.neck.x?-.35:.35):action==='attack'?aim+Math.PI/2+((clip?.step??0)%2?-.5:.6):offhandRestAngle(facing);

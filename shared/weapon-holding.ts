@@ -6,6 +6,7 @@ export function holdingBody(body:number,pose:number){return bodies.frames[body*8
 export function holdingPose(weapon:WeaponId,action:string,clip:AttackClip|undefined,elapsed:number){
  const style=holdingStyle(weapon);if(style==='one'||['walk','hurt','dead'].includes(action))return;
  if(action!=='attack'||!clip)return style==='bow'?16:20;
+ if(elapsed>=clip.duration*.91)return style==='bow'?16:20;
  if(style==='bow'){if(elapsed<clip.windup*.38)return 17;if(elapsed<clip.windup)return 18;if(elapsed<Math.min(clip.duration,clip.windup+clip.interval*.16))return 19;return clip.length>=3?17:16;}
  const step=clip.step%4;if(elapsed<clip.windup*.28)return 20;if(elapsed<clip.windup)return [21,23,21,20][step];if(elapsed<Math.min(clip.duration,clip.windup+clip.interval*.15))return [22,22,23,22][step];return [23,21,20,23][step];
 }

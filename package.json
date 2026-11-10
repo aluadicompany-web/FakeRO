@@ -32,12 +32,12 @@
     "test:combo-combat": "tsx scripts/playtest-combo-combat.ts",
     "art:characters:v4": "python3 scripts/pack-character-v4.py",
     "test:character-v4": "tsx scripts/playtest-character-v4.ts",
-    "art:characters:v5": "python3 scripts/pack-character-v5.py",
+    "art:characters:v5": "python3 scripts/pack-character-v5.py && python3 scripts/register-starter-motion.py",
     "test:character-frames": "tsx scripts/playtest-character-v4.ts",
     "test:painted-frames": "tsx scripts/playtest-painted-frames.ts",
     "art:tower-guards": "python3 scripts/pack-tower-guards.py",
     "test:tower-guards": "tsx scripts/playtest-tower-guards.ts",
-    "art:weapon-holding": "python3 scripts/pack-held-weapons.py && python3 scripts/pack-holding-bodies.py",
+    "art:weapon-holding": "python3 scripts/pack-held-weapons.py && python3 scripts/pack-holding-bodies.py && python3 scripts/register-starter-motion.py",
     "test:weapon-holding": "tsx scripts/playtest-weapon-holding.ts",
     "art:items": "python3 scripts/pack-basic-items.py",
     "test:items": "tsx scripts/playtest-items.ts",
@@ -50,7 +50,9 @@
     "test:final-animation": "tsx scripts/playtest-final-animation.ts",
     "test:final-outfit-game": "tsx scripts/playtest-final-outfit-game.ts",
     "art:final-previews": "python3 scripts/export-final-animation-previews.py",
-    "art:final-animation:legacy": "python3 scripts/pack-final-frames.py"
+    "art:final-animation:legacy": "python3 scripts/pack-final-frames.py",
+    "art:starter-registration": "python3 scripts/register-starter-motion.py",
+    "test:starter-continuity": "tsx scripts/playtest-starter-continuity.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",
